@@ -1,67 +1,70 @@
-# 📝 TaskFlow: Simple Task Management App
+# Essentico: Home Essentials E-Commerce 
 
-## Project Overview
+## Midterm Case Study: CCS112 - Application Development and Emerging Technology
 
-**TaskFlow** is a simple, responsive web-based task management application built entirely with **React Functional Components**. The application enables users to create, organize, and track their tasks efficiently through an intuitive interface. It demonstrates modern React development practices using **Hooks** for state management, **React Router** for navigation, and **Bootstrap** for responsive styling.
+### Project Overview
 
-This project was created as part of the **Prelim Activity 2 for CCS112: Application Development and Emerging Technologies**.
+**Essentico** is a home essentials e-commerce website developed as the Midterm Case Study for the CCS112 course. The primary objective is to **develop the front-end UI/UX** of the application using **React.js**.
 
----
-
-## Project Scope
-
-The goal is to build a task management system that leverages React's functional programming paradigm, modern state management techniques, and component-based architecture. The entire development process utilizes GitHub for version control and collaborative development, with clear branch management and merge workflows.
+This project emphasizes **effective team collaboration** using Git, demonstrated by creating individual branches, making commits, and submitting pull requests, as required by the activity.
 
 ---
 
-## Features
-
-### Core Functionality
-* **Create** new tasks with title and description.
-* **Edit** existing task details.
-* **Delete** completed or unwanted tasks.
-* **Mark tasks** as complete/incomplete.
-* **Filter** tasks by status (all, active, completed).
-* **Search** tasks by keyword.
-
-### User Interface
-* Clean, intuitive navigation between different views.
-* Real-time task updates without page refresh.
-* Bootstrap-styled components for a consistent look and feel.
-
----
-
-## Core Technical Requirements
-
-| Requirement Area | Details |
-| :--- | :--- |
-| **1. Functional Components** | All components must be built using **React Functional Components**. No Class Components are allowed. |
-| **2. State Management** | Uses **`useState` Hook** for managing component and application state. Uses **`useEffect` Hook** for side effects and data persistence. All data must be managed through React Hooks. |
-| **3. Routing** | Utilizes the **`react-router-dom`** library for navigation management. Includes multiple views/pages (Home, Task List, Task Details, About). Includes dynamic routing for individual task viewing. |
-| **4. Styling** | Integration of **React-Bootstrap or standard Bootstrap CSS**. Fully responsive design using the Bootstrap grid system. Uses Bootstrap components for buttons, forms, cards, and navigation. |
-| **5. GitHub Collaboration** | Shared GitHub repository for all team members. Enforces a **Feature branch workflow** (feature branches merge into main). Requires clear commit messages and Pull Request reviews. Uses clear branch naming conventions (e.g., `feature/add-task`, `feature/task-filters`). |
-
----
-
-## Technologies Used
+### Technical Stack
 
 | Category | Technology |
 | :--- | :--- |
-| **Frontend Framework** | React (Functional Components only) |
-| **State Management** | React Hooks (`useState`, `useEffect`) |
-| **Routing** | `react-router-dom` |
-| **Styling** | React-Bootstrap / Bootstrap CSS |
+| **Frontend Framework** | React.js (Functional Components recommended) |
+| **Routing** | React Router |
+| **Styling** | *[To be filled by team - e.g., CSS Modules, Styled Components]* |
 | **Version Control** | Git & GitHub |
-| **Package Manager** | npm or yarn |
+| **Environment** | Docker (as seen in development images) |
 
 ---
 
-## Collaborators
+### Team Roles & Responsibilities
 
-| Name | GitHub Username |
-| :--- | :--- |
-| Joshua Lopez | `pugarioo` |
-| Arvy Lacampuenga | `Binosaur0107` |
-| Stephanie Gapang | `stephvno07` |
-| Primo Victor Miguel Llenasas | `MiguelLlenasas` |
-| John Risk Labanda | `risktancinco` |
+The team follows a component-based division of labor to ensure all key parts of the e-commerce UI are addressed.
+
+| Member | Role / Focus Area | Main Responsibilities | Suggested Git Branch |
+| :---: | :---: | :--- | :--- |
+| **Stephanie Gapang (stephvno07)** | UI/UX Designer | Design wireframes, mockups, color scheme, typography, and layout. Prepare responsive layout guidelines and document design rationale. | `branch: uidesign` |
+| **Primo Victor Miguel Llenasas (MiguelLlenasas)** | Home & Navigation Developer | Implement the Home Page (`HomePage.js`) and Navigation Bar (`Navbar.js`). Ensure navigation routes work (React Router) and apply design guidelines. | `branch: home-navbar` |
+| **Arvy Lacampuenga (Binosaur0107)** | Product & Catalog Developer | Implement Product Listing (`ProductList.js`) and Product Details (`ProductDetails.js`) pages. Create reusable components (like `ProductCard`) and integrate sample product data (JSON). | `branch: product-pages` |
+| **John Risk Labanda (risktancinco)** | Cart & Checkout Developer | Create Cart (`Cart.js`) and Checkout (`Checkout.js`) UI pages. Handle basic state updates (e.g., item count, total) and use React hooks for interactivity. | `branch: cart-checkout` |
+| **Joshua Lopez (pugarioo)** | Style & Integration Manager | Unify CSS/Styling and ensure consistent look and responsiveness. **Merge all branches and resolve conflicts**. Deploy or run final testing. | `branch: development` |
+
+---
+
+### Development Setup
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/pugarioo/Essentico.git
+    cd Essentico
+    ```
+2.  **Install Dependencies (if running locally without Docker):**
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+3.  **Run with Docker Compose (Recommended):**
+    ```bash
+    docker compose up -d --build
+    ```
+    *The application should be accessible at **http://localhost:3000***.
+
+> **❗ Troubleshooting Note:** If you see an error like `Bind for 0.0.0.0:3000 failed: port is already allocated` (as shown in the provided development environment image), another program is using port 3000. You must either stop that program or change the port mapping (e.g., to `3001:3000`) in your `docker-compose.yml` file.
+
+---
+
+### Git Workflow Requirements
+
+Active and proper Git collaboration is a core component of this activity.
+
+1.  **Branching:** Each member must create and work on their **individual feature branch** (e.g., `git checkout -b home-navbar`).
+2.  **Commits:** Make regular, descriptive commits to demonstrate contribution balance.
+3.  **Pull Requests (PRs):** Submit a PR to the `main` branch upon feature completion.
+4.  **Conflict Resolution:** The Style & Integration Manager (Member 5) is responsible for resolving conflicts during merges.
+
