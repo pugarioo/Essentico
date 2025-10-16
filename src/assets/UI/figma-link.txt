@@ -1,0 +1,11 @@
+ESSENTICO – UI/UX Design Resources
+
+This file contains links to the official design assets and mockups used for the e-commerce project.
+
+------------------------------------------------------
+Figma Design Link:
+https://www.figma.com/design/qs2Lms0QRRHKhOGMF6Hjjh/AppDev?node-id=0-1&m=dev&t=jwjA9eW8FZWj7ELm-1
+
+Google Drive (Images and Assets):
+https://drive.google.com/drive/folders/1omRGL5GRmMjnqYraruhz1GLy9s2I5v39?usp=sharing
+------------------------------------------------------
