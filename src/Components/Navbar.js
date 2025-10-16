@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 import { Navbar, Container, Nav, Form, Button, } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './Home.module.css';
-//import homebg from '../assets/images/pexels-pixabay-260046.jpg';
 
-function Navbar(){
+function NavBar(){
     const [menuOpen, setMenuOpen] = useState(false);
     return(
         
@@ -58,4 +57,4 @@ function Navbar(){
     );
 
 }
-export default Navbar;
+export default NavBar;

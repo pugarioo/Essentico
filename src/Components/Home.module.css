@@ -70,6 +70,13 @@
     height: 40px;
 }
 
+.searchbtn:hover {
+    background-color: #767945;
+    color: white;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
 .cartbtn {
     background-color: #fe9900;
     padding: 10px;
