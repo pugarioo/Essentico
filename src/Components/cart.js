@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./Cart.css";
-import { FaTrashAlt } from "react-icons/fa";
+import "./cart.css";
+// import { FaTrashAlt } from "react-icons/fa";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([
@@ -68,7 +68,7 @@ const Cart = () => {
                   onClick={() => removeItem(item.id)}
                   title="Remove item"
                 >
-                  <FaTrashAlt />
+                  {/* <FaTrashAlt /> */}
                 </button>
 
                 <div className="quantity-controls">
