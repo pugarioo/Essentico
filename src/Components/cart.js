@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import "./cart.css";
 // import { FaTrashAlt } from "react-icons/fa";
 
@@ -103,7 +105,9 @@ const Cart = () => {
             <button className="apply-btn">Apply</button>
           </div>
 
-          <button className="checkout-btn">Go to Checkout →</button>
+          <Button variant="dark" as={Link} to="/checkout" className="checkout-btn">
+  Go to Checkout →
+</Button>
         </div>
       </div>
     </div>

@@ -1,0 +1,244 @@
+.checkout-container {
+  margin-top: 320px; /* increased from 150px */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Georgia', serif;
+}
+
+.checkout-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  text-align: left;
+  width: 85%;
+}
+
+.checkout-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 85%;
+}
+
+/* --- LEFT + RIGHT WRAPPER --- */
+.checkout-sections {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+/* LEFT SIDE */
+.shipping-section {
+  width: 950px; /* Figma proportion */
+  background-color: #e6e6e6;
+  padding: 50px 60px;
+  border-radius: 6px;
+  min-height: 750px;
+}
+
+/* Delivery / Pick Up buttons */
+.delivery-options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.option {
+  flex: 1;
+  border: 1px solid #d3d3d3;
+  border-radius: 6px;
+  padding: 14px;
+  text-align: left;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #fff;
+  font-size: 15px;
+  width: 90%;
+}
+
+.option.selected {
+  background-color: #d2d1c2;
+  border: none;
+}
+
+/* Payment Information */
+.payment-title {
+  font-size: 16px;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.payment-icons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.payment-icons img {
+  width: 55px;
+  height: 36px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  object-fit: contain;
+}
+
+/* --- PAYMENT BUTTON EFFECTS --- */
+.payment-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.payment-btn img {
+  width: 55px;
+  height: 36px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  object-fit: contain;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+
+.payment-btn:hover img {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 10px #00aaff);
+}
+
+
+.payment-btn:active img {
+  transform: scale(1.1);
+  filter: brightness(0.9);
+}
+
+
+.payment-btn.selected-payment img {
+  border: 2px solid #00aaff;
+}
+/* Card input with PayPal icon inside */
+.card-input {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.card-input img {
+  position: absolute;
+  right: 10px;
+  width: 26px;
+  height: 26px;
+}
+
+/* Expiration + CVV side by side */
+.exp-cvv {
+  display: flex;
+  gap: 25px;
+}
+
+.exp-cvv .form-group {
+  flex: 1;
+}
+
+.terms {
+  margin-top: 15px;
+  font-size: 12px;
+}
+
+/* RIGHT SIDE */
+.order-summary {
+  width: 90%; /* Figma proportion */
+  background-color: #e6e6e6;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 0px;
+}
+
+.order-summary h3 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: nowrap; /* para di mag line break */
+  white-space: nowrap; /* para di bumaba yung ₱ 360 */
+}
+
+.summary-item.total {
+  font-weight: bold;
+  border-top: 1px solid #888;
+  padding-top: 8px;
+}
+
+/* Promo area */
+.promo {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.promo input {
+  flex: 1;
+  padding: 9px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.promo button {
+  padding: 9px 18px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+/* Pay Now button */
+.pay-now {
+  width: 100%;
+  padding: 14px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 25px;
+  font-weight: 600;
+}
+
+/* Back button */
+.back-btn {
+  width: 268px;
+  height: 69px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: -270px;    
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
