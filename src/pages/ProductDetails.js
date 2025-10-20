@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { FaStar, FaRegStar, FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import productsData from "../Components/sampledata.json";
+import productsData from "../components/sampledata.json";
 import "./ProductDetails.css";
 
 export default function ProductDetails() {

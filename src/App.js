@@ -1,14 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import Navbar from './Components/Navbar';
-import Home from './Components/Home';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
 import ProductList from './pages/ProductList';
 import ProductDetails from './pages/ProductDetails';
-import Home from './Components/Home';
-import NavBar from './Components/Navbar';
-import Cart from './Components/cart.js'
-import Checkout from './Components/Checkout';
+import Cart from './components/cart.js'
+import Checkout from './components/Checkout';
 
 
 function App() {

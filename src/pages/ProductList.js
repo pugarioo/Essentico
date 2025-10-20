@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaSearch, FaFilter, FaSort } from "react-icons/fa";
-import ProductCard from "../Components/ProductCard";
-import productsData from "../Components/sampledata.json";
+import ProductCard from "../components/ProductCard";
+import productsData from "../components/sampledata.json";
 import "./ProductList.css";
 
 export default function ProductList() {
