@@ -9,12 +9,14 @@
     "rating": 4.5,
     "review_count": 199,
     "image_filename": "bean.jpg",
+    "thumbnails": ["beanorange.jpg", "beanblue.jpg", "beanblack.jpg", "beanred.jpg"],
+    "colors": ["#6b7a4c", "#e39383", "#b0d3e2", "#4c4c4c", "#a23b3b"],
     "available_colors": [
-      {"color_name": "Green", "image_filename": "bean.jpg"},
-      {"color_name": "Red/Orange", "image_filename": "beanorange.jpg"},
-      {"color_name": "Light Blue", "image_filename": "beanblue.jpg"},
-      {"color_name": "Dark Gray", "image_filename": "beanblack.jpg"},
-      {"color_name": "Red", "image_filename": "beanred.jpg"}
+      { "color_name": "Green", "image_filename": "bean.jpg" },
+      { "color_name": "Red/Orange", "image_filename": "beanorange.jpg" },
+      { "color_name": "Light Blue", "image_filename": "beanblue.jpg" },
+      { "color_name": "Dark Gray", "image_filename": "beanblack.jpg" },
+      { "color_name": "Red", "image_filename": "beanred.jpg" }
     ]
   },
   {
@@ -26,7 +28,10 @@
     "currency": "₱",
     "rating": 4.8,
     "review_count": 55,
-    "image_filename": "detergent.jpg"
+    "image_filename": "detergent.jpg",
+    "thumbnails": [],
+    "colors": [],
+    "available_colors": []
   },
   {
     "product_id": "HO002",
@@ -37,7 +42,10 @@
     "currency": "₱",
     "rating": 4.6,
     "review_count": 102,
-    "image_filename": "cotton.jpg"
+    "image_filename": "cotton.jpg",
+    "thumbnails": [],
+    "colors": [],
+    "available_colors": []
   },
   {
     "product_id": "HO003",
@@ -48,7 +56,10 @@
     "currency": "₱",
     "rating": 4.4,
     "review_count": 31,
-    "image_filename": "airfreshner.jpg"
+    "image_filename": "airfreshner.jpg",
+    "thumbnails": [],
+    "colors": [],
+    "available_colors": []
   },
   {
     "product_id": "CL004",
@@ -59,7 +70,10 @@
     "currency": "₱",
     "rating": 4.7,
     "review_count": 78,
-    "image_filename": "sponge.jpg"
+    "image_filename": "sponge.jpg",
+    "thumbnails": [],
+    "colors": [],
+    "available_colors": []
   },
   {
     "product_id": "OS005",
@@ -70,7 +84,10 @@
     "currency": "₱",
     "rating": 4.2,
     "review_count": 15,
-    "image_filename": "notebook.jpg"
+    "image_filename": "notebook.jpg",
+    "thumbnails": [],
+    "colors": [],
+    "available_colors": []
   },
   {
     "product_id": "OS006",
@@ -81,7 +98,10 @@
     "currency": "₱",
     "rating": 4.9,
     "review_count": 220,
-    "image_filename": "eraser.jpg"
+    "image_filename": "eraser.jpg",
+    "thumbnails": [],
+    "colors": [],
+    "available_colors": []
   },
   {
     "product_id": "OS007",
@@ -92,7 +112,10 @@
     "currency": "₱",
     "rating": 4.5,
     "review_count": 48,
-    "image_filename": "backpack.jpg"
+    "image_filename": "backpack.jpg",
+    "thumbnails": [],
+    "colors": [],
+    "available_colors": []
   },
   {
     "product_id": "OS008",
@@ -103,7 +126,10 @@
     "currency": "₱",
     "rating": 4.3,
     "review_count": 33,
-    "image_filename": "sticky notes.jpg"
+    "image_filename": "sticky notes.jpg",
+    "thumbnails": [],
+    "colors": [],
+    "available_colors": []
   },
   {
     "product_id": "HS009",
@@ -114,7 +140,10 @@
     "currency": "₱",
     "rating": 4.5,
     "review_count": 88,
-    "image_filename": "colgate.jpg"
+    "image_filename": "colgate.jpg",
+    "thumbnails": [],
+    "colors": [],
+    "available_colors": []
   },
   {
     "product_id": "HS010",
@@ -125,7 +154,10 @@
     "currency": "₱",
     "rating": 4.1,
     "review_count": 12,
-    "image_filename": "soap.jpg"
+    "image_filename": "soap.jpg",
+    "thumbnails": [],
+    "colors": [],
+    "available_colors": []
   },
   {
     "product_id": "HO011",
@@ -136,7 +168,10 @@
     "currency": "₱",
     "rating": 4.0,
     "review_count": 22,
-    "image_filename": "basket.png"
+    "image_filename": "basket.png",
+    "thumbnails": [],
+    "colors": [],
+    "available_colors": []
   },
   {
     "product_id": "OS012",
@@ -147,7 +182,10 @@
     "currency": "₱",
     "rating": 4.7,
     "review_count": 65,
-    "image_filename": "pen.png"
+    "image_filename": "pen.png",
+    "thumbnails": [],
+    "colors": [],
+    "available_colors": []
   },
   {
     "product_id": "CL013",
@@ -158,7 +196,10 @@
     "currency": "₱",
     "rating": 4.4,
     "review_count": 40,
-    "image_filename": "towel.jpg"
+    "image_filename": "towel.jpg",
+    "thumbnails": [],
+    "colors": [],
+    "available_colors": []
   },
   {
     "product_id": "HS014",
@@ -169,6 +210,9 @@
     "currency": "₱",
     "rating": 4.3,
     "review_count": 28,
-    "image_filename": "toothbrush.jpg"
+    "image_filename": "toothbrush.jpg",
+    "thumbnails": [],
+    "colors": [],
+    "available_colors": []
   }
 ]
