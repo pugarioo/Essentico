@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { FaSearch, FaFilter, FaSort } from "react-icons/fa";
 import ProductCard from "../components/ProductCard";
-import productsData from "../components/sampledata.json";
 import "./ProductList.css";
+import productbg from '../assets/images/products-bg.jpg';
 
-export default function ProductList() {
+export default function ProductList({productData, addToCart}) {
   const [products] = useState(
-    productsData.filter(
+    productData.filter(
       (p) =>
         p.name !== "Decorative Storage Basket" &&
         p.name !== "Premium Writing Pen Set"
@@ -39,14 +39,17 @@ export default function ProductList() {
       return 0;
     });
 
-  // 🔹 Extract unique categories
+  //  Extract unique categories
   const categories = [...new Set(products.map((p) => p.category))].filter(Boolean);
 
   return (
     <div className="product-page">
+      <div className='products-bg'
+      style={{ backgroundImage: `url(${productbg})` }}>  
+      </div>
       <h1 className="page-title">What do you want to buy today?</h1>
 
-      {/* 🔍 Search Bar */}
+      {/* Search Bar */}
       <div className="search-bar">
         <input
           type="text"
@@ -67,10 +70,10 @@ export default function ProductList() {
             <FaFilter /> FILTER
           </button>
 
-          {/* 🧩 Dropdown Filter Menu */}
+          {/* Dropdown Filter Menu */}
           {showFilter && (
             <div className="filter-dropdown">
-              <h4>Category</h4>
+              <p>Category</p>
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
@@ -83,7 +86,7 @@ export default function ProductList() {
                 ))}
               </select>
 
-              <h4>Price Range</h4>
+              <p>Price Range</p>
               <select
                 value={priceRange}
                 onChange={(e) => setPriceRange(e.target.value)}
@@ -94,7 +97,7 @@ export default function ProductList() {
                 <option value="high">Above ₱300</option>
               </select>
 
-              <h4>Minimum Rating</h4>
+              <p>Minimum Rating</p>
               <select
                 value={ratingFilter}
                 onChange={(e) => setRatingFilter(Number(e.target.value))}
@@ -105,12 +108,7 @@ export default function ProductList() {
                 <option value={2}>2 stars & up</option>
               </select>
 
-              <button
-                className="apply-btn"
-                onClick={() => setShowFilter(false)}
-              >
-                Apply Filters
-              </button>
+              
             </div>
           )}
         </div>
@@ -138,7 +136,7 @@ export default function ProductList() {
         </div>
       </div>
 
-      {/* 🛍️ Product Grid */}
+      {/* Product Grid */}
       <div className="product-grid">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import "./cart.css";
 // import { FaTrashAlt } from "react-icons/fa";
 
-const Cart = () => {
+const Cart = ({cartData}) => {
   const [cartItems, setCartItems] = useState([
     {
       id: 1,

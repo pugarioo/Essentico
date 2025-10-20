@@ -25,7 +25,8 @@
 }
 
 .navbar {
-    background-color: rgba(217, 217, 217, 0.6);
+    background-color: rgba(82,87,45, 0.30);
+    /* background-color: rgba(206, 207, 195, 0.6); */
     top: 0;
     left: 0;
     width: 100%;
@@ -128,7 +129,6 @@
     width: 50%;
     height: 100%;
     padding-right: 8rem;
-    margin-top: 120px; /* 🔽 added to push content down */
 }
 
 .maintitle {
@@ -139,7 +139,6 @@
     word-wrap: break-word;
     font-size: 5rem;
     text-align: end;
-    margin-top: 100px; /* 🔽 This pushes the title lower */
 }
 
 
@@ -165,6 +164,7 @@
     margin-top: 2rem;
     align-self: flex-end;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .shopnowbtn:hover {
@@ -204,6 +204,7 @@
 
 .navlinksContainer {
     display: flex;
+    margin-right: 2rem;
 }
 
 .cartProfileContainer {

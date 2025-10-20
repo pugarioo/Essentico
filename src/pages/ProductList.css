@@ -1,48 +1,86 @@
 .product-page {
-  padding: 80px 40px 40px; /* 🔥 increased top padding from 40px to 80px */
-  background-color: #fdfdfd;
+  background-color: transparent;
   min-height: 100vh;
   font-family: "Poppins", sans-serif;
+  width: 100vw;
+  padding: 0;
 }
 
+.products-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
 
 .page-title {
   text-align: center;
-  font-size: 26px;
+  font-size: 4rem;
   font-weight: 700;
   color: #333;
-  margin-bottom: 25px;
+  margin-top: 10%;
+  margin-bottom: 4rem
 }
 
-/* 🔍 Search bar */
-.search-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 25px;
-  width: 60%;
-  max-width: 500px;
-  margin: 0 auto 25px;
-  padding: 8px 15px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-}
-
-.search-container input {
+.search-bar {
+  width: 50%; 
+  max-width: 700px;
+  margin: 0 auto 30px;
   border: none;
   outline: none;
   flex: 1;
   font-size: 15px;
   padding: 8px 10px;
-  background: transparent;
+  background: rgba(82,87,45, 0.30)  ;
+  border-radius: 100px;
 }
+
+
+.search-bar input {
+  width: 90%;
+  padding: 5px 0;
+  border: none;
+  font-size: 16px;
+  background-color: transparent;
+  text-align: center;
+}
+
+.search-bar input:focus {
+  outline: none;
+}
+
+.search-icon-inside {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+}
+
 
 .search-icon {
   color: #888;
   font-size: 18px;
   margin-right: 8px;
 }
+
+.product-grid {
+  /* Gawing 4 na column para maging kamukha ng target output */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 20px;
+  padding: 2rem 6.5rem;/* I-align sa filter bar */
+  margin: 0 auto;
+  padding-top: 20px;
+  background-color: transparent;
+  width: 100%;
+}
+
 
 /* Filter bar */
 .filter-container {
@@ -76,87 +114,6 @@
   border-color: #f57c00;
 }
 
-/* 🛍️ Product grid */
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 25px;
-  padding: 0 40px;
-}
-
-/* 🧺 Product card */
-.product-card {
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  overflow: hidden;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-.image-wrapper {
-  position: relative;
-  width: 100%;
-  height: 180px;
-  overflow: hidden;
-}
-
-.product-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-bottom: 1px solid #eee;
-}
-
-.add-to-cart {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  background: #f57c00;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.add-to-cart:hover {
-  background: #333;
-}
-
-.product-info {
-  padding: 15px;
-  text-align: left;
-}
-
-.product-name {
-  white-space: normal;
-  word-wrap: break-word;
-  overflow: visible;
-  text-overflow: unset;
-  display: block;
-  font-size: 1rem; /* adjust as needed */
-  text-align: center;
-}
-
-
-.product-price {
-  color: #f57c00;
-  font-weight: 700;
-  font-size: 14px;
-}
-
-
 /* 🔽 New dropdown filter & sort styles */
 .filter-sort-container {
   display: flex;
@@ -171,7 +128,7 @@
   border-radius: 25px;
   border: 1px solid #ddd;
   background: #fff;
-  font-weight: 600;
+  
   color: #333;
   cursor: pointer;
   transition: 0.3s;
@@ -181,4 +138,33 @@
 .sort-select:hover {
   border-color: #f57c00;
   color: #f57c00;
+}
+
+.filter-group,.filter-dropdown {
+  display: flex;
+  align-items: center ;
+  gap: 1rem;
+}
+
+.filter-dropdown p {
+  margin-right: 10px;
+  font-weight: 600;
+  align-self: center;
+  margin-bottom: 0;
+}
+.filter-dropdown select {
+  padding: 8px 12px;
+  border-radius: 25px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  font-size: 1.5rem;
+  color: #777;
+  margin-top: 50px;
 }

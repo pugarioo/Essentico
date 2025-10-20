@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaBookmark, FaPlus } from 'react-icons/fa';
-import { Link } from 'react-router-dom'; // <--- ADD THIS LINE
+import { Link } from 'react-router-dom'; 
+import './ProductCard.css';
 
 function ProductCard({ product }) {
   if (!product) return null;
@@ -9,7 +10,7 @@ function ProductCard({ product }) {
 
   return (
     <Link 
-      to={`/products/${product.product_id}`} // <--- LINK TO DETAILS PAGE
+      to={`/products/${product.product_id}`} 
       className="product-card-link"
       style={{ textDecoration: 'none', color: 'inherit' }}
     >
