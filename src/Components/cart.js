@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import "./cart.css";
+import "./Cart.css";
 // import { FaTrashAlt } from "react-icons/fa";
 
 const Cart = ({cartData}) => {

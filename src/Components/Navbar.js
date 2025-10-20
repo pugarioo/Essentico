@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Container, Nav, Form, Button, } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from './Home.module.css';
+import styles from './Navbar.module.css';
 
 function NavBar(){
     const [menuOpen, setMenuOpen] = useState(false);
