@@ -128,16 +128,20 @@
     width: 50%;
     height: 100%;
     padding-right: 8rem;
+    margin-top: 120px; /* 🔽 added to push content down */
 }
+
 .maintitle {
     font-family: "Instrument Serif", serif;
     font-weight: 400;
     font-style: italic;
-    color:white;
+    color: white;
     word-wrap: break-word;
     font-size: 5rem;
     text-align: end;
+    margin-top: 100px; /* 🔽 This pushes the title lower */
 }
+
 
 .subtitle {
     font-family: "Instrument Serif", serif;

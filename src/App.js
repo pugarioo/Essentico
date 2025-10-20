@@ -1,6 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+import Navbar from './Components/Navbar';
+import Home from './Components/Home';
+import ProductList from './pages/ProductList';
+import ProductDetails from './pages/ProductDetails';
 import Home from './Components/Home';
 import NavBar from './Components/Navbar';
 import Cart from './Components/cart.js'
@@ -11,8 +15,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-
-        <NavBar></NavBar>
+        <Navbar />
         <main className="main-content">
          <Routes>
             <Route path="/" element={<Home/>} />
