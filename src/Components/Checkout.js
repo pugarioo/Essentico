@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import "./Checkout.css";
+import checkoutbg from "../assets/images/products-bg.jpg"
 
 const Checkout = () => {
   const [selectedOption, setSelectedOption] = useState("Delivery");
@@ -8,7 +9,7 @@ const Checkout = () => {
 
   // handle Pay Now button
   const handlePayNow = () => {
-    alert("✅ Payment Successful! Thank you for your purchase.");
+    alert("Payment Successful! Thank you for your purchase.");
   };
 
   // handle Back button
@@ -18,6 +19,10 @@ const Checkout = () => {
 
   return (
     <div className="checkout-container">
+
+      <div className='checkout-bg'
+      style={{ backgroundImage: `url(${checkoutbg})` }}>  
+      </div>
       <h2 className="checkout-title">Shipping information</h2>
 
       <div className="checkout-content">
@@ -42,7 +47,7 @@ const Checkout = () => {
             </div>
 
             {/* Shipping Address */}
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3 fgroup">
               <Form.Label>Shipping address</Form.Label>
               <Form.Control type="text" placeholder="Enter address" />
             </Form.Group>
@@ -85,12 +90,12 @@ const Checkout = () => {
               </button>
             </div>
 
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3 fgroup">
               <Form.Label>Name on card</Form.Label>
               <Form.Control type="text" placeholder="Enter name" />
             </Form.Group>
 
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3 fgroup  ">
               <Form.Label>Card number</Form.Label>
               <div className="card-input">
                 <Form.Control type="text" placeholder="Enter card number" />
@@ -109,11 +114,11 @@ const Checkout = () => {
             </Form.Group>
 
             <div className="exp-cvv">
-              <Form.Group>
+              <Form.Group className='fgroup'>
                 <Form.Label>Expiration</Form.Label>
                 <Form.Control type="text" placeholder="MM/YY" />
               </Form.Group>
-              <Form.Group>
+              <Form.Group className='fgroup'>
                 <Form.Label>CVV</Form.Label>
                 <Form.Control type="text" placeholder="CVV" />
               </Form.Group>

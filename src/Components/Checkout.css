@@ -1,12 +1,27 @@
 .checkout-container {
-  margin-top: 320px; /* increased from 150px */
+  /* margin-top: 320px;  */
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'Georgia', serif;
+  font-family: 'Poppins', sans-serif;
+  height: 100%;
+  width: 100%;
+}
+
+.checkout-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
 }
 
 .checkout-title {
+  margin-top: 6.5%;
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 25px;
@@ -34,9 +49,11 @@
 .shipping-section {
   width: 950px; /* Figma proportion */
   background-color: #e6e6e6;
-  padding: 50px 60px;
+  padding: 50px ;
   border-radius: 6px;
-  min-height: 750px;
+  height: 95%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Delivery / Pick Up buttons */
@@ -71,9 +88,8 @@
 /* Payment Information */
 .payment-title {
   font-size: 16px;
-  margin-top: 25px;
   margin-bottom: 10px;
-  font-weight: bold;
+  align-self: flex-start;
 }
 
 .payment-icons {
@@ -112,8 +128,7 @@
 
 
 .payment-btn:hover img {
-  transform: scale(1.2);
-  filter: drop-shadow(0 0 10px #00aaff);
+  filter: drop-shadow(0 0 5px #767945);
 }
 
 
@@ -124,13 +139,14 @@
 
 
 .payment-btn.selected-payment img {
-  border: 2px solid #00aaff;
+  border: 2px solid #767945;
 }
 /* Card input with PayPal icon inside */
 .card-input {
   display: flex;
   align-items: center;
   position: relative;
+  width: 100%;
 }
 
 .card-input img {
@@ -146,13 +162,19 @@
   gap: 25px;
 }
 
-.exp-cvv .form-group {
+.fgroup {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .terms {
   margin-top: 15px;
   font-size: 12px;
+  display: flex;
+  justify-content: flex-start;
 }
 
 /* RIGHT SIDE */
