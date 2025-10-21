@@ -1,0 +1,170 @@
+.product-page {
+  background-color: transparent;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  width: 100vw;
+  padding: 0;
+}
+
+.products-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 4rem;
+  font-weight: 700;
+  color: #333;
+  margin-top: 10%;
+  margin-bottom: 4rem
+}
+
+.search-bar {
+  width: 50%; 
+  max-width: 700px;
+  margin: 0 auto 30px;
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 15px;
+  padding: 8px 10px;
+  background: rgba(82,87,45, 0.30)  ;
+  border-radius: 100px;
+}
+
+
+.search-bar input {
+  width: 90%;
+  padding: 5px 0;
+  border: none;
+  font-size: 16px;
+  background-color: transparent;
+  text-align: center;
+}
+
+.search-bar input:focus {
+  outline: none;
+}
+
+.search-icon-inside {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+}
+
+
+.search-icon {
+  color: #888;
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.product-grid {
+  /* Gawing 4 na column para maging kamukha ng target output */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 20px;
+  padding: 2rem 6.5rem;/* I-align sa filter bar */
+  margin: 0 auto;
+  padding-top: 20px;
+  background-color: transparent;
+  width: 100%;
+}
+
+
+/* Filter bar */
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
+  max-width: 600px;
+  margin: 0 auto 30px;
+}
+
+.filter-btn,
+.sort-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  padding: 8px 18px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.filter-btn:hover,
+.sort-btn:hover {
+  background-color: #f57c00;
+  color: #fff;
+  border-color: #f57c00;
+}
+
+/* 🔽 New dropdown filter & sort styles */
+.filter-sort-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.filter-select,
+.sort-select {
+  padding: 10px 15px;
+  border-radius: 25px;
+  border: 1px solid #ddd;
+  background: #fff;
+  
+  color: #333;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.filter-select:hover,
+.sort-select:hover {
+  border-color: #f57c00;
+  color: #f57c00;
+}
+
+.filter-group,.filter-dropdown {
+  display: flex;
+  align-items: center ;
+  gap: 1rem;
+}
+
+.filter-dropdown p {
+  margin-right: 10px;
+  font-weight: 600;
+  align-self: center;
+  margin-bottom: 0;
+}
+.filter-dropdown select {
+  padding: 8px 12px;
+  border-radius: 25px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  font-size: 1.5rem;
+  color: #777;
+  margin-top: 50px;
+}

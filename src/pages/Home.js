@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './Home.module.css';
 import homebg from '../assets/images/pexels-pixabay-260046.jpg';
@@ -14,7 +14,7 @@ function Home() {
       <div className={styles.content}>
         <p className={styles.maintitle}>Everything You Need All in One Place</p>
         <p className={styles.subtitle}>“Shop smarter and make life simpler.”</p>
-        <Button className={styles.shopnowbtn}>Shop Now</Button>
+        <Link className={styles.shopnowbtn} to={'/products'}>Shop Now</Link>
       </div>
     </div>
   );
