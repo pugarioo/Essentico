@@ -42,15 +42,59 @@ function App() {
     }
 
     function addQuantity (cartItem) {
-      
+		updateCart(prevCart => 
+			prevCart.map(item =>
+                item.details.product_id === cartItem.details.product_id
+                    ? { ...item, quantity: item.quantity + 1 } 
+                    : item 
+            ))
     }
+
+	function subtractQuantity (cartItem) {
+
+		if (cartItem.quantity === 1) {
+			removeFromCart(cartItem)
+			return
+		}
+
+		updateCart(prevCart => 
+			prevCart.map(item =>
+                item.details.product_id === cartItem.details.product_id
+                    ? { ...item, quantity: item.quantity - 1 } 
+                    : item 
+            ))
+    }
+
+	function buyProduct(product) {
+		
+	}
+
+	function toggleItemChecked(cartItem) {
+    updateCart(prevCart => 
+        prevCart.map(item => 
+            item.details.product_id === cartItem.details.product_id
+                ? { ...item, isChecked: !item.isChecked } // Toggles the boolean
+                : item
+        )
+    );
+}
+
+	const cartContextValue = {
+	cart,
+	addToCart,
+	removeFromCart,
+	addQuantity,
+	subtractQuantity,
+	toggleItemChecked 
+	};
+    
 
     return (
         <Router>
             <div className="App">
                 <Navbar />
                 <ProductContext.Provider value={  data}>
-                    <CartContext.Provider value={{cart}}>
+                    <CartContext.Provider value={cartContextValue}>
                     <main className="main-content">
                         <Routes>
                             <Route path="/" element={<Home/>} />

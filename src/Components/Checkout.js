@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import "./Checkout.css";
 import checkoutbg from "../assets/images/products-bg.jpg"
+import CartContext from "../contexts/CartContext";
 
 const Checkout = () => {
+  const { cart } = useContext(CartContext)
   const [selectedOption, setSelectedOption] = useState("Delivery");
   const [selectedPayment, setSelectedPayment] = useState("paypal"); // state for selected payment
 
@@ -16,6 +18,13 @@ const Checkout = () => {
   const handleBack = () => {
     window.history.back();
   };
+
+  const subtotal = cart.reduce((total, item) => {
+        if (item.isChecked) {
+            return total + (item.details.price * item.quantity);
+        }
+        return total;
+    }, 0);
 
   return (
     <div className="checkout-container">
@@ -136,23 +145,21 @@ const Checkout = () => {
           <div className="order-summary">
             <h3>Order Summary</h3>
 
-            <div className="summary-item">
-              <span>x1 Bean Bag Soft and comfortable Lounger chair</span>
-              <span>₱ 360</span>
-            </div>
-            <div className="summary-item">
-              <span>x1 Bath Towel</span>
-              <span>₱ 200</span>
-            </div>
-
-            <div className="summary-item">
-              <span>Delivery</span>
-              <span>₱ 36</span>
+            <div className="summary-items">
+                  {
+                    cart.map(item => (
+                        <div className="summary-item">
+                              <span>x{item.quantity} {item.details.name}</span>
+                              <span>{item.details.currency}{item.details.price}</span>
+                        </div>  
+                    ))
+                  }
             </div>
 
+            <hr/>
             <div className="summary-item total">
               <span>Order Total</span>
-              <span>₱ 560</span>
+              <span>₱ {subtotal}</span>
             </div>
 
             <div className="promo">

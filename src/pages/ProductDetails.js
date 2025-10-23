@@ -2,12 +2,15 @@ import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import ProductContext from "../contexts/ProductContext";
+import CartContext from "../contexts/CartContext";
 import "./ProductDetails.css";
 import productbg from '../assets/images/products-bg.jpg'
 
 export default function ProductDetails() {
   const products = useContext(ProductContext)
   const { id } = useParams();
+  const { addToCart, buyProduct } = useContext(CartContext)
+
   const product = products.find(
     (item) => String(item.product_id) === String(id)
   );
@@ -31,7 +34,7 @@ export default function ProductDetails() {
   return (
     <div className="product-details-container">
       <div className='product-details-bg'
-      style={{ backgroundImage: `url(${productbg})` }}></div>
+       style={{ backgroundImage: `url(${productbg})` }}></div>
       <div className="product-details-wrapper">
         {/* Left Side */}
         <div className="image-section">
@@ -61,8 +64,8 @@ export default function ProductDetails() {
           </div>
 
           <div className="buttons-section">
-            <button className="add-to-cart-btn">Add to Cart</button>
-            <button className="buy-now-btn">Buy Now</button>
+            <button className="add-to-cart-btn" onClick={ () => addToCart(product) }>Add to Cart</button>
+            <button className="buy-now-btn" onClick={ () => buyProduct(product) } >Buy Now</button>
           </div>
         </div>
       </div>

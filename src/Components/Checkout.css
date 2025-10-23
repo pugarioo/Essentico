@@ -39,15 +39,15 @@
 /* --- LEFT + RIGHT WRAPPER --- */
 .checkout-sections {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  /* justify-content: center;
+  align-items: flex-start; */
   gap: 10px;
   width: 100%;
 }
 
 /* LEFT SIDE */
 .shipping-section {
-  width: 950px; /* Figma proportion */
+  width: 50%; /* Figma proportion */
   background-color: #e6e6e6;
   padding: 50px ;
   border-radius: 6px;
@@ -179,12 +179,12 @@
 
 /* RIGHT SIDE */
 .order-summary {
-  width: 90%; /* Figma proportion */
+  width: 50%; 
+  height: 95%;
   background-color: #e6e6e6;
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  min-height: 350px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -206,9 +206,15 @@
   white-space: nowrap; /* para di bumaba yung ₱ 360 */
 }
 
+hr {
+  border: none;
+  color: #888;
+  background-color: #888;
+  margin-top: auto;
+  height: 2px;
+}
 .summary-item.total {
   font-weight: bold;
-  border-top: 1px solid #888;
   padding-top: 8px;
 }
 

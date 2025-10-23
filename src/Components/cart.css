@@ -153,7 +153,7 @@
   flex-direction: column;
   justify-content: flex-start;
   max-width: 40%;
-  height: 80%;
+  max-height: 80%;
   background-color: white !important;
   border-radius: 10px;
   padding: 1rem;
@@ -234,6 +234,13 @@ hr {
 
 .checkout-btn:hover {
   background-color: #333;
+}
+
+.checkout-btn.disabled {
+  background-color: #6c757d;  /* A standard bootstrap disabled gray */
+  opacity: 0.65;
+  cursor: not-allowed;
+  pointer-events: none;   
 }
 
 .summary-breakdown {
