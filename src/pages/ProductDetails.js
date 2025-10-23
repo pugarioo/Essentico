@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { FaStar, FaRegStar, FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import productsData from "../data/sampledata.json";
+import { FaStar, FaRegStar } from "react-icons/fa";
+import ProductContext from "../contexts/ProductContext";
 import "./ProductDetails.css";
+import productbg from '../assets/images/products-bg.jpg'
 
 export default function ProductDetails() {
+  const products = useContext(ProductContext)
   const { id } = useParams();
-  const product = productsData.find(
+  const product = products.find(
     (item) => String(item.product_id) === String(id)
   );
 
@@ -28,6 +30,8 @@ export default function ProductDetails() {
 
   return (
     <div className="product-details-container">
+      <div className='product-details-bg'
+      style={{ backgroundImage: `url(${productbg})` }}></div>
       <div className="product-details-wrapper">
         {/* Left Side */}
         <div className="image-section">
@@ -36,22 +40,7 @@ export default function ProductDetails() {
             alt={product.name}
             className="main-product-image"
           />
-          <div className="arrow-controls">
-            <FaArrowLeft />
-            <FaArrowRight />
-          </div>
-
-          <div className="thumbnail-row">
-            {product.thumbnails &&
-              product.thumbnails.map((thumb, index) => (
-                <img
-                  key={index}
-                  src={require(`../assets/images/${thumb}`)}
-                  alt={`Thumbnail ${index + 1}`}
-                  className="thumbnail-image"
-                />
-              ))}
-          </div>
+          
         </div>
 
         {/* Right Side */}
@@ -67,22 +56,8 @@ export default function ProductDetails() {
           <h2 className="price">₱ {product.price}</h2>
 
           <div className="description-section">
-            <h3>Description</h3>
+            <h4>Description</h4>
             <p>{product.description}</p>
-          </div>
-
-          <div className="color-section">
-            <h3>Available Colors</h3>
-            <div className="color-list">
-              {product.colors &&
-                product.colors.map((color, index) => (
-                  <span
-                    key={index}
-                    className="color-dot"
-                    style={{ backgroundColor: color }}
-                  ></span>
-                ))}
-            </div>
           </div>
 
           <div className="buttons-section">

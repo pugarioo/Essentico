@@ -10,7 +10,7 @@ function NavBar(){
         
         <Navbar className={styles.navbar}>
                 <Container>
-                  <Navbar.Brand className={styles.title} href="#home">Essentico</Navbar.Brand>
+                  <Navbar.Brand className={styles.title} href="/">Essentico</Navbar.Brand>
         
                   <div className={styles.hamburger} onClick={() => setMenuOpen(!menuOpen)}>
                     <i className={`fa-solid ${menuOpen ? 'fa-times' : 'fa-bars'}`}></i>
