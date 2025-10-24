@@ -5,7 +5,7 @@ import checkoutbg from "../assets/images/products-bg.jpg"
 import CartContext from "../contexts/CartContext";
 
 const Checkout = () => {
-  const { cart } = useContext(CartContext)
+  const { cart, directBuy } = useContext(CartContext)
   const [selectedOption, setSelectedOption] = useState("Delivery");
   const [selectedPayment, setSelectedPayment] = useState("paypal"); // state for selected payment
 
@@ -19,13 +19,20 @@ const Checkout = () => {
     window.history.back();
   };
 
-  const subtotal = cart.reduce((total, item) => {
-        if (item.isChecked) {
-            return total + (item.details.price * item.quantity);
+  const subtotal = () => {
+        if (directBuy !== null) {
+          return directBuy.details.price * directBuy.quantity
         }
-        return total;
-    }, 0);
-
+        else {
+          cart.reduce((total, item) => {
+            
+            if (item.isChecked) {
+                return total + (item.details.price * item.quantity);
+            }
+            return total;
+          }, 0);
+        }
+  }
   return (
     <div className="checkout-container">
 
@@ -146,13 +153,20 @@ const Checkout = () => {
             <h3>Order Summary</h3>
 
             <div className="summary-items">
-                  {
-                    cart.map(item => (
-                        <div className="summary-item">
-                              <span>x{item.quantity} {item.details.name}</span>
-                              <span>{item.details.currency}{item.details.price}</span>
-                        </div>  
-                    ))
+                  { 
+                     (directBuy !== null) ? (
+                      <div className="summary-item">
+                                <span>x{directBuy.quantity} {directBuy.details.name}</span>
+                                <span>{directBuy.details.currency}{directBuy.details.price}</span>
+                      </div>  
+                     ) : (
+                      cart.map(item => (
+                          <div className="summary-item">
+                                <span>x{item.quantity} {item.details.name}</span>
+                                <span>{item.details.currency}{item.details.price}</span>
+                          </div>  
+                      ))
+                     )
                   }
             </div>
 
