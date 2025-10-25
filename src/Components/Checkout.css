@@ -206,6 +206,13 @@
   white-space: nowrap; /* para di bumaba yung ₱ 360 */
 }
 
+.summary-item-products {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
 hr {
   border: none;
   color: #888;
@@ -223,6 +230,8 @@ hr {
   display: flex;
   gap: 10px;
   margin-top: 20px;
+  width: 100%;
+  overflow: hidden;
 }
 
 .promo input {
@@ -230,9 +239,11 @@ hr {
   padding: 9px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  min-width: 0;
 }
 
 .promo button {
+  flex-shrink: 0;
   padding: 9px 18px;
   background-color: #767945;
   color: white;

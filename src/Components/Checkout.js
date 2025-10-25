@@ -163,13 +163,13 @@ const Checkout = () => {
             <div className="summary-items">
                   { 
                      (directBuy !== null) ? (
-                      <div className="summary-item">
+                      <div className="summary-item-products">
                                 <span>x{directBuy.quantity} {directBuy.details.name}</span>
                                 <span>{directBuy.details.currency}{directBuy.details.price}</span>
                       </div>  
                      ) : (
                       cart.map(item => (
-                          <div className="summary-item">
+                          <div className="summary-item-products">
                                 <span>x{item.quantity} {item.details.name}</span>
                                 <span>{item.details.currency}{item.details.price}</span>
                           </div>  
