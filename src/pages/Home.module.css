@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&display=swap');
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.bg_img {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    opacity: 0.5;
+    z-index: 0;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    color: white;
+    z-index: 1;
+    align-self: flex-end;
+    width: 50%;
+    height: 100%;
+    padding-right: 8rem;
+}
+
+.maintitle {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-style: italic;
+    color: white;
+    word-wrap: break-word;
+    font-size: 5rem;
+    text-align: end;
+}
+
+
+.subtitle {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-style: italic;
+    color:white;
+    word-wrap: break-word;
+    font-size: 2rem;
+    text-align: end;
+    margin-top: -2rem;
+}
+
+.shopnowbtn {
+    background-color: white;
+    color: black;
+    font-weight: 600;
+    border: none;
+    border-radius: 0;
+    padding: 20px 50px;
+    font-size: 1rem;
+    margin-top: 2rem;
+    align-self: flex-end;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.shopnowbtn:hover {
+    background-color: #767945;
+    color: white;
+    transition: 0.3s;
+}
+
+
+.navlinks :global(.nav-link) {
+    position: relative;
+    padding-bottom: 5px;
+    margin-right: 10px;
+}
+
+.navlinks :global(.nav-link)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #767945; 
+    transition: width 0.3s ease;
+}
+
+.navlinks :global(.nav-link):hover::after {
+    width: 100%;
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.navlinksContainer {
+    display: flex;
+    margin-right: 2rem;
+}
+
+.cartProfileContainer {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .search, .cartProfileIcons {
+        display: none;
+    }
+
+    .navlinks {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .navlinksContainer {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: rgba(217, 217, 217, 0.9);
+        width: 100%;
+        text-align: center;
+    }
+
+    .showMenu {
+        display: flex;
+    }
+
+    .navlinks {
+        flex-direction: column;
+    }
+
+    .cartProfileContainer {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .cartText, .profileText {
+        color: white;
+        padding: 10px;
+    }
+
+    .content {
+        align-items: center;
+        width: 100%;
+        padding: 0 2rem;
+        text-align: center;
+    }
+
+    .maintitle, .subtitle {
+        text-align: center;
+    }
+
+    .shopnowbtn {
+        align-self: center;
+    }
+}
+
+@media (max-width: 992px) {
+    .maintitle {
+        font-size: 4rem;
+    }
+
+    .subtitle {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .maintitle {
+        font-size: 3rem;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+    }
+}
+    

@@ -1,0 +1,135 @@
+/* src/components/Popup.css */
+
+/* 1. The full-screen dark background overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensures it's on top of everything */
+}
+
+/* 2. The white content box */
+.popup-content {
+  background-color: white;
+  padding: 24px 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px; /* Max width for the modal */
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  z-index: 1001; /* Sits on top of the overlay */
+
+  /* Animation for sliding in */
+  animation: slide-down 0.3s ease-out;
+}
+
+/* 3. Product Info */
+.popup-content h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.popup-content p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* 4. Quantity Controls */
+.popup-content .quantity-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  border: none;
+}
+
+.popup-content .quantity-controls button {
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 50%; /* Makes them round */
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Prevents text selection on rapid clicks */
+  user-select: none;
+}
+
+.popup-content .quantity-controls button:hover {
+  background-color: #e0e0e0;
+}
+
+.popup-content .quantity-controls span {
+  font-size: 1.5rem;
+  font-weight: 600;
+  min-width: 40px;
+  text-align: center;
+  user-select: none;
+}
+
+/* 5. Bottom Buttons (Confirm/Cancel) */
+.popup-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.popup-buttons button {
+  flex: 1; /* Makes both buttons equal width */
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.popup-buttons .cancel-btn {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+}
+
+.popup-buttons .cancel-btn:hover {
+  background-color: #f9f9f9;
+}
+
+.popup-buttons .confirm-btn {
+  background-color: #767945;
+  color: white;
+  border: 1px solid #767945;
+}
+
+.popup-buttons .confirm-btn:hover {
+  background-color: #444;
+}
+
+/* Animation for the modal sliding in */
+@keyframes slide-down {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

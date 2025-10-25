@@ -1,12 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@500&display=swap');
+
 .App {
   text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+  height: 100vh;
+  width: 100vw;
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
 }
 
 .navbar {
-  background-color: #282c34;
+  background-color: #cecfc3;
   padding: 1rem;
   margin-bottom: 2rem;
   border-radius: 8px;
@@ -25,7 +32,14 @@
 }
 
 .main-content {
-  min-height: 400px;
+  height: 100vh;
+  width: 100vw;
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
 }
 
 h1 {
@@ -49,3 +63,5 @@ li {
   margin-bottom: 0.5rem;
   color: #666;
 }
+
+
