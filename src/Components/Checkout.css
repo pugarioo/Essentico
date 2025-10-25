@@ -1,0 +1,330 @@
+.checkout-container {
+  /* margin-top: 320px;  */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  height: 100%;
+  width: 100%;
+}
+
+.checkout-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+.checkout-title {
+  margin-top: 6.5%;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  text-align: left;
+  width: 85%;
+}
+
+.checkout-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 85%;
+}
+
+/* --- LEFT + RIGHT WRAPPER --- */
+.checkout-sections {
+  display: flex;
+  /* justify-content: center;
+  align-items: flex-start; */
+  gap: 10px;
+  width: 100%;
+}
+
+/* LEFT SIDE */
+.shipping-section {
+  width: 50%; /* Figma proportion */
+  background-color: #e6e6e6;
+  padding: 50px ;
+  border-radius: 6px;
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Delivery / Pick Up buttons */
+.delivery-options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.option {
+  flex: 1;
+  border: 1px solid #d3d3d3;
+  border-radius: 6px;
+  padding: 14px;
+  text-align: left;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #fff;
+  font-size: 15px;
+  width: 90%;
+}
+
+.option.selected {
+  background-color: #d2d1c2;
+  border: none;
+}
+
+/* Payment Information */
+.payment-title {
+  font-size: 16px;
+  margin-bottom: 10px;
+  align-self: flex-start;
+}
+
+.payment-icons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.payment-icons img {
+  width: 55px;
+  height: 36px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  object-fit: contain;
+}
+
+/* --- PAYMENT BUTTON EFFECTS --- */
+.payment-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.payment-btn img {
+  width: 55px;
+  height: 36px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  object-fit: contain;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+
+.payment-btn:hover img {
+  filter: drop-shadow(0 0 5px #767945);
+}
+
+
+.payment-btn:active img {
+  transform: scale(1.1);
+  filter: brightness(0.9);
+}
+
+
+.payment-btn.selected-payment img {
+  border: 2px solid #767945;
+}
+/* Card input with PayPal icon inside */
+.card-input {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.card-input img {
+  position: absolute;
+  right: 10px;
+  width: 26px;
+  height: 26px;
+}
+
+/* Expiration + CVV side by side */
+.exp-cvv {
+  display: flex;
+  gap: 25px;
+}
+
+.fgroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.terms {
+  margin-top: 15px;
+  font-size: 12px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* RIGHT SIDE */
+.order-summary {
+  width: 50%; 
+  height: 95%;
+  background-color: #e6e6e6;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 0px;
+}
+
+.order-summary h3 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: nowrap; /* para di mag line break */
+  white-space: nowrap; /* para di bumaba yung ₱ 360 */
+}
+
+hr {
+  border: none;
+  color: #888;
+  background-color: #888;
+  margin-top: auto;
+  height: 2px;
+}
+.summary-item.total {
+  font-weight: bold;
+  padding-top: 8px;
+}
+
+/* Promo area */
+.promo {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.promo input {
+  flex: 1;
+  padding: 9px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.promo button {
+  padding: 9px 18px;
+  background-color: #767945;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+/* Pay Now button */
+.pay-now {
+  width: 100%;
+  padding: 14px;
+  background-color: #767945;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 25px;
+  font-weight: 600;
+}
+
+/* Back button */
+.back-btn {
+  width: 268px;
+  height: 69px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: -270px;    
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-btn .arrow {
+  justify-self: flex-start;
+}
+
+
+@media (max-width: 768px) {
+  /* 1. Fix container spacing & clear the fixed navbar */
+  .checkout-container {
+    padding: 60px 20px 20px 20px;
+    margin-top: 80px;         
+  }
+
+  .checkout-title {
+    width: 100%;
+    text-align: center; 
+    font-size: 24px;    
+    margin-top: 0;        
+    margin-bottom: 20px;
+  }
+
+  .checkout-content {
+    width: 100%;
+  }
+
+  /* 2. Stack the main left/right columns */
+  .checkout-sections {
+    flex-direction: column;
+    gap: 20px; 
+  }
+
+  /* 3. Make both sections full-width */
+  .shipping-section,
+  .order-summary {
+    width: 100%;
+    padding: 25px; 
+  }
+
+  /* 4. Make delivery buttons full-width */
+  .option {
+    width: 100%;
+  }
+
+  /* 5. Stack the 'Expiration' and 'CVV' fields */
+  .exp-cvv {
+    flex-direction: column;
+    gap: 0; 
+  }
+
+  /* 6. Fix the 'Back' button */
+  .back-btn {
+    width: 100%;
+    margin-top: 20px;   
+    align-self: center; 
+    height: 50px;       
+    margin-bottom: 20px; /* Adds space at the bottom */
+  }
+}

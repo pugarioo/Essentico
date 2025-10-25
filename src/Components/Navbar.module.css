@@ -1,0 +1,206 @@
+.navbar {
+    background-color: rgba(82,87,45, 0.30);
+    /* background-color: rgba(206, 207, 195, 0.6); */
+    top: 0;
+    left: 0;
+    width: 100%;
+    position: fixed;
+    border-radius: 0;
+    color: white;
+    z-index: 999;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.navbar :global(.nav-link),
+.navbar :global(.navbar-brand) {
+   color: #fff !important;
+}
+
+.title {
+    font-family: "Sansita Swashed", system-ui;
+    font-weight: 500;
+    font-size: 2rem;
+}
+
+.searchbar {
+    border-radius: 50px 0 0 50px;
+    height: 40px;
+    border: none;
+}
+
+.searchbtn {
+    border-radius: 0 50px 50px 0;
+    color: black;
+    border: none;
+    background-color: white;
+    height: 40px;
+}
+
+.searchbtn:hover {
+    background-color: #767945;
+    color: white;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.cartbtn {
+    background-color: #fe9900;
+    padding: 10px;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.profilebtn {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+}
+
+.profilebtn:hover, .cartbtn:hover {
+    background-color: #767945;
+    color: white;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.profileico {
+    color: black;
+}
+
+.navlinks {
+    font-size: 1.2rem;
+}
+
+.navlinks :global(.nav-link) {
+    position: relative;
+    padding-bottom: 5px;
+    margin-right: 10px;
+}
+
+.navlinks :global(.nav-link)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #767945; 
+    transition: width 0.3s ease;
+}
+
+.navlinks :global(.nav-link):hover::after {
+    width: 100%;
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: white;
+    background: transparent;
+    border: none;
+}
+
+.navlinksContainer {
+    display: flex;
+    margin-right: 2rem;
+}
+
+.cartProfileContainer {
+    display: none;
+}
+
+
+.closeButton {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    .closeButton {
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 2rem;
+        color: black;
+        background: transparent;
+        border: none;
+    }
+
+    /* This is the main container for the slide-out menu */
+    .navlinksContainer {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: white;
+        width: 100%;
+        height: 100vh;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        
+        /* FIX 1: STOPS OVERFLOW
+         * This overrides the 'ms-auto' (margin-left: auto) from Bootstrap
+         * that is attached to this element in your React code.
+        */
+        margin: 0 !important; 
+        
+        /* Hides menu off-screen and sets up animation */
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* This slides the menu on-screen */
+    .navlinksContainer.showMenu {
+        transform: translateX(0);
+    }
+
+    /* This rule targets the .navlinks (Home, etc.) wrapper */
+    .navlinksContainer.showMenu .navlinks {
+        display: flex; /* <-- Be explicit */
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* FIX 2: SHOWS MISSING LINKS
+     * The desktop styles have '.cartProfileContainer { display: none; }'
+     * We MUST override that here to make "Cart" and "Profile" appear.
+    */
+    .navlinksContainer.showMenu .cartProfileContainer {
+        display: flex; /* <-- This makes it visible */
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* This rule styles ALL the links in the mobile menu */
+    .navlinksContainer.showMenu :global(.nav-link) {
+        color: black !important;
+        font-size: 1.2rem;
+        margin: 10px 0; /* Adds vertical spacing */
+    }
+
+    /* This desktop-only class should be hidden on mobile */
+    .cartProfileIcons {
+        display: none;
+    }
+}

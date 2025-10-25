@@ -13,7 +13,7 @@
 }
 
 .navbar {
-  background-color: #282c34;
+  background-color: #cecfc3;
   padding: 1rem;
   margin-bottom: 2rem;
   border-radius: 8px;
@@ -63,3 +63,5 @@ li {
   margin-bottom: 0.5rem;
   color: #666;
 }
+
+
