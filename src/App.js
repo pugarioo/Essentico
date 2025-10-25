@@ -78,6 +78,7 @@ function App() {
     }
 
 	function buyProduct(item) {
+        
 		setDirectBuy(item);
 	}
 

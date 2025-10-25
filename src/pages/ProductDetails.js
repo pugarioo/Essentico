@@ -44,7 +44,7 @@ export default function ProductDetails() {
     const handleBuyNowClick = () => {
         // 4. Same pattern for "Buy Now"
         showPopup(product, (quantity) => {
-            buyProduct(product, quantity);
+            buyProduct({ details: product, quantity: quantity });
             navigate('/checkout');
         });
     };

@@ -15,8 +15,8 @@ const Checkout = () => {
   const handlePayNow = () => {
     alert("Payment Successful! Thank you for your purchase.");
     navigate("/products")
-    setDirectBuy(null)
-    clearBought()
+    directBuy === null ? clearBought() : setDirectBuy(null) 
+    
   };
 
   // handle Back button
