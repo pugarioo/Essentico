@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { FaSearch, FaFilter, FaSort } from "react-icons/fa";
+import React, { useContext, useState, useEffect } from "react";
+import { FaSearch, FaFilter, FaSort, FaBars, FaTimes } from "react-icons/fa";
 import ProductCard from "../components/ProductCard";
 import "./ProductList.css";
 import productbg from '../assets/images/products-bg.jpg';
@@ -15,6 +15,16 @@ export default function ProductList() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [priceRange, setPriceRange] = useState("");
   const [ratingFilter, setRatingFilter] = useState(0);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // 🔹 Filter + Sort logic
   const filteredProducts = products
@@ -57,80 +67,88 @@ export default function ProductList() {
 	  </div>
 
 	  {/* Filter / Sort Bar */}
-	  <div className="filter-bar">
-		<div className="filter-group">
-		  <button
-			className="filter-btn"
-			onClick={() => setShowFilter(!showFilter)}
-		  >
-			<FaFilter /> FILTER
-		  </button>
+      <div className="filter-sort-wrapper">
+        {isMobile && (
+          <button className="mobile-menu-toggle" onClick={() => setShowMobileMenu(!showMobileMenu)}>
+            {showMobileMenu ? <FaTimes /> : <FaBars />}
+          </button>
+        )}
 
-		  {/* Dropdown Filter Menu */}
-		  {showFilter && (
-			<div className="filter-dropdown">
-			  <p>Category</p>
-			  <select
-				value={selectedCategory}
-				onChange={(e) => setSelectedCategory(e.target.value)}
-			  >
-				<option value="">All</option>
-				{categories.map((cat, index) => (
-				  <option key={index} value={cat}>
-					{cat}
-				  </option>
-				))}
-			  </select>
+        {(showMobileMenu || !isMobile) && (
+          <div className={`filter-bar ${isMobile ? 'mobile-menu' : ''}`}>
+            <div className="filter-group">
+              <button
+                className="filter-btn"
+                onClick={() => setShowFilter(!showFilter)}
+              >
+                <FaFilter /> FILTER
+              </button>
 
-			  <p>Price Range</p>
-			  <select
-				value={priceRange}
-				onChange={(e) => setPriceRange(e.target.value)}
-			  >
-				<option value="">All</option>
-				<option value="low">Below ₱100</option>
-				<option value="mid">₱100 - ₱300</option>
-				<option value="high">Above ₱300</option>
-			  </select>
+              {/* Dropdown Filter Menu */}
+              {showFilter && (
+                <div className="filter-dropdown">
+                  <p>Category</p>
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    {categories.map((cat, index) => (
+                      <option key={index} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
 
-			  <p>Minimum Rating</p>
-			  <select
-				value={ratingFilter}
-				onChange={(e) => setRatingFilter(Number(e.target.value))}
-			  >
-				<option value={0}>All</option>
-				<option value={4}>4 stars & up</option>
-				<option value={3}>3 stars & up</option>
-				<option value={2}>2 stars & up</option>
-			  </select>
+                  <p>Price Range</p>
+                  <select
+                    value={priceRange}
+                    onChange={(e) => setPriceRange(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    <option value="low">Below ₱100</option>
+                    <option value="mid">₱100 - ₱300</option>
+                    <option value="high">Above ₱300</option>
+                  </select>
 
-			  
-			</div>
-		  )}
-		</div>
+                  <p>Minimum Rating</p>
+                  <select
+                    value={ratingFilter}
+                    onChange={(e) => setRatingFilter(Number(e.target.value))}
+                  >
+                    <option value={0}>All</option>
+                    <option value={4}>4 stars & up</option>
+                    <option value={3}>3 stars & up</option>
+                    <option value={2}>2 stars & up</option>
+                  </select>
+                </div>
+              )}
+            </div>
 
-		{/* 🔹 Sort Button */}
-		<div className="sort-group">
-		  <button
-			className="sort-btn"
-			onClick={() =>
-			  setSortOrder((prev) =>
-				prev === ""
-				  ? "priceAsc"
-				  : prev === "priceAsc"
-				  ? "priceDesc"
-				  : prev === "priceDesc"
-				  ? "nameAsc"
-				  : prev === "nameAsc"
-				  ? "nameDesc"
-				  : ""
-			  )
-			}
-		  >
-			<FaSort /> SORT ({sortOrder || "none"})
-		  </button>
-		</div>
-	  </div>
+            {/* 🔹 Sort Button */}
+            <div className="sort-group">
+              <button
+                className="sort-btn"
+                onClick={() =>
+                  setSortOrder((prev) =>
+                    prev === ""
+                      ? "priceAsc"
+                      : prev === "priceAsc"
+                      ? "priceDesc"
+                      : prev === "priceDesc"
+                      ? "nameAsc"
+                      : prev === "nameAsc"
+                      ? "nameDesc"
+                      : ""
+                  )
+                }
+              >
+                <FaSort /> SORT ({sortOrder || "none"})
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
 
 	  {/* Product Grid */}
 	  <div className="product-grid">

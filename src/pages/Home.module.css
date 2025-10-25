@@ -175,3 +175,24 @@
         align-self: center;
     }
 }
+
+@media (max-width: 992px) {
+    .maintitle {
+        font-size: 4rem;
+    }
+
+    .subtitle {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .maintitle {
+        font-size: 3rem;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+    }
+}
+    

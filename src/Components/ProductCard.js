@@ -3,13 +3,21 @@ import { FaBookmark, FaPlus } from 'react-icons/fa';
 import { Link } from 'react-router-dom'; 
 import './ProductCard.css';
 import CartContext from '../contexts/CartContext';
+import PopupContext from '../contexts/PopupContext';
 
 function ProductCard({ product }) {
-  const { addToCart } = useContext(CartContext)
+  const { addToCart } = useContext(CartContext);
+  const { showPopup } = useContext(PopupContext);
 
   if (!product) return null;
 
   const imagePath = require(`../assets/images/${product.image_filename}`);
+
+  const handleAddToCartClick = () => {
+    showPopup(product, (quantity) => {
+      addToCart(product, quantity);
+    });
+  };
 
   return (
     
@@ -26,7 +34,7 @@ function ProductCard({ product }) {
           <h3 className="product-name">{product.name}</h3>
           <p className="product-price">₱ {product.price.toFixed(2)}</p>
         </Link>
-        <div className="add-btn" onClick={() => addToCart(product)}>
+        <div className="add-btn" onClick={handleAddToCartClick}>
           <FaPlus />
         </div>
       </div>

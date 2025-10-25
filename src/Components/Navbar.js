@@ -12,22 +12,25 @@ function NavBar(){
                 <Container>
                   <Navbar.Brand className={styles.title} href="/">Essentico</Navbar.Brand>
         
-                  <div className={styles.hamburger} onClick={() => setMenuOpen(!menuOpen)}>
+                  <button className={styles.hamburger} onClick={() => setMenuOpen(!menuOpen)}>
                     <i className={`fa-solid ${menuOpen ? 'fa-times' : 'fa-bars'}`}></i>
-                  </div>
+                  </button>
         
                   <div className={`${styles.navlinksContainer} ${menuOpen ? styles.showMenu : ''} ms-auto`}>
+                    <button className={styles.closeButton} onClick={() => setMenuOpen(false)}>
+                        <i className="fa-solid fa-times"></i>
+                    </button>
                     <Nav className={styles.navlinks}>
-                      <Nav.Link as={Link} to="/">Home</Nav.Link>
-                      <Nav.Link as={Link} to="/products">Products</Nav.Link>
-                      <Nav.Link as={Link} to="">About</Nav.Link>
+                      <Nav.Link as={Link} to="/" onClick={() => setMenuOpen(false)}>Home</Nav.Link>
+                      <Nav.Link as={Link} to="/products" onClick={() => setMenuOpen(false)}>Products</Nav.Link>
+                      <Nav.Link as={Link} to="" onClick={() => setMenuOpen(false)}>About</Nav.Link>
                     </Nav>
         
                     <Nav className={styles.cartProfileContainer}>
-                      <Nav.Link as={Link} to="/cart" className={styles.cartText}>
+                      <Nav.Link as={Link} to="/cart" className={styles.cartText} onClick={() => setMenuOpen(false)}>
                         Cart
                       </Nav.Link>
-                      <Nav.Link as={Link} to="" className={styles.profileText}>
+                      <Nav.Link as={Link} to="" className={styles.profileText} onClick={() => setMenuOpen(false)}>
                         Profile
                       </Nav.Link>
                     </Nav>

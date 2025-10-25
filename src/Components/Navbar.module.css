@@ -111,6 +111,8 @@
     cursor: pointer;
     font-size: 1.5rem;
     color: white;
+    background: transparent;
+    border: none;
 }
 
 .navlinksContainer {
@@ -123,29 +125,82 @@
 }
 
 
+.closeButton {
+    display: none;
+}
+
 @media (max-width: 768px) {
-
-    .navlinks {
-        display: flex;
-        flex-direction: column;
-    }
-
     .hamburger {
         display: block;
     }
 
-    .navlinksContainer {
-        display: none;
-        flex-direction: column;
+    .closeButton {
+        display: block;
         position: absolute;
-        top: 60px;
-        right: 0;
-        background-color: rgba(217, 217, 217, 0.9);
-        width: 100%;
-        text-align: center;
+        top: 20px;
+        right: 20px;
+        font-size: 2rem;
+        color: black;
+        background: transparent;
+        border: none;
     }
 
-    .navlinks {
+    /* This is the main container for the slide-out menu */
+    .navlinksContainer {
+        display: flex;
         flex-direction: column;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: white;
+        width: 100%;
+        height: 100vh;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        
+        /* FIX 1: STOPS OVERFLOW
+         * This overrides the 'ms-auto' (margin-left: auto) from Bootstrap
+         * that is attached to this element in your React code.
+        */
+        margin: 0 !important; 
+        
+        /* Hides menu off-screen and sets up animation */
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* This slides the menu on-screen */
+    .navlinksContainer.showMenu {
+        transform: translateX(0);
+    }
+
+    /* This rule targets the .navlinks (Home, etc.) wrapper */
+    .navlinksContainer.showMenu .navlinks {
+        display: flex; /* <-- Be explicit */
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* FIX 2: SHOWS MISSING LINKS
+     * The desktop styles have '.cartProfileContainer { display: none; }'
+     * We MUST override that here to make "Cart" and "Profile" appear.
+    */
+    .navlinksContainer.showMenu .cartProfileContainer {
+        display: flex; /* <-- This makes it visible */
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* This rule styles ALL the links in the mobile menu */
+    .navlinksContainer.showMenu :global(.nav-link) {
+        color: black !important;
+        font-size: 1.2rem;
+        margin: 10px 0; /* Adds vertical spacing */
+    }
+
+    /* This desktop-only class should be hidden on mobile */
+    .cartProfileIcons {
+        display: none;
     }
 }

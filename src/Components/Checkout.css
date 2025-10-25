@@ -270,3 +270,61 @@ hr {
   cursor: pointer;
   transition: all 0.2s ease;
 }
+
+.back-btn .arrow {
+  justify-self: flex-start;
+}
+
+
+@media (max-width: 768px) {
+  /* 1. Fix container spacing & clear the fixed navbar */
+  .checkout-container {
+    padding: 60px 20px 20px 20px;
+    margin-top: 80px;         
+  }
+
+  .checkout-title {
+    width: 100%;
+    text-align: center; 
+    font-size: 24px;    
+    margin-top: 0;        
+    margin-bottom: 20px;
+  }
+
+  .checkout-content {
+    width: 100%;
+  }
+
+  /* 2. Stack the main left/right columns */
+  .checkout-sections {
+    flex-direction: column;
+    gap: 20px; 
+  }
+
+  /* 3. Make both sections full-width */
+  .shipping-section,
+  .order-summary {
+    width: 100%;
+    padding: 25px; 
+  }
+
+  /* 4. Make delivery buttons full-width */
+  .option {
+    width: 100%;
+  }
+
+  /* 5. Stack the 'Expiration' and 'CVV' fields */
+  .exp-cvv {
+    flex-direction: column;
+    gap: 0; 
+  }
+
+  /* 6. Fix the 'Back' button */
+  .back-btn {
+    width: 100%;
+    margin-top: 20px;   
+    align-self: center; 
+    height: 50px;       
+    margin-bottom: 20px; /* Adds space at the bottom */
+  }
+}

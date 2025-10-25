@@ -73,6 +73,10 @@ function App() {
             ))
     }
 
+    function clearBought () {
+        updateCart(prevCart => prevCart.filter(item => !item.isChecked))
+    }
+
 	function buyProduct(item) {
 		setDirectBuy(item);
 	}
@@ -108,7 +112,9 @@ function App() {
         subtractQuantity,
         toggleItemChecked,
         buyProduct,
-        directBuy
+        directBuy,
+        setDirectBuy,
+        clearBought
 	};
 
     const popupContextValue = {

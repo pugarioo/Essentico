@@ -1,17 +1,22 @@
 import React, { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"
 import "./Checkout.css";
 import checkoutbg from "../assets/images/products-bg.jpg"
 import CartContext from "../contexts/CartContext";
 
 const Checkout = () => {
-  const { cart, directBuy } = useContext(CartContext)
+  const { cart, directBuy, setDirectBuy, clearBought } = useContext(CartContext)
   const [selectedOption, setSelectedOption] = useState("Delivery");
   const [selectedPayment, setSelectedPayment] = useState("paypal"); // state for selected payment
+  const navigate = useNavigate()
 
   // handle Pay Now button
   const handlePayNow = () => {
     alert("Payment Successful! Thank you for your purchase.");
+    navigate("/products")
+    setDirectBuy(null)
+    clearBought()
   };
 
   // handle Back button
@@ -24,7 +29,7 @@ const Checkout = () => {
           return directBuy.details.price * directBuy.quantity
         }
         else {
-          cart.reduce((total, item) => {
+          return cart.reduce((total, item) => {
             
             if (item.isChecked) {
                 return total + (item.details.price * item.quantity);
@@ -33,6 +38,9 @@ const Checkout = () => {
           }, 0);
         }
   }
+  const deliveryFee = subtotal() > 0 ? 50 : 0;
+  const total = subtotal() + deliveryFee;
+
   return (
     <div className="checkout-container">
 
@@ -171,9 +179,17 @@ const Checkout = () => {
             </div>
 
             <hr/>
+            <div className="summary-item">
+              <span>Subtotal</span>
+              <span>₱ {subtotal().toFixed(2)}</span>
+            </div>
+            <div className="summary-item">
+              <span>Delivery Fee</span>
+              <span>₱ {deliveryFee.toFixed(2)}</span>
+            </div>
             <div className="summary-item total">
               <span>Order Total</span>
-              <span>₱ {subtotal}</span>
+              <span>₱ {total.toFixed(2)}</span>
             </div>
 
             <div className="promo">
@@ -189,7 +205,7 @@ const Checkout = () => {
 
         {/* BACK BUTTON BELOW */}
         <button className="back-btn" onClick={handleBack}>
-          Back
+          <i class="fa-solid fa-arrow-left arrow"></i> 
         </button>
       </div>
     </div>
