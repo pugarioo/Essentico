@@ -2,13 +2,13 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import './App.css';
-import Navbar from './components/Navbar';
-import Popup from './components/Popup';
+import Navbar from './components/Navbar.js';
+import Popup from './components/Popup.js';
 import Home from './pages/Home';
 import ProductList from './pages/ProductList';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './components/Cart.js'
-import Checkout from './components/Checkout';
+import Checkout from './components/Checkout.js';
 import CartContext  from './contexts/CartContext';
 import ProductContext from './contexts/ProductContext'
 import PopupContext from './contexts/PopupContext';
