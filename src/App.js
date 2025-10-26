@@ -7,7 +7,7 @@ import Popup from './components/Popup.js';
 import Home from './pages/Home';
 import ProductList from './pages/ProductList';
 import ProductDetails from './pages/ProductDetails';
-import Cart from './components/Cart.js'
+import Cart from './components/cart.js'
 import Checkout from './components/Checkout.js';
 import CartContext  from './contexts/CartContext';
 import ProductContext from './contexts/ProductContext'
