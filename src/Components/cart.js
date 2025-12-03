@@ -15,7 +15,7 @@ function CartItem({ item }) {
     const { addQuantity, subtractQuantity, removeFromCart, toggleItemChecked } = useContext(CartContext);
     
     // FIX: Access properties inside 'item.details'
-    const imagePath = require(`../assets/images/${item.details.image_filename}`);
+    const imagePath = `http://localhost:8082/storage/products/${item.details.image_filename}`;
     
     // Calculate subtotal for this item
     const itemSubtotal = item.details.price * item.quantity;
@@ -91,7 +91,7 @@ function Cart () {
                     {cart.length > 0 ? (
                         cart.map((item) => (
                             // FIX: Added the required 'key' prop for React
-                            <CartItem key={item.details.product_id} item={item} />
+                            <CartItem key={item.details.id} item={item} />
                         ))
                     ) : (
                         <p>Your cart is empty.</p>

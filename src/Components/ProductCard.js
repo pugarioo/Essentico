@@ -11,7 +11,7 @@ function ProductCard({ product }) {
 
   if (!product) return null;
 
-  const imagePath = require(`../assets/images/${product.image_filename}`);
+  const imagePath = `http://localhost:8082/storage/products/${product.image_filename}`;
 
   const handleAddToCartClick = () => {
     showPopup(product, (quantity) => {

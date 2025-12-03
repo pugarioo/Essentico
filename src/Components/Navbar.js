@@ -23,7 +23,6 @@ function NavBar(){
                     <Nav className={styles.navlinks}>
                       <Nav.Link as={Link} to="/" onClick={() => setMenuOpen(false)}>Home</Nav.Link>
                       <Nav.Link as={Link} to="/products" onClick={() => setMenuOpen(false)}>Products</Nav.Link>
-                      <Nav.Link as={Link} to="" onClick={() => setMenuOpen(false)}>About</Nav.Link>
                     </Nav>
         
                     <Nav className={styles.cartProfileContainer}>

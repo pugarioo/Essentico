@@ -31,7 +31,6 @@ function App() {
         fetch('http://localhost:8082/api/products')
             .then(response => response.json())
             .then(data => {
-                console.log('Fetched data:', data);
                 setData(data)
                 setIsFetching(false);
             })
@@ -41,12 +40,12 @@ function App() {
     function addToCart(product, quantity=1) {
         updateCart(prevCart => {
             const existingItem = prevCart.find(
-                item => item.details.product_id === product.product_id 
+                item => item.details.id === product.id 
             )
 
             if (existingItem) {
                 return prevCart.map(item =>
-                item.details.product_id === product.product_id
+                    item.details.id === product.id
                     ? { ...item, quantity: item.quantity + quantity } 
                     : item 
                 );

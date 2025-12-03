@@ -57,7 +57,7 @@ export default function ProductDetails() {
         {/* Left Side */}
         <div className="image-section">
           <img
-            src={require(`../assets/images/${product.image_filename}`)}
+            src={`http://localhost:8082/storage/products/${product.image_filename}`}
             alt={product.name}
             className="main-product-image"
           />
