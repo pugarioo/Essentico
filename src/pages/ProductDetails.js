@@ -8,14 +8,14 @@ import "./ProductDetails.css";
 import productbg from '../assets/images/products-bg.jpg'
 
 export default function ProductDetails() {
-  const products = useContext(ProductContext)
+  const { data } = useContext(ProductContext)
   const { id } = useParams();
   const { addToCart, buyProduct } = useContext(CartContext)
   const { showPopup } = useContext(PopupContext)
   const navigate = useNavigate()
 
-  const product = products.find(
-    (item) => String(item.product_id) === String(id)
+  const product = data.find(
+    (item) => String(item.id) === String(id)
   );
 
   if (!product) {

@@ -23,7 +23,7 @@ function ProductCard({ product }) {
     
       <div className="product-card">
         <Link
-        to={`/products/${product.product_id}`} 
+        to={`/products/${product.id}`} 
         className="product-card-link"
         style={{ textDecoration: 'none', color: 'inherit' }}
         >

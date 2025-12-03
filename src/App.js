@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Navbar from './components/Navbar.js';
 import Popup from './components/Popup.js';
@@ -12,7 +12,7 @@ import Checkout from './components/Checkout.js';
 import CartContext  from './contexts/CartContext';
 import ProductContext from './contexts/ProductContext'
 import PopupContext from './contexts/PopupContext';
-import data from './data/sampledata.json';
+// import data from './data/sampledata.json';
 
 
 function App() {
@@ -23,6 +23,20 @@ function App() {
         product: null,
         quantity: null
     })
+    const [isFetching, setIsFetching] = useState(false);
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        setIsFetching(true);
+        fetch('http://localhost:8082/api/products')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Fetched data:', data);
+                setData(data)
+                setIsFetching(false);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    },[]);
 
     function addToCart(product, quantity=1) {
         updateCart(prevCart => {
@@ -123,12 +137,17 @@ function App() {
         showPopup,
         hidePopup,
     }
+
+    const productContextValue = {
+        data,
+        isFetching
+    }
     
     return (
         <Router>
             <div className="App">
                 <Navbar />
-                <ProductContext.Provider value={data}>
+                <ProductContext.Provider value={productContextValue}>
                     <CartContext.Provider value={cartContextValue}>
                         <PopupContext.Provider value={popupContextValue}>
                             <main className="main-content">
