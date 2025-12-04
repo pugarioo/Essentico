@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Card, Button, Modal, Form, Table, Row, Col, ToggleButtonGroup, ToggleButton } from "react-bootstrap";
 import { FaEdit, FaTruck, FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./Accounts.css";
 import accountbg from '../assets/images/products-bg.jpg';
+import AuthContext from "../contexts/AuthContext";
 
 function Accounts() {
   const navigate = useNavigate();
+
+  const { logout, isLoggingOut } = useContext(AuthContext);
 
   const [user, setUser] = useState({
     name: "Firstname Lastname",
@@ -62,9 +65,9 @@ function Accounts() {
     ]);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("auth");
-    navigate("/login");
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login")
   };
 
   return (
@@ -88,8 +91,8 @@ function Accounts() {
                   <Button variant="primary" onClick={() => setShowEditModal(true)}>
                     <FaEdit /> Edit Profile
                   </Button>
-                  <Button variant="danger" onClick={handleLogout}>
-                    <FaSignOutAlt /> Logout
+                  <Button variant="danger" onClick={handleLogout} disabled={isLoggingOut}>
+                    <FaSignOutAlt /> {isLoggingOut ? "Logging out" : "Logout"}
                   </Button>
                 </div>
               </div>

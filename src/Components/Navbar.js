@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Navbar, Container, Nav, Button } from 'react-bootstrap'; // ✅ Button included here
 import { FaSignInAlt } from "react-icons/fa"; // ✅ correct icon for Login
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './Navbar.module.css';
+import AuthContext from '../contexts/AuthContext';
 
 function NavBar(){
     const [menuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate(); // ✅ navigation hook
+    const { isAuthenticated } = useContext(AuthContext);
 
     // ✅ Login redirect function
     const goToLogin = () => {
@@ -32,14 +34,13 @@ function NavBar(){
                     <Nav className={styles.navlinks}>
                         <Nav.Link as={Link} to="/" onClick={() => setMenuOpen(false)}>Home</Nav.Link>
                         <Nav.Link as={Link} to="/products" onClick={() => setMenuOpen(false)}>Products</Nav.Link>
-                        <Nav.Link as={Link} to="" onClick={() => setMenuOpen(false)}>About</Nav.Link>
                     </Nav>
 
                     <Nav className={styles.cartProfileContainer}>
-                        <Nav.Link as={Link} to="/cart" className={styles.cartText} onClick={() => setMenuOpen(false)}>
+                        <Nav.Link as={Link} to={isAuthenticated ? "/cart" : "/login"} className={styles.cartText} onClick={() => setMenuOpen(false)}>
                             Cart
                         </Nav.Link>
-                        <Nav.Link as={Link} to="/accounts" className={styles.profileText} onClick={() => setMenuOpen(false)}>
+                        <Nav.Link as={Link} to={isAuthenticated ? "/accounts" : "/login"} className={styles.profileText} onClick={() => setMenuOpen(false)}>
                             Profile
                         </Nav.Link>
                     </Nav>
@@ -47,25 +48,16 @@ function NavBar(){
 
                 {/* ✅ LOGIN BUTTON ADDED HERE BESIDE PROFILE ICON (minimal add, structure preserved) */}
                 <Nav className={`${styles.cartProfileIcons}`}>
-                    <Nav.Link as={Link} to="/cart" className={styles.cartbtn}>
+                    <Nav.Link as={Link} to={isAuthenticated ? "/cart" : "/login"} className={styles.cartbtn}>
                         <i className={`fa-solid fa-basket-shopping`} />
                     </Nav.Link>
 
-                    <Nav.Link as={Link} to="/accounts" className={styles.profilebtn}>
+                    <Nav.Link as={Link} to={isAuthenticated ? "/accounts" : "/login"} className={styles.profilebtn}>
                         <i className={`fa-regular fa-user ${styles.profileico}`} />
                     </Nav.Link>
 
-                    {/* ✅ Login button placed beside Profile */}
-                    <Button
-                      variant="outline-light"
-                      className="ms-2"
-                      onClick={goToLogin}
-                      style={{ fontSize: "15px", padding: "6px 14px", borderRadius: "8px" }}
-                    >
-                      <FaSignInAlt className="me-1"/> Login
-                    </Button>
-
                 </Nav>
+                
             </Container>
         </Navbar>
     );

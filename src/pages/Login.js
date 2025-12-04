@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { FaUser, FaLock } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import AuthContext from "../contexts/AuthContext";
 import "./Login.css";
 
 function Login() {
@@ -11,20 +12,25 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const { login, isLoggingIn } = useContext(AuthContext);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!username || !password) {
       setErrorMsg("Please fill in all fields.");
       return;
     }
+    
+    try {
+      await login(username, password);
+      navigate("/products");
+    } catch (error) {
+      setErrorMsg(error.message);
+    }
 
     setErrorMsg("");
 
-    // Fake login — replace with backend later
-    localStorage.setItem("auth", "true");
-
-    navigate("/accounts"); // redirect
   };
 
   return (
@@ -59,9 +65,18 @@ function Login() {
             />
           </Form.Group>
 
-          <Button variant="primary" className="login-btn" type="submit">
-            Login
+          <Button
+            variant="primary"
+            className="login-btn"
+            type="submit"
+            disabled={isLoggingIn}
+          >
+            {isLoggingIn ? "Logging in..." : "Login"}
           </Button>
+          <div className="mt-3 text-center">
+            <span className="text-muted">Don't have an account? </span>
+            <Link to="/register" className="register-link">Register</Link>
+          </div>
         </Form>
       </Card>
     </div>
