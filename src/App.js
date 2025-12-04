@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Navbar from './Components/Navbar.js';
 import Popup from './Components/Popup.js';
@@ -25,16 +25,29 @@ function App() {
         product: null,
         quantity: null
     })
+    const [isFetching, setIsFetching] = useState(false);
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        setIsFetching(true);
+        fetch('http://localhost:8082/api/products')
+            .then(response => response.json())
+            .then(data => {
+                setData(data)
+                setIsFetching(false);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    },[]);
 
     function addToCart(product, quantity=1) {
         updateCart(prevCart => {
             const existingItem = prevCart.find(
-                item => item.details.product_id === product.product_id 
+                item => item.details.id === product.id 
             )
 
             if (existingItem) {
                 return prevCart.map(item =>
-                item.details.product_id === product.product_id
+                    item.details.id === product.id
                     ? { ...item, quantity: item.quantity + quantity } 
                     : item 
                 );
@@ -125,12 +138,17 @@ function App() {
         showPopup,
         hidePopup,
     }
+
+    const productContextValue = {
+        data,
+        isFetching
+    }
     
     return (
         <Router>
             <div className="App">
                 <Navbar />
-                <ProductContext.Provider value={data}>
+                <ProductContext.Provider value={productContextValue}>
                     <CartContext.Provider value={cartContextValue}>
                         <PopupContext.Provider value={popupContextValue}>
                             <main className="main-content">
