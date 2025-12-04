@@ -2,17 +2,19 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './App.css';
-import Navbar from './components/Navbar.js';
-import Popup from './components/Popup.js';
+import Navbar from './Components/Navbar.js';
+import Popup from './Components/Popup.js';
 import Home from './pages/Home';
 import ProductList from './pages/ProductList';
 import ProductDetails from './pages/ProductDetails';
-import Cart from './components/Cart.js'
-import Checkout from './components/Checkout.js';
+import Cart from './Components/cart.js';
+import Checkout from './Components/Checkout.js';
 import CartContext  from './contexts/CartContext';
 import ProductContext from './contexts/ProductContext'
 import PopupContext from './contexts/PopupContext';
-// import data from './data/sampledata.json';
+import data from './data/sampledata.json';
+import Login from './pages/Login';
+import Accounts from './pages/Accounts';
 
 
 function App() {
@@ -156,6 +158,8 @@ function App() {
                                     <Route path="/products/:id" element={<ProductDetails/>} />
                                     <Route path="/cart" element={<Cart/>}/>
                                     <Route path="/checkout" element={<Checkout />} />
+                                    <Route path="/login" element={<Login />} /> 
+                                    <Route path="/accounts" element={<Accounts />} />
                                 </Routes>
                             </main>
                             <Popup/>
