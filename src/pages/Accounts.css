@@ -1,0 +1,94 @@
+.account-page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px;
+  background: transparent; 
+  position: static;
+  border-radius: 15px;
+  overflow: visible; 
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url("../assets/images/products-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.profile-card, .orders-card {
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(3px);
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 20px;
+}
+
+.profile-card {
+  margin-top: 100px; 
+}
+
+.order-table-wrapper {
+  max-height: 400px;
+  overflow-y: auto;
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  scrollbar-width: thin;
+}
+
+.profile-img {
+  width: 160px;   
+  height: 160px;  
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ddd;
+}
+
+h3, .orders-card h4 {
+  font-weight: 600;
+}
+
+.order-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+.tracking-timeline p {
+  font-size: 15px;
+  padding: 5px 10px;
+  background: rgba(0,0,0,0.05);
+  border-left: 4px solid #007bff;
+  border-radius: 8px;
+}
+
+/* PROFILE DETAILS + BUTTONS */
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* all text aligned to left */
+  gap: 8px;               /* spacing between name/email/phone/address */
+}
+
+.profile-buttons {
+  display: flex;
+  gap: 10px;          
+  margin-top: 10px;  
+  flex-wrap: wrap;   
+}
+
+.profile-buttons button {
+  min-width: 120px;   /* consistent button width */
+}
+
+/* Align buttons to the left edge of the profile info */
+.profile-details .profile-buttons {
+  align-self: flex-start;
+}

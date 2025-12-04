@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { FaSearch, FaFilter, FaSort, FaBars, FaTimes } from "react-icons/fa";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../Components/ProductCard";
 import "./ProductList.css";
 import productbg from '../assets/images/products-bg.jpg';
 import ProductContext from "../contexts/ProductContext";

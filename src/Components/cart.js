@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import CartContext from "../contexts/CartContext";
-import "./Cart.css";
+import "./cart.css";
 import cartBg from '../assets/images/products-bg.jpg';
 
 // This is a new helper function for formatting currency
