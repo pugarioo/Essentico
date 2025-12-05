@@ -16,6 +16,7 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMsg(""); // Clear previous errors BEFORE attempting login
 
     if (!username || !password) {
       setErrorMsg("Please fill in all fields.");
@@ -26,11 +27,10 @@ function Login() {
       await login(username, password);
       navigate("/products");
     } catch (error) {
-      setErrorMsg(error.message);
+      // Show the error message from the backend
+      setErrorMsg(error.message || "Invalid email or password. Please try again.");
     }
-
-    setErrorMsg("");
-
+    // REMOVED: setErrorMsg("") - this was clearing the error message!
   };
 
   return (
@@ -43,11 +43,11 @@ function Login() {
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
             <Form.Label>
-              <FaUser className="icon" /> Username
+              <FaUser className="icon" /> Email
             </Form.Label>
             <Form.Control
-              type="text"
-              placeholder="Enter username"
+              type="email"
+              placeholder="Enter email"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />

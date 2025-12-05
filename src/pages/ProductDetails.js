@@ -4,6 +4,7 @@ import { FaStar, FaRegStar } from "react-icons/fa";
 import ProductContext from "../contexts/ProductContext";
 import CartContext from "../contexts/CartContext";
 import PopupContext from "../contexts/PopupContext";
+import AuthContext from "../contexts/AuthContext";
 import "./ProductDetails.css";
 import productbg from '../assets/images/products-bg.jpg'
 
@@ -12,6 +13,7 @@ export default function ProductDetails() {
   const { id } = useParams();
   const { addToCart, buyProduct } = useContext(CartContext)
   const { showPopup } = useContext(PopupContext)
+  const { isAuthenticated } = useContext(AuthContext)
   const navigate = useNavigate()
 
   const product = data.find(
@@ -36,6 +38,10 @@ export default function ProductDetails() {
 
   const handleAddToCartClick = () => {
         // 3. Call showPopup and pass it the product and a function to run
+        if (!isAuthenticated) {
+          navigate("/login");
+          return;
+        }
         showPopup(product, (quantity) => {
             addToCart(product, quantity);
         });
@@ -43,6 +49,10 @@ export default function ProductDetails() {
 
     const handleBuyNowClick = () => {
         // 4. Same pattern for "Buy Now"
+        if (!isAuthenticated) {
+          navigate("/login");
+          return;
+        }
         showPopup(product, (quantity) => {
             buyProduct({ details: product, quantity: quantity });
             navigate('/checkout');

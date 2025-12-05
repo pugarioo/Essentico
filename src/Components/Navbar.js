@@ -37,10 +37,10 @@ function NavBar(){
                     </Nav>
 
                     <Nav className={styles.cartProfileContainer}>
-                        <Nav.Link as={Link} to={isAuthenticated ? "/cart" : "/login"} className={styles.cartText} onClick={() => setMenuOpen(false)}>
+                        <Nav.Link as={Link} to={"/cart"} className={styles.cartText} onClick={() => setMenuOpen(false)}>
                             Cart
                         </Nav.Link>
-                        <Nav.Link as={Link} to={isAuthenticated ? "/accounts" : "/login"} className={styles.profileText} onClick={() => setMenuOpen(false)}>
+                        <Nav.Link as={Link} to={"/accounts"} className={styles.profileText} onClick={() => setMenuOpen(false)}>
                             Profile
                         </Nav.Link>
                     </Nav>
@@ -48,11 +48,11 @@ function NavBar(){
 
                 {/* ✅ LOGIN BUTTON ADDED HERE BESIDE PROFILE ICON (minimal add, structure preserved) */}
                 <Nav className={`${styles.cartProfileIcons}`}>
-                    <Nav.Link as={Link} to={isAuthenticated ? "/cart" : "/login"} className={styles.cartbtn}>
+                    <Nav.Link as={Link} to={"/cart"} className={styles.cartbtn}>
                         <i className={`fa-solid fa-basket-shopping`} />
                     </Nav.Link>
 
-                    <Nav.Link as={Link} to={isAuthenticated ? "/accounts" : "/login"} className={styles.profilebtn}>
+                    <Nav.Link as={Link} to={"/accounts"} className={styles.profilebtn}>
                         <i className={`fa-regular fa-user ${styles.profileico}`} />
                     </Nav.Link>
 

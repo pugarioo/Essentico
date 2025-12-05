@@ -1,42 +1,45 @@
-import React, { useState, useContext } from "react";
+import React from "react";
+import { useState, useContext, useEffect } from "react";
 import { Card, Button, Modal, Form, Table, Row, Col, ToggleButtonGroup, ToggleButton } from "react-bootstrap";
 import { FaEdit, FaTruck, FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import "./Accounts.css";
-import accountbg from '../assets/images/products-bg.jpg';
+import "./Accounts.css";  
 import AuthContext from "../contexts/AuthContext";
+import UserContext from "../contexts/UserContext";
+
+import defaultProfile from '../assets/images/default-profile.png';
 
 function Accounts() {
+
+  const { user, updateUser, isUpdatingUser } = useContext(UserContext);
+  
   const navigate = useNavigate();
-
   const { logout, isLoggingOut } = useContext(AuthContext);
+  const [imagePath, setImagePath] = useState('');
+  const [orders, setOrders] = useState([]);
 
-  const [user, setUser] = useState({
-    name: "Firstname Lastname",
-    email: "firstnamelastname@example.com",
-    phone: "09123456789",
-    address: "Cabuyao, Laguna, Philippines",
-    profilePic: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-  });
-
-  const [orders] = useState([
-    { id: 1050, items: 2, total: 450, status: "Ongoing", date: "2025-11-30", payment: "GCash", contact: "09111111111",
-      itemsOrdered: ["Backpack", "Toothbrush"] },
-    { id: 1049, items: 5, total: 1500, status: "Completed", date: "2025-11-25", payment: "COD", contact: "09222222222",
-      itemsOrdered: ["Colgate", "Shampoo", "Bag", "Socks", "Tumbler"] },
-    { id: 1045, items: 2, total: 600, status: "Cancelled", date: "2025-10-20", payment: "Bank Transfer", contact: "09333333333",
-      itemsOrdered: ["Jacket", "Cap"] },
-    { id: 1038, items: 8, total: 4200, status: "Completed", date: "2025-09-10", payment: "Maya", contact: "09444444444",
-      itemsOrdered: ["Perfume", "Shoes", "Sandals", "Belt", "Wallet", "Jeans", "T-shirt", "Watch"] },
-    { id: 1036, items: 4, total: 1300, status: "Ongoing", date: "2025-12-01", payment: "Credit Card", contact: "09555555555",
-      itemsOrdered: ["Notebook", "Ballpen", "Bag", "Charger"] }
-  ]);
+  useEffect(() => {
+    const path = user.image_filename == null ? defaultProfile : `http://localhost:8082/storage/users/${user.image_filename}`;
+    setImagePath(path);
+  }, [user]);
 
   const [orderFilter, setOrderFilter] = useState("Ongoing");
   const filteredOrders = orders.filter(order => order.status === orderFilter);
 
   const [showEditModal, setShowEditModal] = useState(false);
-  const [editData, setEditData] = useState(user);
+  const [editData, setEditData] = useState({});
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+
+  // Initialize editData only when modal opens, not when user changes
+  const handleOpenEditModal = () => {
+    if (user) {
+      setEditData({ ...user }); // Create a copy of user data
+      setImagePreview(null);
+      setSelectedImage(null);
+    }
+    setShowEditModal(true);
+  };
 
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -44,9 +47,49 @@ function Accounts() {
   const [showTrackModal, setShowTrackModal] = useState(false);
   const [trackingStatus, setTrackingStatus] = useState([]);
 
-  const handleSave = () => {
-    setUser(editData);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedImage(file);
+      // Create preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      const formData = new FormData();
+      
+      // Add text fields
+      formData.append('name', editData.name || '');
+      formData.append('email', editData.email || '');
+      if (editData.phone) formData.append('phone', editData.phone);
+      if (editData.address) formData.append('address', editData.address);
+      
+      // Add image if selected
+      if (selectedImage) {
+        formData.append('image', selectedImage);
+      }
+      
+      await updateUser(formData);
+      setShowEditModal(false);
+      setSelectedImage(null);
+      setImagePreview(null);
+    } catch (error) {
+      console.error('Failed to update profile:', error);
+    }
+  };
+
+  const handleCloseModal = () => {
     setShowEditModal(false);
+    setSelectedImage(null);
+    setImagePreview(null);
+    // Optionally reset editData when closing
+    setEditData({});
   };
 
   const handleOrderClick = (order) => {
@@ -70,6 +113,13 @@ function Accounts() {
     navigate("/login")
   };
 
+  const handleImageError = (e) => {
+    // Fallback to default profile image if the fetched image fails
+    if (e.target.src !== defaultProfile) {
+      e.target.src = defaultProfile;
+    }
+  };
+
   return (
     <div className="account-page">
       {/* PROFILE CARD */}
@@ -77,18 +127,23 @@ function Accounts() {
         <Card.Body>
           <Row>
             <Col md={3} className="text-center">
-              <img src={user.profilePic} alt="Profile" className="profile-img" />
+              <img 
+                src={imagePath} 
+                alt="Profile" 
+                className="profile-img"
+                onError={handleImageError}
+              />
             </Col>
 
             <Col md={9}>
               <div className="profile-details">
                 <h3>{user.name}</h3>
                 <p><strong>Email:</strong> {user.email}</p>
-                <p><strong>Phone:</strong> {user.phone}</p>
-                <p><strong>Address:</strong> {user.address}</p>
+                <p><strong>Phone:</strong> {user.phone ? user.phone : "N/A"}</p>
+                <p><strong>Address:</strong> {user.address ? user.address : "N/A"}</p>
 
                 <div className="profile-buttons">
-                  <Button variant="primary" onClick={() => setShowEditModal(true)}>
+                  <Button onClick={handleOpenEditModal}>
                     <FaEdit /> Edit Profile
                   </Button>
                   <Button variant="danger" onClick={handleLogout} disabled={isLoggingOut}>
@@ -113,7 +168,7 @@ function Accounts() {
       {/* ORDER HISTORY */}
       <Card className="orders-card shadow-sm">
         <Card.Body>
-          <h4>Order History ({orderFilter})</h4>
+          <h4>{orderFilter} Order History</h4>
           <div className="order-table-wrapper">
             <Table striped hover>
               <thead>
@@ -193,17 +248,34 @@ function Accounts() {
       </Modal>
 
       {/* EDIT PROFILE MODAL */}
-      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+      <Modal show={showEditModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Profile</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
+            <Form.Group className="mb-3 text-center">
+              <Form.Label>Profile Picture</Form.Label>
+              <div className="profile-image-upload">
+                <img 
+                  src={imagePreview || imagePath} 
+                  alt="Profile Preview" 
+                  className="profile-img-preview"
+                  onError={handleImageError}
+                />
+                <Form.Control
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="mt-2"
+                />
+              </div>
+            </Form.Group>
             <Form.Group>
               <Form.Label>Full Name</Form.Label>
               <Form.Control
                 type="text"
-                value={editData.name}
+                value={editData.name || ''}
                 onChange={(e) => setEditData({ ...editData, name: e.target.value })}
               />
             </Form.Group>
@@ -211,7 +283,7 @@ function Accounts() {
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
-                value={editData.email}
+                value={editData.email || ''}
                 onChange={(e) => setEditData({ ...editData, email: e.target.value })}
               />
             </Form.Group>
@@ -219,7 +291,7 @@ function Accounts() {
               <Form.Label>Phone</Form.Label>
               <Form.Control
                 type="text"
-                value={editData.phone}
+                value={editData.phone || ''}
                 onChange={(e) => setEditData({ ...editData, phone: e.target.value })}
               />
             </Form.Group>
@@ -227,15 +299,17 @@ function Accounts() {
               <Form.Label>Address</Form.Label>
               <Form.Control
                 type="text"
-                value={editData.address}
+                value={editData.address || ''}
                 onChange={(e) => setEditData({ ...editData, address: e.target.value })}
               />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowEditModal(false)}>Cancel</Button>
-          <Button variant="success" onClick={handleSave}>Save Changes</Button>
+          <Button variant="secondary" onClick={handleCloseModal}>Cancel</Button>
+          <Button variant="success" onClick={handleSave} disabled={isUpdatingUser}>
+            {isUpdatingUser ? "Saving..." : "Save Changes"}
+          </Button>
         </Modal.Footer>
       </Modal>
 

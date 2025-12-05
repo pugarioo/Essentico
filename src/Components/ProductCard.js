@@ -1,19 +1,27 @@
 import React, { useContext } from 'react';
 import { FaBookmark, FaPlus } from 'react-icons/fa';
-import { Link } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom'; 
 import './ProductCard.css';
 import CartContext from '../contexts/CartContext';
 import PopupContext from '../contexts/PopupContext';
+import AuthContext from '../contexts/AuthContext';
+
 
 function ProductCard({ product }) {
   const { addToCart } = useContext(CartContext);
   const { showPopup } = useContext(PopupContext);
+  const { isAuthenticated } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   if (!product) return null;
 
   const imagePath = `http://localhost:8082/storage/products/${product.image_filename}`;
 
   const handleAddToCartClick = () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
     showPopup(product, (quantity) => {
       addToCart(product, quantity);
     });
