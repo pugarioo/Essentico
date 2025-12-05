@@ -45,8 +45,8 @@ export const UserProvider = ({ children }) => {
         setIsUpdatingUser(true);
 
         try {
-            const response = await fetch('http://localhost:8082/api/users', {
-                method: 'PUT',
+            const response = await fetch('http://localhost:8082/api/user', {
+                method: 'POST',
                 headers: {
                     // Don't set Content-Type header - browser will set it with boundary for FormData
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
@@ -57,8 +57,9 @@ export const UserProvider = ({ children }) => {
             if (response.ok) {
                 const data = await response.json();
                 const userObj = typeof data === 'string' ? JSON.parse(data) : data;
+                console.log(userObj);
                 setUser(userObj);
-                localStorage.setItem("user", JSON.stringify(userObj));
+                localStorage.setItem("user", JSON.stringify(userObj.user));
                 window.dispatchEvent(new Event('userUpdated'));
             } else {
                 const errorData = await response.json().catch(() => ({}));
