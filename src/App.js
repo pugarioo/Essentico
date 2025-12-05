@@ -13,7 +13,10 @@ import CartContext  from './contexts/CartContext';
 import ProductContext from './contexts/ProductContext'
 import PopupContext from './contexts/PopupContext';
 import data from './data/sampledata.json';
-
+import AdminLogin from './components/AdminLogin';
+import AdminDashboard from "./components/AdminDashboard"; 
+import Order from './components/Order';
+import Customer from './components/Customer'; 
 
 function App() {
     const [cart, updateCart] = useState([]);
@@ -138,6 +141,12 @@ function App() {
                                     <Route path="/products/:id" element={<ProductDetails/>} />
                                     <Route path="/cart" element={<Cart/>}/>
                                     <Route path="/checkout" element={<Checkout />} />
+
+                                    <Route path="/admin" element={<AdminLogin />} />
+                                    <Route path="/admin-dashboard" element={<AdminDashboard />} />  
+                                    <Route path="/customer" element={<Customer />} />
+                                    <Route path="/order" element={<Order />} />
+
                                 </Routes>
                             </main>
                             <Popup/>

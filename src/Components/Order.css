@@ -1,0 +1,78 @@
+/* --- ORDER LIST HEADER --- */
+.order-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* --- ADD ORDER BUTTON (GREEN) --- */
+.btn-add-order {
+  background-color: #16b05e !important; /* green */
+  color: white !important;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-add-order:hover {
+  background-color: #129a52 !important; /* darker green */
+}
+
+/* --- TABLE CONTAINER --- */
+.order-table-container {
+  width: 95%;
+  overflow-x: auto;
+}
+
+/* --- ORDER TABLE STYLING --- */
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-table th,
+.order-table td {
+  padding: 10px;
+  border: 1px solid #cecfc3;
+  text-align: left;
+}
+
+.order-table th {
+  background-color: #cecfc3;
+  color: #282c34;
+}
+
+/* --- STATUS BADGES --- */
+.status-badge {
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.status-Pending {
+  background-color: #ffe0b2;
+  color: #e65100;
+}
+
+.status-Completed {
+  background-color: #d1ffd6;
+  color: #2e7d32;
+}
+
+.status-Cancelled {
+  background-color: #ffd1d1;
+  color: #b71c1c;
+}
+
+/* --- ACTION ICONS --- */
+.action-icon {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.action-icon.delete {
+  color: red;
+}
