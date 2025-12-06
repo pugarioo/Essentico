@@ -1,0 +1,71 @@
+/* --- Categories.css --- */
+
+/* 1. Header/Form Styling (Unique to Categories) */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px; 
+  padding: 10px 0;
+  border-bottom: 1px solid #eee; 
+}
+
+.admin-header h2 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #555;
+}
+
+.category-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.category-form input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 250px; 
+  font-size: 14px;
+}
+
+/* 2. TABLE OVERRIDE (FIXING COLUMN WIDTHS FOR CATEGORIES TABLE) */
+/* Targets the table *inside* the category-table-container to isolate changes */
+
+.category-table-container .admin-table {
+    table-layout: fixed; /* Ensures column widths are respected */
+}
+
+/* Category Name Column: Needs more space */
+.category-table-container thead th:nth-child(1),
+.category-table-container tbody td:nth-child(1) {
+    width: 35%; 
+}
+
+/* Product Count Column */
+.category-table-container thead th:nth-child(2),
+.category-table-container tbody td:nth-child(2) {
+    width: 15%; 
+    text-align: center;
+}
+
+/* Status Column */
+.category-table-container thead th:nth-child(3),
+.category-table-container tbody td:nth-child(3) {
+    width: 20%;
+    text-align: center;
+}
+
+/* Action Column */
+.category-table-container thead th:nth-child(4),
+.category-table-container tbody td:nth-child(4) {
+    width: 15%; 
+    text-align: right;
+}
+
+/* Center items within the Product Count and Status cells */
+.category-table-container tbody td:nth-child(2),
+.category-table-container tbody td:nth-child(3) {
+    text-align: center;
+}
