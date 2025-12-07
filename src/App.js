@@ -1,11 +1,15 @@
 // src/App.js (Final Code)
 
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
+
+// Components
 import Navbar from './components/Navbar';
 import Popup from './components/Popup';
+
+// Pages
 import Home from './pages/Home';
 import ProductList from './pages/ProductList';
 import ProductDetails from './pages/ProductDetails';
@@ -24,6 +28,16 @@ import Products from "./admin/products/Products";
 // import Categories from "./admin/products/Categories"; // Hindi kailangan dito
 
 // ... [Lahat ng functions (addToCart, removeFromCart, atbp.) ay pareho] ...
+import Cart from './components/cart.js'
+import Checkout from './components/Checkout.js';
+import CartContext  from './contexts/CartContext';
+import ProductContext from './contexts/ProductContext'
+import PopupContext from './contexts/PopupContext';
+import data from './data/sampledata.json';
+import AdminLogin from './components/AdminLogin';
+import AdminDashboard from "./components/AdminDashboard"; 
+import Order from './components/Order';
+import Customer from './components/Customer'; 
 
 function App() {
     const [cart, updateCart] = useState([]);
@@ -40,133 +54,61 @@ function App() {
                 item => item.details.product_id === product.product_id 
             )
 
-            if (existingItem) {
-                return prevCart.map(item =>
-                item.details.product_id === product.product_id
-                    ? { ...item, quantity: item.quantity + quantity } 
-                    : item 
-                );
-            }
-            else {
-                return [...prevCart, {details: product, quantity: quantity, isChecked: true}]
-            }
-        }
+// Context Providers
+import { ProductProvider } from './contexts/ProductContext';
+import { CartProvider } from './contexts/CartContext';
+import { PopupProvider } from './contexts/PopupContext';
+import { AuthProvider } from './contexts/AuthContext'; // Using the Auth one we made earlier
+import { UserProvider } from './contexts/UserContext';
 
-        )
-    }
-    
-    function removeFromCart (cartItem) {
-        updateCart(prevCart => prevCart.filter(item => item.details.product_id !== cartItem.details.product_id))
-    }
+import AuthContext from './contexts/AuthContext';
 
-    function addQuantity (cartItem) {
-        updateCart(prevCart => 
-            prevCart.map(item =>
-                item.details.product_id === cartItem.details.product_id
-                    ? { ...item, quantity: item.quantity + 1 } 
-                    : item 
-            ))
-    }
+function App() {
 
-    function subtractQuantity (cartItem) {
-
-        if (cartItem.quantity === 1) {
-            removeFromCart(cartItem)
-            return
-        }
-
-        updateCart(prevCart => 
-            prevCart.map(item =>
-                item.details.product_id === cartItem.details.product_id
-                    ? { ...item, quantity: item.quantity - 1 } 
-                    : item 
-            ))
-    }
-
-    function clearBought () {
-        updateCart(prevCart => prevCart.filter(item => !item.isChecked))
-    }
-
-    function buyProduct(item) {
-        
-        setDirectBuy(item);
-    }
-
-    function toggleItemChecked(cartItem) {
-        updateCart(prevCart => 
-            prevCart.map(item => 
-                item.details.product_id === cartItem.details.product_id
-                    ? { ...item, isChecked: !item.isChecked } // Toggles the boolean
-                    : item
-            )
-        );
-    }
-    function showPopup (product, onConfirmCallback) {
-        setPopup({
-            isVisible: true,
-            product: product,
-            // 'onConfirm' will be a function that takes a quantity
-            onConfirm: (quantity) => onConfirmCallback(quantity) 
-        });
-    };
-
-    function hidePopup () {
-        setPopup({ isVisible: false, product: null, onConfirm: null });
-    };
-    
-
-    const cartContextValue = {
-        cart,
-        addToCart,
-        removeFromCart,
-        addQuantity,
-        subtractQuantity,
-        toggleItemChecked,
-        buyProduct,
-        directBuy,
-        setDirectBuy,
-        clearBought
-    };
-
-    const popupContextValue = {
-        popup,
-        showPopup,
-        hidePopup,
-    }
-    
     return (
         <Router>
             <div className="App">
-                <Navbar />
-                <ProductContext.Provider value={data}>
-                    <CartContext.Provider value={cartContextValue}>
-                        <PopupContext.Provider value={popupContextValue}>
-                            <main className="main-content">
-                                <Routes>
-                                    {/* Public Routes */}
-                                    <Route path="/" element={<Home/>} />
-                                    <Route path="/products" element={<ProductList />} />
-                                    <Route path="/products/:id" element={<ProductDetails/>} />
-                                    <Route path="/cart" element={<Cart/>}/>
-                                    <Route path="/checkout" element={<Checkout />} />
-                                    
-                                    {/* Admin Routes */}
-                                    <Route path="/admin" element={<AdminLogin />} />
-
-                                    {/* ADMIN LAYOUT ROUTE: Ito ang maglo-load ng AdminLayout sa lahat ng sub-path ng /admin/ */}
-                                    <Route 
-                                        path="/admin/*" 
-                                        element={<AdminLayout />} 
-                                    />
-                                </Routes>
-                            </main>
-                            <Popup/>
-                        </PopupContext.Provider>
-                    </CartContext.Provider>
-                </ProductContext.Provider>
+                <AuthProvider>
+                    <UserProvider>
+                        <ProductProvider>
+                            <CartProvider>
+                                <PopupProvider>
+                                    <Navbar />
+                                    <AppRoutes />
+                                    <Popup />
+                                </PopupProvider>
+                            </CartProvider>
+                        </ProductProvider>
+                    </UserProvider>
+                </AuthProvider>
             </div>
         </Router>
     );
-}   
+}
+
+
+function AppRoutes() {
+    const { isAuthenticated, isCheckingAuth } = useContext(AuthContext);
+    
+    // Show loading or nothing while checking auth
+    if (isCheckingAuth) {
+        return <main className="main-content"><div>Loading...</div></main>;
+    }
+    
+    return (
+        <main className="main-content">
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/products" element={<ProductList />} />
+                <Route path="/products/:id" element={<ProductDetails />} />
+                <Route path="/cart" element={isAuthenticated ? <Cart /> : <Navigate to="/login" />} />
+                <Route path="/checkout" element={isAuthenticated ? <Checkout /> : <Navigate to="/login" />} />
+                <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/" />} />
+                <Route path="/register" element={!isAuthenticated ? <Register /> : <Navigate to="/" />} />
+                <Route path="/accounts" element={isAuthenticated ? <Accounts /> : <Navigate to="/login" />} />
+            </Routes>
+        </main>
+    );
+}
 
 export default App;

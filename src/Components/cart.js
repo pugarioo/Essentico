@@ -15,7 +15,7 @@ function CartItem({ item }) {
     const { addQuantity, subtractQuantity, removeFromCart, toggleItemChecked } = useContext(CartContext);
     
     // FIX: Access properties inside 'item.details'
-    const imagePath = require(`../assets/images/${item.details.image_filename}`);
+    const imagePath = `http://localhost:8082/storage/products/${item.details.image_filename}`;
     
     // Calculate subtotal for this item
     const itemSubtotal = item.details.price * item.quantity;
@@ -66,16 +66,7 @@ function Cart () {
         if (item.isChecked) {
             return total + (item.details.price * item.quantity);
         }
-        return total;
-    }, 0); // Start total at 0
-
-    // Set a fixed delivery fee (you can make this dynamic later)
-    const deliveryFee = subtotal > 0 ? 50 : 0;
-    
-    
-    const total = subtotal + deliveryFee;
-    
-    const isCheckoutDisabled = subtotal === 0
+    };
 
     return (
         <div className="cart-container">
@@ -91,7 +82,7 @@ function Cart () {
                     {cart.length > 0 ? (
                         cart.map((item) => (
                             // FIX: Added the required 'key' prop for React
-                            <CartItem key={item.details.product_id} item={item} />
+                            <CartItem key={item.details.id} item={item} />
                         ))
                     ) : (
                         <p>Your cart is empty.</p>
@@ -149,6 +140,6 @@ function Cart () {
             </div>
         </div>
     );
-};
+}
 
-export default Cart;
+export default AdminLogin;

@@ -204,3 +204,57 @@
         display: none;
     }
 }
+
+/* Style for the Login text link in the mobile menu */
+.loginText {
+    color: #fff !important;
+    margin-left: 10px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Hover effect for the login text */
+.loginText:hover {
+    color: #767945 !important;
+}
+
+/* Style for the login icon on desktop */
+.loginIcon {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+    cursor: pointer;
+}
+
+/* Hover effect for login icon */
+.loginIcon:hover {
+    background-color: #767945;
+    color: white;
+    transition: 0.3s;
+}
+
+/* Show login text only on desktop */
+@media (max-width: 768px) {
+    .loginText {
+        color: black !important; /* override to black on mobile for visibility */
+        margin-left: 0;
+    }
+
+    .loginIcon {
+        display: none;
+    }
+}
+
+/* Show login icon only on desktop */
+@media (min-width: 769px) {
+    .loginText {
+        display: none;
+    }
+}
