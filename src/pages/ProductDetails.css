@@ -25,16 +25,23 @@
     display: flex;
     gap: 40px;
     justify-content: center;
+    align-items: flex-start; /* Align items at the top */
   }
 
   .image-section {
     flex: 1;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 500px; /* Match info-section height for consistent alignment */
+    justify-content: flex-start;
   }
 
   .main-product-image {
     width: 500px;
-    height: auto;
+    aspect-ratio: 1 / 1; /* 1:1 aspect ratio */
+    object-fit: cover; /* Fill the square while maintaining aspect ratio */
     border-radius: 10px;
   }
 
@@ -74,6 +81,8 @@
     align-items: flex-start;
     flex-direction: column;
     padding: 1rem;
+    height: 500px; /* Match the image height exactly for consistent positioning */
+    justify-content: space-between; /* Distribute space evenly */
   }
 
   .product-title {
@@ -107,10 +116,20 @@
     margin: 15px 0;
   }
 
+  .description-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* Allow flex shrinking */
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
   .description-section h4 {
     font-weight: 600;
     margin-bottom: 5px;
     text-align: start;
+    flex-shrink: 0; /* Don't shrink the heading */
   }
 
   .description-section p {
@@ -118,6 +137,9 @@
     line-height: 1.6;
     font-size: 15px;
     text-align: start;
+    margin: 0;
+    overflow-y: auto; /* Allow scrolling if description is too long */
+    max-height: 200px; /* Limit height to prevent layout shift */
   }
 
   .color-section {
@@ -141,7 +163,9 @@
   .buttons-section {
     display: flex;
     gap: 15px;
-    margin-top: auto;
+    margin-top: auto; /* Push buttons to bottom */
+    width: 100%;
+    flex-shrink: 0; /* Don't shrink buttons */
   }
 
   .add-to-cart-btn,
@@ -180,6 +204,8 @@
     .main-product-image {
       width: 100%;
       max-width: 400px;
+      aspect-ratio: 1 / 1; /* Maintain 1:1 aspect ratio on mobile */
+      object-fit: cover;
     }
     .info-section {
       align-items: center;

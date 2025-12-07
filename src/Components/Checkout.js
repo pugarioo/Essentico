@@ -4,34 +4,160 @@ import { useNavigate } from "react-router-dom"
 import "./Checkout.css";
 import checkoutbg from "../assets/images/products-bg.jpg"
 import CartContext from "../contexts/CartContext";
+import UserContext from "../contexts/UserContext";
 
 const Checkout = () => {
+  const { user } = useContext(UserContext);
   const { cart, directBuy, setDirectBuy, clearBought } = useContext(CartContext)
   const [selectedOption, setSelectedOption] = useState("Delivery");
   const [selectedPayment, setSelectedPayment] = useState("paypal"); // state for selected payment
   const [order, setOrder] = useState(null);
   const navigate = useNavigate()
+  const [shippingAddress, setShippingAddress] = useState("");
+  const [cardName, setCardName] = useState("");
+  const [isOrdering, setIsOrdering] = useState(false);
+
+  // Auto-populate shipping address and card name from user profile
+  useEffect(() => {
+    if (user) {
+      if (user.address && !shippingAddress) {
+        setShippingAddress(user.address);
+      }
+      if (user.name && !cardName) {
+        setCardName(user.name);
+      }
+    }
+  }, [user]);
 
   useEffect(() => {  
     // If directBuy is set, create an order based on it
     if (directBuy !== null) {
-      setOrder([directBuy]);
-      console.log(order)
+      setOrder(directBuy);
+      console.log("Order set from directBuy:", directBuy);
     } else {
       // Otherwise, create an order based on checked items in the cart
-      console.log("Creating order from cart")
       const checkedItems = cart.filter(item => item.isChecked);
-      setOrder(checkedItems);
-      console.log(order)
+      if (checkedItems.length > 0) {
+        setOrder(checkedItems);
+        console.log("Order set from cart:", checkedItems);
+      } else {
+        setOrder(null);
+        console.log("No checked items in cart");
+      }
     }
   }, [cart, directBuy]);
 
   // handle Pay Now button
-  const handlePayNow = () => {
-    alert("Payment Successful! Thank you for your purchase.");
-    navigate("/products")
-    directBuy === null ? clearBought() : setDirectBuy(null) 
+  const handlePayNow = async () => {
+    // Validation checks
+    if (!user || !user.id) {
+      alert("Please log in to place an order.");
+      navigate("/login");
+      return;
+    }
+
+    if (!order || (Array.isArray(order) && order.length === 0)) {
+      alert("No items selected for order. Please add items to your cart.");
+      return;
+    }
+
+    if (!shippingAddress.trim()) {
+      alert("Please enter a shipping address.");
+      return;
+    }
+
+    setIsOrdering(true);
     
+    try {
+      // Prepare order items in the format backend expects
+      // Backend expects: items[0].details.id and items[0].details.price
+      let orderItems = [];
+      
+      if (directBuy !== null) {
+        // For direct buy, format as single item with nested details
+        orderItems = [{
+          details: {
+            id: directBuy.details.id,
+            price: directBuy.details.price
+          },
+          quantity: directBuy.quantity
+        }];
+      } else {
+        // For cart items, map to backend format with nested details
+        const checkedItems = cart.filter(item => item.isChecked);
+        if (checkedItems.length === 0) {
+          alert("No checked items in cart.");
+          setIsOrdering(false);
+          return;
+        }
+        orderItems = checkedItems.map(item => ({
+          details: {
+            id: item.details.id,
+            price: item.details.price
+          },
+          quantity: item.quantity
+        }));
+      }
+
+      const orderData = {
+        user_id: user.id,
+        items: orderItems,
+        total_amount: total,
+        status: "pending",
+        payment_method: selectedPayment,
+        delivery_address: shippingAddress,
+      };
+
+      console.log("Submitting order:", orderData);
+
+      const token = localStorage.getItem("token");
+      const response = await fetch('http://localhost:8082/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(orderData)
+      });
+
+      const responseData = await response.json().catch(() => ({}));
+
+      if (response.ok) {
+        alert("Payment Successful! Thank you for your purchase.");
+        navigate("/products");
+        directBuy === null ? clearBought() : setDirectBuy(null);
+      } else {
+        // Handle Laravel validation errors
+        let errorMessage = "Payment Failed! Please try again.";
+        
+        if (responseData.message) {
+          errorMessage = responseData.message;
+        } else if (responseData.error) {
+          errorMessage = responseData.error;
+        }
+        
+        // If there are validation errors, show them
+        if (responseData.errors) {
+          const errorMessages = Object.values(responseData.errors)
+            .flat()
+            .filter(msg => msg)
+            .join('\n');
+          if (errorMessages) {
+            errorMessage = errorMessages;
+          }
+        }
+        
+        alert(errorMessage);
+        console.error("Order failed - Full response:", responseData);
+        console.error("Order data sent:", orderData);
+      }
+    } catch (error) {
+      console.error("Error placing order:", error);
+      alert("Payment Failed! Please try again.");
+    } finally {
+      setIsOrdering(false);
+    }
   };
 
   // handle Back button
@@ -88,7 +214,7 @@ const Checkout = () => {
             {/* Shipping Address */}
             <Form.Group className="mb-3 fgroup">
               <Form.Label>Shipping address</Form.Label>
-              <Form.Control type="text" placeholder="Enter address" />
+              <Form.Control type="text" placeholder="Enter address" value={shippingAddress} onChange={(e) => setShippingAddress(e.target.value)} />
             </Form.Group>
 
             {/* PAYMENT INFORMATION */}
@@ -131,7 +257,12 @@ const Checkout = () => {
 
             <Form.Group className="mb-3 fgroup">
               <Form.Label>Name on card</Form.Label>
-              <Form.Control type="text" placeholder="Enter name" />
+              <Form.Control 
+                type="text" 
+                placeholder="Enter name" 
+                value={cardName}
+                onChange={(e) => setCardName(e.target.value)}
+              />
             </Form.Group>
 
             <Form.Group className="mb-3 fgroup  ">
@@ -212,15 +343,15 @@ const Checkout = () => {
               <button>Apply</button>
             </div>
 
-            <button className="pay-now" onClick={handlePayNow}>
-              Pay Now
+            <button className="pay-now" onClick={handlePayNow} disabled={isOrdering}>
+              {isOrdering ? "Processing..." : "Pay Now"}
             </button>
           </div>
         </div>
 
         {/* BACK BUTTON BELOW */}
         <button className="back-btn" onClick={handleBack}>
-          <i class="fa-solid fa-arrow-left arrow"></i> 
+          <i className="fa-solid fa-arrow-left arrow"></i> 
         </button>
       </div>
     </div>

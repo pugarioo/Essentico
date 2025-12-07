@@ -213,3 +213,49 @@
   background-color: #4f7a41;
 }
 
+/* Edit Product Modal Label Styles */
+.modal .form-label {
+  color: #5f8d4e;
+  font-weight: 500;
+  text-shadow: none;
+}
+
+/* Form Input Styles */
+.modal .form-control,
+.modal .form-select {
+  border: 1px solid #ced4da !important;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  width: 100%;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.modal .form-control:focus,
+.modal .form-select:focus {
+  border-color: #5f8d4e !important;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(95, 141, 78, 0.25) !important;
+}
+
+.modal .form-control::placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+
+.modal textarea.form-control {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.modal input[type="file"].form-control {
+  padding: 4px;
+  border: 1px dashed #ced4da;
+  background-color: #f8f9fa;
+}
+
+.modal input[type="file"].form-control:hover {
+  border-color: #5f8d4e;
+  background-color: #f0f0f0;
+}
+

@@ -102,9 +102,9 @@
 }
 
 .product-image {
+  height: 200px;
+  object-fit: contain;
   width: 100%;
-  height: 200px; /* Mas mataas na image area */
-  object-fit: contain; /* Para makita ang buong image */
   border-radius: 3px;
   margin: 0;
   padding: 10px;

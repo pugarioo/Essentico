@@ -1,14 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Form, Button, Card, Alert, Navbar, Container } from "react-bootstrap";
 import { FaUser, FaLock } from "react-icons/fa";
-import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import AuthContext from "../contexts/AuthContext";
 import UserContext from "../contexts/UserContext";
 import "./Login.css";
 import "./AdminLogin.css";
 
 export default function AdminLogin() {
-  const navigate = useNavigate();
   const location = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,11 +22,6 @@ export default function AdminLogin() {
     }
   }, [user]);
 
-  // If already logged in as admin, redirect to admin dashboard using Navigate component
-  if (user && user.role === 'admin' && location.pathname !== '/admin') {
-    return <Navigate to="/admin" replace />;
-  }
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
@@ -39,8 +33,7 @@ export default function AdminLogin() {
 
     try {
       await adminLogin(email, password);
-      // Navigation will be handled by the Navigate component above
-      // when user state updates
+      // Navigation will be handled by App.js routes when user state updates
     } catch (error) {
       setError(error.message || "Invalid email or password. Please try again.");
     }

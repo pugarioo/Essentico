@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { FaSignOutAlt } from "react-icons/fa";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,16 +7,22 @@ import AuthContext from '../contexts/AuthContext';
 import UserContext from '../contexts/UserContext';
 
 function AdminNavbar() {
-    const navigate = useNavigate();
     const { logout } = useContext(AuthContext);
     const { user } = useContext(UserContext);
 
     const handleLogout = async () => {
         try {
             await logout();
-            navigate('/admin/login');
+            // Small delay to ensure state is fully cleared before navigation
+            setTimeout(() => {
+                window.location.replace('/admin/login');
+            }, 100);
         } catch (error) {
             console.error('Logout failed:', error);
+            // Even if logout fails, try to navigate away
+            setTimeout(() => {
+                window.location.replace('/admin/login');
+            }, 100);
         }
     };
 

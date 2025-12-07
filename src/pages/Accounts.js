@@ -1,7 +1,7 @@
 import React from "react";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { Card, Button, Modal, Form, Table, Row, Col, ToggleButtonGroup, ToggleButton } from "react-bootstrap";
-import { FaEdit, FaTruck, FaSignOutAlt } from "react-icons/fa";
+import { FaEdit, FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./Accounts.css";  
 import AuthContext from "../contexts/AuthContext";
@@ -17,14 +17,108 @@ function Accounts() {
   const { logout, isLoggingOut } = useContext(AuthContext);
   const [imagePath, setImagePath] = useState('');
   const [orders, setOrders] = useState([]);
+  const [loadingOrders, setLoadingOrders] = useState(false);
+  const [ordersError, setOrdersError] = useState(null);
+  const hasFetchedOrders = useRef(false);
 
   useEffect(() => {
-    const path = user.image_filename == null ? defaultProfile : `http://localhost:8082/storage/users/${user.image_filename}`;
-    setImagePath(path);
+    if (user) {
+      const path = user.image_filename == null ? defaultProfile : `http://localhost:8082/storage/users/${user.image_filename}`;
+      setImagePath(path);
+    } else {
+      setImagePath(defaultProfile);
+    }
   }, [user]);
 
-  const [orderFilter, setOrderFilter] = useState("Ongoing");
-  const filteredOrders = orders.filter(order => order.status === orderFilter);
+  // Fetch orders for the logged-in user
+  useEffect(() => {
+    const fetchOrders = async () => {
+      const token = localStorage.getItem("token");
+      if (!token || !user || !user.id) {
+        return;
+      }
+
+      // Prevent fetching if already fetched for this user
+      if (hasFetchedOrders.current) {
+        return;
+      }
+
+      hasFetchedOrders.current = true;
+      setLoadingOrders(true);
+      setOrdersError(null);
+
+      try {
+        const response = await fetch('http://localhost:8082/api/orders', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          // Transform backend orders to match component expectations
+          const transformedOrders = data.map(order => {
+            // Map order items to a readable format
+            const itemsList = order.order_items?.map(item => 
+              `${item.quantity}x ${item.product?.name || 'Unknown Product'}`
+            ).join(', ') || 'No items';
+            
+            // Keep the original status from backend (pending, processing, shipped, delivered, cancelled)
+            const status = (order.status || 'pending').toLowerCase();
+
+            // Parse total_amount as float (it comes as string from backend)
+            const totalAmount = parseFloat(order.total_amount) || 0;
+
+            return {
+              id: order.id,
+              items: itemsList,
+              total: totalAmount,
+              status: status,
+              date: order.ordered_at ? new Date(order.ordered_at).toLocaleDateString() : 'N/A',
+              payment: order.payment_method || 'N/A',
+              contact: order.delivery_address || order.user?.address || 'N/A',
+              itemsOrdered: order.order_items?.map(item => 
+                `${item.quantity}x ${item.product?.name || 'Unknown Product'}`
+              ) || []
+            };
+          });
+          setOrders(transformedOrders);
+        } else {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.message || 'Failed to fetch orders');
+        }
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+        setOrdersError(error.message);
+      } finally {
+        setLoadingOrders(false);
+      }
+    };
+
+    fetchOrders();
+    
+    // Reset the ref when user changes
+    return () => {
+      hasFetchedOrders.current = false;
+    };
+    // Only depend on user.id to prevent constant re-renders
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
+
+  const [orderFilter, setOrderFilter] = useState("ongoing");
+  const filteredOrders = orders.filter(order => {
+    if (orderFilter === "all") {
+      return true; // Show all orders
+    } else if (orderFilter === "ongoing") {
+      // Show pending, processing, and shipped orders
+      return order.status === "pending" || order.status === "processing" || order.status === "shipped";
+    } else {
+      // Show orders matching the specific status
+      return order.status === orderFilter;
+    }
+  });
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [editData, setEditData] = useState({});
@@ -43,9 +137,6 @@ function Accounts() {
 
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
-
-  const [showTrackModal, setShowTrackModal] = useState(false);
-  const [trackingStatus, setTrackingStatus] = useState([]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -97,16 +188,6 @@ function Accounts() {
     setShowOrderModal(true);
   };
 
-  const handleTrackOrder = () => {
-    setShowTrackModal(true);
-    setTrackingStatus([
-      "📦 Order Confirmed",
-      "🛠 Preparing your order",
-      "🚚 Rider picked up your order",
-      "📍 On the way to delivery address",
-      "🏠 Arriving soon..."
-    ]);
-  };
 
   const handleLogout = async () => {
     await logout();
@@ -119,6 +200,21 @@ function Accounts() {
       e.target.src = defaultProfile;
     }
   };
+
+  // Show loading state if user is not yet loaded
+  if (!user) {
+    return (
+      <div className="account-page">
+        <Card className="profile-card shadow-sm">
+          <Card.Body>
+            <div className="text-center">
+              <p>Loading profile...</p>
+            </div>
+          </Card.Body>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="account-page">
@@ -137,10 +233,10 @@ function Accounts() {
 
             <Col md={9}>
               <div className="profile-details">
-                <h3>{user.name}</h3>
-                <p><strong>Email:</strong> {user.email}</p>
-                <p><strong>Phone:</strong> {user.phone ? user.phone : "N/A"}</p>
-                <p><strong>Address:</strong> {user.address ? user.address : "N/A"}</p>
+                <h3>{user?.name || "Loading..."}</h3>
+                <p><strong>Email:</strong> {user?.email || "Loading..."}</p>
+                <p><strong>Phone:</strong> {user?.phone ? user.phone : "N/A"}</p>
+                <p><strong>Address:</strong> {user?.address ? user.address : "N/A"}</p>
 
                 <div className="profile-buttons">
                   <Button onClick={handleOpenEditModal}>
@@ -159,91 +255,123 @@ function Accounts() {
       {/* TOGGLE BUTTON */}
       <div className="order-toggle">
         <ToggleButtonGroup type="radio" name="orderStatus" value={orderFilter} onChange={(val) => setOrderFilter(val)}>
-          <ToggleButton id="ongoing" value="Ongoing" variant="outline-primary">Ongoing</ToggleButton>
-          <ToggleButton id="completed" value="Completed" variant="outline-success">Completed</ToggleButton>
-          <ToggleButton id="cancelled" value="Cancelled" variant="outline-danger">Cancelled</ToggleButton>
+          <ToggleButton id="all" value="all" variant="outline-secondary">All Orders</ToggleButton>
+          <ToggleButton id="ongoing" value="ongoing" variant="outline-primary">Ongoing</ToggleButton>
+          <ToggleButton id="delivered" value="delivered" variant="outline-success">Delivered</ToggleButton>
+          <ToggleButton id="cancelled" value="cancelled" variant="outline-danger">Cancelled</ToggleButton>
         </ToggleButtonGroup>
       </div>
 
       {/* ORDER HISTORY */}
       <Card className="orders-card shadow-sm">
         <Card.Body>
-          <h4>{orderFilter} Order History</h4>
+          <h4>
+            {orderFilter === "all" 
+              ? "All Orders" 
+              : orderFilter === "ongoing"
+              ? "Ongoing Orders"
+              : orderFilter.charAt(0).toUpperCase() + orderFilter.slice(1) + " Orders"
+            }
+          </h4>
           <div className="order-table-wrapper">
-            <Table striped hover>
-              <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Items</th>
-                  <th>Total (₱)</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredOrders.length > 0 ? (
-                  filteredOrders.map((order) => (
-                    <tr key={order.id} onClick={() => handleOrderClick(order)} style={{ cursor: "pointer" }}>
-                      <td>#{order.id}</td>
-                      <td>{order.items}</td>
-                      <td>{order.total}</td>
-                    </tr>
-                  ))
-                ) : (
+            {loadingOrders ? (
+              <div className="text-center p-3">
+                <p>Loading orders...</p>
+              </div>
+            ) : ordersError ? (
+              <div className="text-center p-3">
+                <p style={{ color: 'red' }}>Error: {ordersError}</p>
+              </div>
+            ) : (
+              <Table striped hover>
+                <thead>
                   <tr>
-                    <td colSpan="3" className="text-center">No {orderFilter} orders</td>
+                    <th>Order ID</th>
+                    <th>Items</th>
+                    <th>Total (₱)</th>
                   </tr>
-                )}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {filteredOrders.length > 0 ? (
+                    filteredOrders.map((order) => (
+                      <tr key={order.id} onClick={() => handleOrderClick(order)} style={{ cursor: "pointer" }}>
+                        <td>#{order.id}</td>
+                        <td>{order.items}</td>
+                        <td>₱{order.total.toFixed(2)}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="3" className="text-center">No {orderFilter} orders</td>
+                    </tr>
+                  )}
+                </tbody>
+              </Table>
+            )}
           </div>
         </Card.Body>
       </Card>
 
       {/* ORDER DETAILS MODAL */}
-      <Modal show={showOrderModal} onHide={() => setShowOrderModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Order Details #{selectedOrder?.id}</Modal.Title>
+      <Modal show={showOrderModal} onHide={() => setShowOrderModal(false)} centered size="lg" className="order-details-modal">
+        <Modal.Header closeButton className="order-modal-header">
+          <Modal.Title className="order-modal-title">Order Details #{selectedOrder?.id}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="order-modal-body">
           {selectedOrder && (
-            <>
-              <p><strong>Order Date:</strong> {selectedOrder.date}</p>
-              <p><strong>Total Items:</strong> {selectedOrder.items}</p>
-              <p><strong>Order Total:</strong> ₱{selectedOrder.total}</p>
-              <p><strong>Status:</strong> {selectedOrder.status}</p>
-              <p><strong>Payment Method:</strong> {selectedOrder.payment}</p>
-              <p><strong>Contact Used:</strong> {selectedOrder.contact}</p>
-              <hr />
-              <h5>Items Ordered:</h5>
-              <ul>
-                {selectedOrder.itemsOrdered.map((item, i) => (
-                  <li key={i}>{item}</li>
-                ))}
-              </ul>
-            </>
+            <div className="order-details-content">
+              {/* Status Badge */}
+              <div className="order-status-section">
+                <span className={`order-status-badge status-${selectedOrder.status || 'pending'}`}>
+                  {selectedOrder.status ? selectedOrder.status.charAt(0).toUpperCase() + selectedOrder.status.slice(1) : 'Pending'}
+                </span>
+              </div>
+
+              {/* Order Information Grid */}
+              <div className="order-info-grid">
+                <div className="order-info-item">
+                  <span className="order-info-label">Order Date</span>
+                  <span className="order-info-value">{selectedOrder.date}</span>
+                </div>
+                <div className="order-info-item">
+                  <span className="order-info-label">Payment Method</span>
+                  <span className="order-info-value">{selectedOrder.payment}</span>
+                </div>
+                <div className="order-info-item">
+                  <span className="order-info-label">Total Items</span>
+                  <span className="order-info-value">{selectedOrder.itemsOrdered.length}</span>
+                </div>
+                <div className="order-info-item order-total">
+                  <span className="order-info-label">Order Total</span>
+                  <span className="order-info-value">₱{selectedOrder.total.toFixed(2)}</span>
+                </div>
+              </div>
+
+              {/* Delivery Address */}
+              <div className="order-address-section">
+                <span className="order-info-label">Delivery Address</span>
+                <span className="order-info-value">{selectedOrder.contact}</span>
+              </div>
+
+              {/* Items Ordered */}
+              <div className="order-items-section">
+                <h5 className="order-items-title">Items Ordered</h5>
+                <div className="order-items-list">
+                  {selectedOrder.itemsOrdered.map((item, i) => (
+                    <div key={i} className="order-item">
+                      <span className="order-item-bullet">•</span>
+                      <span className="order-item-text">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowOrderModal(false)}>Close</Button>
-          <Button variant="primary" onClick={handleTrackOrder}>
-            <FaTruck /> Track Order
+        <Modal.Footer className="order-modal-footer">
+          <Button variant="secondary" onClick={() => setShowOrderModal(false)} className="order-close-btn">
+            Close
           </Button>
-        </Modal.Footer>
-      </Modal>
-
-      {/* TRACKING MODAL */}
-      <Modal show={showTrackModal} onHide={() => setShowTrackModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title><FaTruck className="me-2" /> Tracking Order #{selectedOrder?.id}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="tracking-timeline">
-            {trackingStatus.map((step, index) => (
-              <p key={index}>{step}</p>
-            ))}
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowTrackModal(false)}>Close</Button>
         </Modal.Footer>
       </Modal>
 

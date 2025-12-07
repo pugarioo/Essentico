@@ -137,25 +137,38 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         setIsLoggingOut(true)
         
-        const response = await fetch('http://localhost:8082/api/logout', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem("token")}`
-            },
-            
-        })
+        try {
+            const response = await fetch('http://localhost:8082/api/logout', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                },
+            })
 
-        if (response.ok) {
+            // Always clear local state, even if API call fails
             setIsAuthenticated(false);
             localStorage.removeItem("token")
             localStorage.removeItem("tokenType")
             localStorage.removeItem("user")
-        } else {
-            throw new Error('Logout failed');
+            
+            // Dispatch event to clear user context
+            window.dispatchEvent(new Event('userUpdated'));
+            
+            if (!response.ok) {
+                throw new Error('Logout failed');
+            }
+        } catch (error) {
+            // Even if logout API fails, clear local state
+            setIsAuthenticated(false);
+            localStorage.removeItem("token")
+            localStorage.removeItem("tokenType")
+            localStorage.removeItem("user")
+            window.dispatchEvent(new Event('userUpdated'));
+            throw error;
+        } finally {
+            setIsLoggingOut(false)
         }
-
-        setIsLoggingOut(false)
     };
 
     const contextData = {

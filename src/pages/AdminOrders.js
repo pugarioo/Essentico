@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Button, Table } from "react-bootstrap";
-import { FaEye, FaTruck, FaTrash } from "react-icons/fa";
+import { Table, Form } from "react-bootstrap";
 import './AdminOrders.css';
 
 function AdminOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [updatingStatus, setUpdatingStatus] = useState(new Set());
+
+  const statusOptions = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
 
   useEffect(() => {
     fetch("http://localhost:8082/api/orders")
@@ -27,6 +29,48 @@ function AdminOrders() {
       });
   }, []);
 
+  const handleStatusChange = async (orderId, newStatus) => {
+    setUpdatingStatus(prev => new Set(prev).add(orderId));
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`http://localhost:8082/api/orders/${orderId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          status: newStatus
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Failed to update order status');
+      }
+
+      // Update local state
+      setOrders(prevOrders =>
+        prevOrders.map(order =>
+          order.id === orderId
+            ? { ...order, status: newStatus }
+            : order
+        )
+      );
+    } catch (error) {
+      console.error('Error updating order status:', error);
+      alert(error.message || 'Failed to update order status');
+    } finally {
+      setUpdatingStatus(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(orderId);
+        return newSet;
+      });
+    }
+  };
+
   if (loading) return <div className="admin-content"><p>Loading orders...</p></div>;
   if (error) return <div className="admin-content"><p>Error: {error}</p></div>;
 
@@ -34,7 +78,6 @@ function AdminOrders() {
     <div className="admin-content">
       <div className="admin-header">
         <h2>Orders</h2>
-        <button className="btn-primary btn-add-new">+ Add Order</button>
       </div>
 
       {orders.length === 0 ? (
@@ -51,7 +94,6 @@ function AdminOrders() {
                 <th>Total</th>
                 <th>Date</th>
                 <th>Status</th>
-                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -73,23 +115,22 @@ function AdminOrders() {
                       ))}
                     </ul>
                   </td>
-                  <td>₱{order.total_amount || 0}</td>
+                  <td>₱{parseFloat(order.total_amount || 0).toFixed(2)}</td>
                   <td>{order.ordered_at ? new Date(order.ordered_at).toLocaleDateString() : "-"}</td>
                   <td>
-                    <span className="status-badge status-pending">
-                      {order.status || "Pending"}
-                    </span>
-                  </td>
-                  <td className="action-buttons">
-                    <button className="icon-btn action-view" title="View">
-                      <FaEye />
-                    </button>
-                    <button className="icon-btn action-ship" title="Ship">
-                      <FaTruck />
-                    </button>
-                    <button className="icon-btn action-delete" title="Delete">
-                      <FaTrash />
-                    </button>
+                    <Form.Select
+                      value={order.status || 'pending'}
+                      onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                      disabled={updatingStatus.has(order.id)}
+                      size="sm"
+                      className="status-select"
+                    >
+                      {statusOptions.map((status) => (
+                        <option key={status} value={status}>
+                          {status.charAt(0).toUpperCase() + status.slice(1)}
+                        </option>
+                      ))}
+                    </Form.Select>
                   </td>
                 </tr>
               ))}
