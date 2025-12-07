@@ -1,3 +1,5 @@
+// src/App.js (Final Code)
+
 import React from 'react';
 import { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -11,6 +13,21 @@ import Popup from './components/Popup';
 import Home from './pages/Home';
 import ProductList from './pages/ProductList';
 import ProductDetails from './pages/ProductDetails';
+import Cart from './components/Cart.js'
+import Checkout from './components/Checkout';
+import CartContext  from './contexts/CartContext';
+import ProductContext from './contexts/ProductContext'
+import PopupContext from './contexts/PopupContext';
+import data from './data/sampledata.json';
+import AdminLogin from "./admin/AdminLogin";
+
+// Tiyakin na ang mga ito ay tama ang paths
+import AdminLayout from "./admin/layout/AdminLayout";
+import Dashboard from "./admin/dashboard/Dashboard"; 
+import Products from "./admin/products/Products";
+// import Categories from "./admin/products/Categories"; // Hindi kailangan dito
+
+// ... [Lahat ng functions (addToCart, removeFromCart, atbp.) ay pareho] ...
 import Cart from './components/cart.js'
 import Checkout from './components/Checkout.js';
 import CartContext  from './contexts/CartContext';
