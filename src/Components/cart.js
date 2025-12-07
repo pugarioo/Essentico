@@ -66,16 +66,7 @@ function Cart () {
         if (item.isChecked) {
             return total + (item.details.price * item.quantity);
         }
-        return total;
-    }, 0); // Start total at 0
-
-    // Set a fixed delivery fee (you can make this dynamic later)
-    const deliveryFee = subtotal > 0 ? 50 : 0;
-    
-    
-    const total = subtotal + deliveryFee;
-    
-    const isCheckoutDisabled = subtotal === 0
+    };
 
     return (
         <div className="cart-container">
@@ -149,6 +140,6 @@ function Cart () {
             </div>
         </div>
     );
-};
+}
 
-export default Cart;
+export default AdminLogin;

@@ -11,11 +11,31 @@ import Popup from './components/Popup';
 import Home from './pages/Home';
 import ProductList from './pages/ProductList';
 import ProductDetails from './pages/ProductDetails';
-import Cart from './components/cart'; // (Note: capitalize component filename usually: Cart.js)
-import Checkout from './components/Checkout';
-import Login from './pages/Login';
-import Register from './pages/Register'; // Add this import
-import Accounts from './pages/Accounts';
+import Cart from './components/cart.js'
+import Checkout from './components/Checkout.js';
+import CartContext  from './contexts/CartContext';
+import ProductContext from './contexts/ProductContext'
+import PopupContext from './contexts/PopupContext';
+import data from './data/sampledata.json';
+import AdminLogin from './components/AdminLogin';
+import AdminDashboard from "./components/AdminDashboard"; 
+import Order from './components/Order';
+import Customer from './components/Customer'; 
+
+function App() {
+    const [cart, updateCart] = useState([]);
+    const [directBuy, setDirectBuy] = useState(null)
+    const [popup, setPopup] = useState({
+        isVisible: false,
+        product: null,
+        quantity: null
+    })
+
+    function addToCart(product, quantity=1) {
+        updateCart(prevCart => {
+            const existingItem = prevCart.find(
+                item => item.details.product_id === product.product_id 
+            )
 
 // Context Providers
 import { ProductProvider } from './contexts/ProductContext';

@@ -1,0 +1,66 @@
+.customer-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.btn-add-customer {
+  background-color: #61dafb;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-add-customer:hover {
+  background-color: #4fa1e0;
+}
+
+.customer-table-container {
+  width: 90%;
+  overflow-x: auto;
+}
+
+.customer-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.customer-table th, .customer-table td {
+  padding: 10px;
+  border: 1px solid #cecfc3;
+  text-align: left;
+}
+
+.customer-table th {
+  background-color: #cecfc3;
+  color: #282c34;
+}
+
+.status-badge {
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.status-Active {
+  background-color: #d1ffd6;
+  color: #2e7d32;
+}
+
+.status-Inactive {
+  background-color: #ffd1d1;
+  color: #b71c1c;
+}
+
+.action-icon {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.action-icon.delete {
+  color: red;
+}
