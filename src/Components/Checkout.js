@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom"
 import "./Checkout.css";
@@ -9,7 +9,22 @@ const Checkout = () => {
   const { cart, directBuy, setDirectBuy, clearBought } = useContext(CartContext)
   const [selectedOption, setSelectedOption] = useState("Delivery");
   const [selectedPayment, setSelectedPayment] = useState("paypal"); // state for selected payment
+  const [order, setOrder] = useState(null);
   const navigate = useNavigate()
+
+  useEffect(() => {  
+    // If directBuy is set, create an order based on it
+    if (directBuy !== null) {
+      setOrder([directBuy]);
+      console.log(order)
+    } else {
+      // Otherwise, create an order based on checked items in the cart
+      console.log("Creating order from cart")
+      const checkedItems = cart.filter(item => item.isChecked);
+      setOrder(checkedItems);
+      console.log(order)
+    }
+  }, [cart, directBuy]);
 
   // handle Pay Now button
   const handlePayNow = () => {

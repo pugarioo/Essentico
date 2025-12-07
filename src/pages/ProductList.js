@@ -7,7 +7,7 @@ import ProductContext from "../contexts/ProductContext";
 
 export default function ProductList() {
 
-  const products = useContext(ProductContext)
+  const {data, isFetching } = useContext(ProductContext)
 
   const [search, setSearch] = useState("");
   const [sortOrder, setSortOrder] = useState("");
@@ -27,7 +27,7 @@ export default function ProductList() {
   }, []);
 
   // 🔹 Filter + Sort logic
-  const filteredProducts = products
+  const filteredProducts = data
 	.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()))
 	.filter((p) => {
 	  if (selectedCategory && p.category !== selectedCategory) return false;
@@ -46,7 +46,7 @@ export default function ProductList() {
 	});
 
   //  Extract unique categories
-  const categories = [...new Set(products.map((p) => p.category))].filter(Boolean);
+  const categories = [...new Set(data.map((p) => p.category))].filter(Boolean);
 
   return (
 	<div className="product-page">
@@ -152,13 +152,18 @@ export default function ProductList() {
 
 	  {/* Product Grid */}
 	  <div className="product-grid">
-		{filteredProducts.length > 0 ? (
-		  filteredProducts.map((product) => (
-			<ProductCard key={product.product_id} product={product} />
-		  ))
-		) : (
-		  <p className="no-results">No products found matching your filters.</p>
-		)}
+		{
+      isFetching ? 
+        <p className="no-results">Loading products...</p>
+      :
+        filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
+          <ProductCard key={product.id} product={product} />
+          ))
+        ) : (
+          <p className="no-results">No products found matching your filters.</p>
+        )
+      }
 	  </div>
 	</div>
   );

@@ -1,0 +1,245 @@
+.account-page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px;
+  background: transparent; 
+  position: static;
+  border-radius: 15px;
+  overflow: visible; 
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url("../assets/images/products-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.profile-card, .orders-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 35px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(118, 121, 69, 0.2);
+  transition: all 0.3s ease;
+}
+
+.profile-card:hover, .orders-card:hover {
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.profile-card {
+  margin-top: 100px; 
+}
+
+.order-table-wrapper {
+  max-height: 400px;
+  overflow-y: auto;
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  scrollbar-width: thin;
+}
+
+.order-table-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.order-table-wrapper::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.order-table-wrapper::-webkit-scrollbar-thumb {
+  background: #767945;
+  border-radius: 10px;
+}
+
+.order-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #515829;
+}
+
+.profile-img {
+  width: 160px;   
+  height: 160px;  
+  min-width: 160px;
+  min-height: 160px;
+  max-width: 160px;
+  max-height: 160px;
+  border-radius: 50%; 
+  object-fit: cover;
+  border: 4px solid #767945;
+  box-shadow: 0 2px 10px rgba(118, 121, 69, 0.3);
+  display: block;
+  margin: 0 auto;
+  background-color: rgba(118, 121, 69, 0.05);
+}
+
+h3, .orders-card h4 {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.orders-card h4 {
+  color: #767945;
+  border-bottom: 2px solid rgba(118, 121, 69, 0.2);
+  padding-bottom: 10px;
+}
+
+.order-toggle {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+/* Toggle button styling */
+.order-toggle .btn {
+  border-color: #767945;
+  color: #767945;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.order-toggle .btn-check:checked + .btn,
+.order-toggle .btn.active {
+  background-color: #767945;
+  border-color: #767945;
+  color: white;
+  box-shadow: 0 2px 8px rgba(118, 121, 69, 0.3);
+}
+
+.order-toggle .btn:hover {
+  border-color: #767945;
+  color: #767945;
+  background-color: rgba(118, 121, 69, 0.1);
+}
+
+.order-toggle .btn-check:checked + .btn:hover,
+.order-toggle .btn.active:hover {
+  background-color: #515829;
+  border-color: #515829;
+}
+
+/* Table styling improvements */
+.orders-card table {
+  margin-top: 10px;
+}
+
+.orders-card table thead th {
+  background-color: rgba(118, 121, 69, 0.1);
+  color: #767945;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(118, 121, 69, 0.2);
+  padding: 12px;
+}
+
+.orders-card table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.orders-card table tbody tr:hover {
+  background-color: rgba(118, 121, 69, 0.05);
+}
+
+.tracking-timeline p {
+  font-size: 15px;
+  padding: 5px 10px;
+  background: rgba(0,0,0,0.05);
+  border-left: 4px solid #767945;
+  border-radius: 8px;
+}
+
+/* PROFILE DETAILS + BUTTONS */
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.profile-details h3 {
+  color: #767945;
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+.profile-details p {
+  color: #555;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.profile-details p strong {
+  color: #333;
+}
+
+.profile-buttons {
+  display: flex;
+  gap: 12px;          
+  margin-top: 15px;  
+  flex-wrap: wrap;   
+}
+
+.profile-buttons button {
+  min-width: 130px;
+  background-color: #767945;
+  border-color: #767945;
+  font-weight: 500;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(118, 121, 69, 0.2);
+}
+
+.profile-buttons button:hover {
+  background-color: #515829;
+  border-color: #515829;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(118, 121, 69, 0.3);
+}
+
+.profile-buttons button:active {
+  transform: translateY(0);
+}
+
+/* Align buttons to the left edge of the profile info */
+.profile-details .profile-buttons {
+  align-self: flex-start;
+}
+
+/* Profile image upload preview */
+.profile-image-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-img-preview {
+  width: 120px;
+  height: 120px;
+  min-width: 120px;
+  min-height: 120px;
+  max-width: 120px;
+  max-height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #767945;
+  box-shadow: 0 2px 8px rgba(118, 121, 69, 0.2);
+  margin-bottom: 10px;
+  background-color: rgba(118, 121, 69, 0.05);
+}
+
+.profile-image-upload input[type="file"] {
+  max-width: 250px;
+}
