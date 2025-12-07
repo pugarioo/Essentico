@@ -1,3 +1,5 @@
+// src/App.js (Final Code)
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -9,11 +11,19 @@ import ProductList from './pages/ProductList';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './components/Cart.js'
 import Checkout from './components/Checkout';
-import CartContext  from './contexts/CartContext';
+import CartContext  from './contexts/CartContext';
 import ProductContext from './contexts/ProductContext'
 import PopupContext from './contexts/PopupContext';
 import data from './data/sampledata.json';
+import AdminLogin from "./admin/AdminLogin";
 
+// Tiyakin na ang mga ito ay tama ang paths
+import AdminLayout from "./admin/layout/AdminLayout";
+import Dashboard from "./admin/dashboard/Dashboard"; 
+import Products from "./admin/products/Products";
+// import Categories from "./admin/products/Categories"; // Hindi kailangan dito
+
+// ... [Lahat ng functions (addToCart, removeFromCart, atbp.) ay pareho] ...
 
 function App() {
     const [cart, updateCart] = useState([]);
@@ -50,23 +60,23 @@ function App() {
     }
 
     function addQuantity (cartItem) {
-		updateCart(prevCart => 
-			prevCart.map(item =>
+        updateCart(prevCart => 
+            prevCart.map(item =>
                 item.details.product_id === cartItem.details.product_id
                     ? { ...item, quantity: item.quantity + 1 } 
                     : item 
             ))
     }
 
-	function subtractQuantity (cartItem) {
+    function subtractQuantity (cartItem) {
 
-		if (cartItem.quantity === 1) {
-			removeFromCart(cartItem)
-			return
-		}
+        if (cartItem.quantity === 1) {
+            removeFromCart(cartItem)
+            return
+        }
 
-		updateCart(prevCart => 
-			prevCart.map(item =>
+        updateCart(prevCart => 
+            prevCart.map(item =>
                 item.details.product_id === cartItem.details.product_id
                     ? { ...item, quantity: item.quantity - 1 } 
                     : item 
@@ -77,12 +87,12 @@ function App() {
         updateCart(prevCart => prevCart.filter(item => !item.isChecked))
     }
 
-	function buyProduct(item) {
+    function buyProduct(item) {
         
-		setDirectBuy(item);
-	}
+        setDirectBuy(item);
+    }
 
-	function toggleItemChecked(cartItem) {
+    function toggleItemChecked(cartItem) {
         updateCart(prevCart => 
             prevCart.map(item => 
                 item.details.product_id === cartItem.details.product_id
@@ -105,7 +115,7 @@ function App() {
     };
     
 
-	const cartContextValue = {
+    const cartContextValue = {
         cart,
         addToCart,
         removeFromCart,
@@ -116,7 +126,7 @@ function App() {
         directBuy,
         setDirectBuy,
         clearBought
-	};
+    };
 
     const popupContextValue = {
         popup,
@@ -133,11 +143,21 @@ function App() {
                         <PopupContext.Provider value={popupContextValue}>
                             <main className="main-content">
                                 <Routes>
+                                    {/* Public Routes */}
                                     <Route path="/" element={<Home/>} />
                                     <Route path="/products" element={<ProductList />} />
                                     <Route path="/products/:id" element={<ProductDetails/>} />
                                     <Route path="/cart" element={<Cart/>}/>
                                     <Route path="/checkout" element={<Checkout />} />
+                                    
+                                    {/* Admin Routes */}
+                                    <Route path="/admin" element={<AdminLogin />} />
+
+                                    {/* ADMIN LAYOUT ROUTE: Ito ang maglo-load ng AdminLayout sa lahat ng sub-path ng /admin/ */}
+                                    <Route 
+                                        path="/admin/*" 
+                                        element={<AdminLayout />} 
+                                    />
                                 </Routes>
                             </main>
                             <Popup/>
@@ -147,6 +167,6 @@ function App() {
             </div>
         </Router>
     );
-}	
+}   
 
 export default App;

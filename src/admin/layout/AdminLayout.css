@@ -1,0 +1,201 @@
+/* AdminLayout.css */
+
+/* --- GLOBAL LAYOUT --- */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding-top: 75px; /* Adjust according to top navbar height */
+  background-color: #F5F3F1; /* Light beige background */
+  color: #4A4A4A;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Main content area */
+.admin-content {
+  flex: 1;
+  padding: 30px 40px;
+  background-color: #F5F3F1;
+}
+
+/* --- HEADER / PAGE TITLE WITH BUTTON --- */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.admin-header h2 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #333333;
+  margin: 0;
+}
+
+/* Add button style */
+.btn-primary,
+.btn-add-new,
+.add-btn {
+  background-color: #5f8d4e;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-add-new:hover,
+.add-btn:hover {
+  background-color: #4f7a41;
+}
+
+/* --- CARD STYLE FOR TABLE CONTAINER --- */
+.card,
+.table-card-wrapper {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  overflow-x: auto;
+}
+
+/* --- TABLE STYLES --- */
+.admin-table,
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  min-width: 700px; /* ensure responsiveness, horizontal scroll if small screen */
+}
+
+.admin-table thead tr,
+.styled-table thead tr {
+  background-color: #f0f0f0;
+  color: #4a4a4a;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.admin-table th,
+.admin-table td,
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.admin-table tbody tr:hover,
+.styled-table tbody tr:hover {
+  background-color: #f7f7f7;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* ID columns */
+.th-id,
+.td-id {
+  width: 50px;
+}
+
+/* Action buttons container */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+/* --- ACTION BUTTONS (EDIT, DELETE) --- */
+.icon-btn,
+.action-btn {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.action-edit,
+.icon-btn.action-edit {
+  background-color: #ffc107;
+  color: #444;
+}
+
+.action-edit:hover {
+  background-color: #e0a800;
+}
+
+.action-delete,
+.icon-btn.action-delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+.action-delete:hover {
+  background-color: #b02a37;
+}
+
+/* --- STATUS TAGS --- */
+.status-tag {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: white;
+  display: inline-block;
+  min-width: 70px;
+  text-align: center;
+}
+
+.status-active {
+  background-color: #6ba368;
+}
+
+.status-scheduled {
+  background-color: #f2b75c;
+  color: #4a4a4a;
+}
+
+.status-draft {
+  background-color: #a9a9a9;
+  color: white;
+}
+
+/* --- LOW STOCK HIGHLIGHT --- */
+.low-stock {
+  color: #d66f6f;
+  font-weight: 700;
+}
+
+/* --- RESPONSIVE CONTAINER --- */
+@media screen and (max-width: 768px) {
+  .admin-content {
+    padding: 20px;
+  }
+
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .btn-primary,
+  .btn-add-new,
+  .add-btn {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .admin-table,
+  .styled-table {
+    min-width: 100%;
+    font-size: 14px;
+  }
+}

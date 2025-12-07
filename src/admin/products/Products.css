@@ -1,0 +1,65 @@
+/* Products.css */
+
+.products-module-container {
+    width: 100%;
+}
+
+.products-sub-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; /* I-align sa bottom ang nav-tabs */
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ddd;
+}
+
+.module-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+}
+
+/* --- Navigation Tabs Styling --- */
+.nav-tabs {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-tab-btn {
+    background: none;
+    border: none;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #777;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.nav-tab-btn:hover {
+    color: #333;
+}
+
+/* Active Tab Indicator */
+.nav-tab-btn.active {
+    color: #4CAF50; /* Green/Primary Color */
+    font-weight: 600;
+}
+
+.nav-tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -12px; /* I-align sa ilalim ng border ng sub-nav */
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #4CAF50; /* Green highlight */
+    border-radius: 2px 2px 0 0;
+}
+
+.products-content-area {
+    /* Dito maglo-load ang ProductList.js o Categories.js */
+    padding-top: 10px; 
+}
