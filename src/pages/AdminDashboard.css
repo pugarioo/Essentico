@@ -1,0 +1,50 @@
+/* --- AdminDashboard.css --- */
+
+/* 1. OUTER CONTAINER: Full screen container */
+.admin-dashboard-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex; 
+    width: 100vw;
+    height: 100vh;
+    background-color: #F5F3F1; 
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* 2. INNER WRAPPER: Defines the dimensions and contains the Sidebar and Main Area */
+.admin-dashboard-wrapper {
+    display: flex; 
+    width: 100%;
+    height: calc(100vh - 60px); /* Subtract navbar height */
+    margin-top: 60px; /* Account for fixed navbar */
+    box-shadow: none;
+    border-radius: 0;
+    overflow: hidden; 
+}
+
+/* 3. MAIN CONTENT AREA: Consumes the rest of the space */
+.admin-main-content-area {
+    flex-grow: 1; 
+    background-color: #F5F3F1; 
+    padding: 0; 
+    overflow-y: auto;
+    height: 100%;
+}
+
+/* 4. MAIN PAGE CONTENT: Container for all content */
+.admin-main-page-content {
+    padding: 30px 40px;
+    min-height: 100%;
+}
+
+/* Ensure the body/root element has no margin that could interfere */
+body, #root {
+    margin: 0;
+    padding: 0;
+}
+

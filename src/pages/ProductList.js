@@ -28,6 +28,7 @@ export default function ProductList() {
 
   // 🔹 Filter + Sort logic
   const filteredProducts = data
+	.filter((p) => p.is_available === true) // Only show listed products
 	.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()))
 	.filter((p) => {
 	  if (selectedCategory && p.category !== selectedCategory) return false;
@@ -45,8 +46,8 @@ export default function ProductList() {
 	  return 0;
 	});
 
-  //  Extract unique categories
-  const categories = [...new Set(data.map((p) => p.category))].filter(Boolean);
+  //  Extract unique categories (only from available products)
+  const categories = [...new Set(data.filter((p) => p.is_available === true).map((p) => p.category))].filter(Boolean);
 
   return (
 	<div className="product-page">

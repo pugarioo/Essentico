@@ -1,0 +1,215 @@
+/* AdminProductList.css */
+
+.product-list-container {
+    width: 100%;
+    padding: 10px;
+}
+
+/* Product Cards Container */
+.product-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Horizontal Product Card */
+.product-card-horizontal {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    gap: 20px;
+}
+
+.product-card-horizontal:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Product Image */
+.product-card-image {
+    flex-shrink: 0;
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e0e0e0;
+    color: #999;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Product Content (Middle Section) */
+.product-card-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+}
+
+.product-card-name {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    text-align: left;
+}
+
+.product-card-price {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #4CAF50;
+    text-align: left;
+}
+
+.product-card-description {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+/* Product Actions (Right Section) */
+.product-card-actions {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 20px;
+    border-left: 1px solid #e0e0e0;
+}
+
+.product-card-actions .action-btn {
+    min-width: 100px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.product-card-actions .action-edit {
+    background-color: #ffc107;
+    color: #444;
+}
+
+.product-card-actions .action-edit:hover {
+    background-color: #e0a800;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(255, 193, 7, 0.3);
+}
+
+.product-card-actions .action-delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+.product-card-actions .action-delete:hover {
+    background-color: #b02a37;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+}
+
+.product-card-actions .action-listed {
+    background-color: #6c757d;
+    color: white;
+}
+
+.product-card-actions .action-listed.listed-active {
+    background-color: #5f8d4e;
+    color: white;
+}
+
+.product-card-actions .action-listed.listed-inactive {
+    background-color: #6c757d;
+    color: white;
+}
+
+.product-card-actions .action-listed:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.product-card-actions .action-listed:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Admin Content Container */
+.admin-content {
+    width: 100%;
+    padding: 0;
+}
+
+/* Admin Header */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.admin-header h2 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #333333;
+    margin: 0;
+}
+
+/* Add button style */
+.btn-primary,
+.btn-add-new {
+  background-color: #5f8d4e;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-add-new:hover {
+  background-color: #4f7a41;
+}
+

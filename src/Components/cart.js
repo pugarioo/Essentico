@@ -58,7 +58,7 @@ function CartItem({ item }) {
 }
 
 function Cart () {
-    const { cart } = useContext(CartContext);
+    const { cart, isLoadingCart } = useContext(CartContext);
     
     // --- CALCULATIONS ---
     // We only sum items that are checked
@@ -66,7 +66,12 @@ function Cart () {
         if (item.isChecked) {
             return total + (item.details.price * item.quantity);
         }
-    };
+        return total;
+    }, 0);
+
+    const deliveryFee = subtotal > 0 ? 50 : 0;
+    const total = subtotal + deliveryFee;
+    const isCheckoutDisabled = subtotal === 0
 
     return (
         <div className="cart-container">
@@ -79,10 +84,12 @@ function Cart () {
             <div className="cart-content">
                 {/* LEFT: Items */}
                 <div className="cart-items">
-                    {cart.length > 0 ? (
+                    {isLoadingCart ? (
+                        <p>Loading cart...</p>
+                    ) : cart.length > 0 ? (
                         cart.map((item) => (
                             // FIX: Added the required 'key' prop for React
-                            <CartItem key={item.details.id} item={item} />
+                            <CartItem key={item.id || item.details.id} item={item} />
                         ))
                     ) : (
                         <p>Your cart is empty.</p>
@@ -142,4 +149,4 @@ function Cart () {
     );
 }
 
-export default AdminLogin;
+export default Cart;

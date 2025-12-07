@@ -12,7 +12,7 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const { login, isLoggingIn } = useContext(AuthContext);
+  const { userLogin, isLoggingIn } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ function Login() {
     }
     
     try {
-      await login(username, password);
+      await userLogin(username, password);
       navigate("/products");
     } catch (error) {
       // Show the error message from the backend

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useContext } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
 
 // Components
@@ -13,46 +13,12 @@ import Popup from './components/Popup';
 import Home from './pages/Home';
 import ProductList from './pages/ProductList';
 import ProductDetails from './pages/ProductDetails';
-import Cart from './components/Cart.js'
-import Checkout from './components/Checkout';
-import CartContext  from './contexts/CartContext';
-import ProductContext from './contexts/ProductContext'
-import PopupContext from './contexts/PopupContext';
-import data from './data/sampledata.json';
-import AdminLogin from "./admin/AdminLogin";
-
-// Tiyakin na ang mga ito ay tama ang paths
-import AdminLayout from "./admin/layout/AdminLayout";
-import Dashboard from "./admin/dashboard/Dashboard"; 
-import Products from "./admin/products/Products";
-// import Categories from "./admin/products/Categories"; // Hindi kailangan dito
-
-// ... [Lahat ng functions (addToCart, removeFromCart, atbp.) ay pareho] ...
 import Cart from './components/cart.js'
-import Checkout from './components/Checkout.js';
-import CartContext  from './contexts/CartContext';
-import ProductContext from './contexts/ProductContext'
-import PopupContext from './contexts/PopupContext';
-import data from './data/sampledata.json';
-import AdminLogin from './components/AdminLogin';
-import AdminDashboard from "./components/AdminDashboard"; 
-import Order from './components/Order';
-import Customer from './components/Customer'; 
-
-function App() {
-    const [cart, updateCart] = useState([]);
-    const [directBuy, setDirectBuy] = useState(null)
-    const [popup, setPopup] = useState({
-        isVisible: false,
-        product: null,
-        quantity: null
-    })
-
-    function addToCart(product, quantity=1) {
-        updateCart(prevCart => {
-            const existingItem = prevCart.find(
-                item => item.details.product_id === product.product_id 
-            )
+import Checkout from './components/Checkout'; 
+import Accounts from './pages/Accounts';
+import AdminLogin from './pages/AdminLogin'; 
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 // Context Providers
 import { ProductProvider } from './contexts/ProductContext';
@@ -61,7 +27,12 @@ import { PopupProvider } from './contexts/PopupContext';
 import { AuthProvider } from './contexts/AuthContext'; // Using the Auth one we made earlier
 import { UserProvider } from './contexts/UserContext';
 
+
 import AuthContext from './contexts/AuthContext';
+import UserContext from './contexts/UserContext';
+import AdminDashboard from './pages/AdminDashboard';
+   
+
 
 function App() {
 
@@ -73,9 +44,7 @@ function App() {
                         <ProductProvider>
                             <CartProvider>
                                 <PopupProvider>
-                                    <Navbar />
-                                    <AppRoutes />
-                                    <Popup />
+                                    <AppContent />
                                 </PopupProvider>
                             </CartProvider>
                         </ProductProvider>
@@ -86,13 +55,58 @@ function App() {
     );
 }
 
+function AppContent() {
+    const location = useLocation();
+    const isAdminRoute = location.pathname.startsWith('/admin');
+
+    return (
+        <>
+            {!isAdminRoute && <Navbar />}
+            <AppRoutes />
+            {!isAdminRoute && <Popup />}
+        </>
+    );
+}
+
 
 function AppRoutes() {
     const { isAuthenticated, isCheckingAuth } = useContext(AuthContext);
+    const { user } = useContext(UserContext);
+    const location = useLocation();
+    const isAdminRoute = location.pathname.startsWith('/admin');
     
+    // Check if user is admin
+    const isAdmin = user && user.role === 'admin';
+
     // Show loading or nothing while checking auth
     if (isCheckingAuth) {
         return <main className="main-content"><div>Loading...</div></main>;
+    }
+    
+    // Admin routes don't use main-content wrapper
+    if (isAdminRoute) {
+        return (
+            <Routes>
+                {/* Admin login - only accessible if not authenticated or not admin */}
+                <Route 
+                    path="/admin/login" 
+                    element={
+                        !isAuthenticated || !isAdmin ? <AdminLogin /> : <Navigate to="/admin" replace />
+                    } 
+                />
+                {/* Admin dashboard - only accessible if authenticated AND admin */}
+                <Route 
+                    path="/admin/*" 
+                    element={
+                        isAuthenticated && isAdmin ? (
+                            <AdminDashboard />
+                        ) : (
+                            <Navigate to="/admin/login" replace />
+                        )
+                    } 
+                />
+            </Routes>
+        );
     }
     
     return (

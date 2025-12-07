@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { FaFolder, FaEdit, FaTrash } from "react-icons/fa";
+import './AdminCategories.css';
 
 // Format ISO date string to readable format
 const formatDate = (isoString) => {
@@ -11,13 +13,13 @@ const formatDate = (isoString) => {
   });
 };
 
-const Categories = () => {
+const AdminCategories = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8082/api/categories") // Replace with your backend URL
+    fetch("http://localhost:8082/api/categories")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch categories");
@@ -34,8 +36,8 @@ const Categories = () => {
       });
   }, []);
 
-  if (loading) return <p>Loading categories...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <div className="admin-content"><p>Loading categories...</p></div>;
+  if (error) return <div className="admin-content"><p>Error: {error}</p></div>;
 
   return (
     <div className="admin-content">
@@ -68,9 +70,7 @@ const Categories = () => {
                 <tr key={category.id}>
                   <td>{category.id}</td>
                   <td>
-                    <span role="img" aria-label="folder">
-                      📁
-                    </span>{" "}
+                    <FaFolder style={{ marginRight: "8px", color: "#767945" }} />
                     {category.category_name}
                   </td>
                   <td>{category.products_count}</td>
@@ -78,10 +78,10 @@ const Categories = () => {
                   <td>{formatDate(category.updated_at)}</td>
                   <td className="action-buttons">
                     <button className="icon-btn action-edit" title="Edit">
-                      ✏️
+                      <FaEdit />
                     </button>
                     <button className="icon-btn action-delete" title="Delete">
-                      🗑️
+                      <FaTrash />
                     </button>
                   </td>
                 </tr>
@@ -94,4 +94,5 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default AdminCategories;
+

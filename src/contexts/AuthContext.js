@@ -21,11 +21,11 @@ export const AuthProvider = ({ children }) => {
         setIsCheckingAuth(false); // Mark as done checking
     }, []);
 
-    const login = async (email, password) => {
+    const userLogin = async (email, password) => {
         setIsLoggingIn(true)
 
         try {
-            const response = await fetch('http://localhost:8082/api/login', {
+            const response = await fetch('http://localhost:8082/api/user/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem("token", data.token)
                 localStorage.setItem("tokenType", data.tokenType)
                 localStorage.setItem("user", JSON.stringify(data.user))
+                window.dispatchEvent(new Event('userUpdated'));
             } else {
                 // Get error message from backend response
                 const errorData = await response.json().catch(() => ({}));
@@ -75,6 +76,64 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const adminLogin = async (email, password) => {
+        setIsLoggingIn(true)
+
+        try {
+            const response = await fetch('http://localhost:8082/api/admin/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ "email": email, "password": password })
+            })
+
+            if (response.ok) {
+                const data = await response.json();
+
+                setIsAuthenticated(true);
+                localStorage.setItem("token", data.token)
+                localStorage.setItem("tokenType", data.tokenType)
+                localStorage.setItem("user", JSON.stringify(data.user))
+                window.dispatchEvent(new Event('userUpdated'));
+            } else {
+                // Get error message from backend response
+                const errorData = await response.json().catch(() => ({}));
+                
+                // Handle backend error format:
+                // 401: { message: 'Invalid email or password', errors: { email: [...] } }
+                // 422: { message: 'Validation failed', errors: {...} }
+                // 500: { message: '...', error: '...' }
+                let errorMessage = errorData.message || 'Login failed';
+                
+                // If there are validation errors, extract them
+                if (errorData.errors) {
+                    const errorMessages = Object.values(errorData.errors)
+                        .flat()
+                        .filter(msg => msg)
+                        .join(', ');
+                    if (errorMessages) {
+                        errorMessage = errorMessages;
+                    }
+                } else if (errorData.error) {
+                    errorMessage = errorData.error;
+                }
+                
+                throw new Error(errorMessage);
+            }
+        } catch (error) {
+            // Re-throw the error so AdminLogin component can catch it
+            throw error;
+        } finally {
+            // Always reset loading state, even if there's an error
+            setIsLoggingIn(false)
+        }
+    };
+
+    // Keep login for backward compatibility (defaults to user login)
+    const login = userLogin;
+
     const logout = async () => {
         setIsLoggingOut(true)
         
@@ -101,6 +160,8 @@ export const AuthProvider = ({ children }) => {
 
     const contextData = {
         login,
+        userLogin,
+        adminLogin,
         logout,
         isAuthenticated,
         setIsAuthenticated,

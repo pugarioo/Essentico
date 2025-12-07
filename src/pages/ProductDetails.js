@@ -28,6 +28,15 @@ export default function ProductDetails() {
     );
   }
 
+  // Check if product is available (listed)
+  if (product.is_available !== true) {
+    return (
+      <div className="product-details-container">
+        <h2>This product is currently unavailable</h2>
+      </div>
+    );
+  }
+
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -81,7 +90,7 @@ export default function ProductDetails() {
           <div className="rating-section">
             {renderStars(Math.round(product.rating))}
             <span className="rating-score">[{product.rating}]</span>
-            <span className="review-count">{product.review_count} reviews</span>
+            <span className="review-count">{product.ratings_count || 0} Ratings</span>
           </div>
 
           <h2 className="price">₱ {product.price}</h2>
