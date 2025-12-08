@@ -44,12 +44,20 @@ const AdminSidebar = ({ activeTab, setActiveTab }) => {
                     <span className="icon">■</span> Users/Accounts
                 </button>
 
-                {/* Settings Tab */}
+                {/* Discounts/Promos Tab */}
                 <button 
-                    onClick={() => handleTabClick('settings')}
-                    className={`admin-menu-item ${activeTab === 'settings' ? 'active' : ''}`}
+                    onClick={() => handleTabClick('promos')}
+                    className={`admin-menu-item ${activeTab === 'promos' ? 'active' : ''}`}
                 >
-                    <span className="icon">■</span> Settings
+                    <span className="icon">■</span> Discounts/Promos
+                </button>
+
+                {/* Ratings Tab */}
+                <button 
+                    onClick={() => handleTabClick('ratings')}
+                    className={`admin-menu-item ${activeTab === 'ratings' ? 'active' : ''}`}
+                >
+                    <span className="icon">■</span> Ratings
                 </button>
 
             </div>

@@ -208,9 +208,11 @@
 
 .summary-item-products {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 
 hr {

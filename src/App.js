@@ -24,6 +24,7 @@ import Register from './pages/Register';
 import { ProductProvider } from './contexts/ProductContext';
 import { CartProvider } from './contexts/CartContext';
 import { PopupProvider } from './contexts/PopupContext';
+import { AlertProvider } from './contexts/AlertContext';
 import { AuthProvider } from './contexts/AuthContext'; // Using the Auth one we made earlier
 import { UserProvider } from './contexts/UserContext';
 
@@ -44,7 +45,9 @@ function App() {
                         <ProductProvider>
                             <CartProvider>
                                 <PopupProvider>
-                                    <AppContent />
+                                    <AlertProvider>
+                                        <AppContent />
+                                    </AlertProvider>
                                 </PopupProvider>
                             </CartProvider>
                         </ProductProvider>
@@ -107,6 +110,11 @@ function AppRoutes() {
                 />
             </Routes>
         );
+    }
+    
+    // If admin tries to access user routes, redirect to admin dashboard
+    if (isAuthenticated && isAdmin) {
+        return <Navigate to="/admin" replace />;
     }
     
     return (

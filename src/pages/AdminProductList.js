@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
-import { FaEdit, FaTrash, FaCheck, FaTimes } from "react-icons/fa";
+import { FaEdit, FaTrash, FaCheck, FaTimes, FaEye } from "react-icons/fa";
 import { Modal, Button, Form } from "react-bootstrap";
 import AuthContext from "../contexts/AuthContext";
+import AlertContext from "../contexts/AlertContext";
 import './AdminProductList.css';
 
 function AdminProductList() {
@@ -12,6 +13,8 @@ function AdminProductList() {
   const [deletingProducts, setDeletingProducts] = useState(new Set());
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showViewModal, setShowViewModal] = useState(false);
+  const [viewingProduct, setViewingProduct] = useState(null);
   const [editingProduct, setEditingProduct] = useState(null);
   const [editFormData, setEditFormData] = useState({});
   const [addFormData, setAddFormData] = useState({
@@ -28,6 +31,7 @@ function AdminProductList() {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
+  const { alert: showAlert, confirm: showConfirm } = useContext(AlertContext);
 
   useEffect(() => {
     fetch("http://localhost:8082/api/products")
@@ -63,6 +67,23 @@ function AdminProductList() {
         console.error("Error fetching categories:", err);
       });
   }, []);
+
+  const handleView = (productId) => {
+    const product = products.find(p => p.id === productId);
+    if (product) {
+      console.log('Viewing product:', product);
+      console.log('Product category_id:', product.category_id);
+      console.log('Product category object:', product.category);
+      console.log('Available categories:', categories);
+      setViewingProduct(product);
+      setShowViewModal(true);
+    }
+  };
+
+  const handleCloseViewModal = () => {
+    setShowViewModal(false);
+    setViewingProduct(null);
+  };
 
   const handleEdit = (productId) => {
     const product = products.find(p => p.id === productId);
@@ -132,12 +153,12 @@ function AdminProductList() {
 
   const handleUpdateProduct = async () => {
     if (!isAuthenticated) {
-      alert('You must be logged in to update products');
+      await showAlert({ title: 'Unauthorized', message: 'You must be logged in to update products', variant: 'warning' });
       return;
     }
 
     if (!editFormData.name || !editFormData.price) {
-      alert('Please fill in all required fields (name and price)');
+      await showAlert({ title: 'Missing Fields', message: 'Please fill in all required fields (name and price)', variant: 'warning' });
       return;
     }
 
@@ -188,10 +209,10 @@ function AdminProductList() {
       );
 
       handleCloseEditModal();
-      alert('Product updated successfully!');
+      await showAlert({ title: 'Success', message: 'Product updated successfully!', variant: 'success' });
     } catch (error) {
       console.error('Error updating product:', error);
-      alert(error.message || 'Failed to update product');
+      await showAlert({ title: 'Error', message: error.message || 'Failed to update product', variant: 'danger' });
     } finally {
       setIsUpdating(false);
     }
@@ -199,12 +220,12 @@ function AdminProductList() {
 
   const handleAddProduct = async () => {
     if (!isAuthenticated) {
-      alert('You must be logged in to add products');
+      await showAlert({ title: 'Unauthorized', message: 'You must be logged in to add products', variant: 'warning' });
       return;
     }
 
     if (!addFormData.name || !addFormData.price) {
-      alert('Please fill in all required fields (name and price)');
+      await showAlert({ title: 'Missing Fields', message: 'Please fill in all required fields (name and price)', variant: 'warning' });
       return;
     }
 
@@ -229,6 +250,8 @@ function AdminProductList() {
         formData.append('image', selectedImage);
       }
 
+
+      console.log(formData);
       const response = await fetch('http://localhost:8082/api/products', {
         method: 'POST',
         headers: {
@@ -249,22 +272,27 @@ function AdminProductList() {
       setProducts(prevProducts => [...prevProducts, newProduct]);
 
       handleCloseAddModal();
-      alert('Product added successfully!');
+      await showAlert({ title: 'Success', message: 'Product added successfully!', variant: 'success' });
     } catch (error) {
       console.error('Error adding product:', error);
-      alert(error.message || 'Failed to add product');
+      await showAlert({ title: 'Error', message: error.message || 'Failed to add product', variant: 'danger' });
     } finally {
       setIsAdding(false);
     }
   };
 
   const handleDelete = async (productId) => {
-    if (!window.confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
-      return;
-    }
+    const confirmed = await showConfirm({
+      title: 'Delete Product',
+      message: 'Are you sure you want to delete this product? This action cannot be undone.',
+      variant: 'danger',
+      confirmLabel: 'Delete',
+      cancelLabel: 'Cancel'
+    });
+    if (!confirmed) return;
 
     if (!isAuthenticated) {
-      alert('You must be logged in to delete products');
+      await showAlert({ title: 'Unauthorized', message: 'You must be logged in to delete products', variant: 'warning' });
       return;
     }
 
@@ -290,10 +318,10 @@ function AdminProductList() {
         prevProducts.filter(product => product.id !== productId)
       );
 
-      alert('Product deleted successfully!');
+      await showAlert({ title: 'Success', message: 'Product deleted successfully!', variant: 'success' });
     } catch (error) {
       console.error('Error deleting product:', error);
-      alert(error.message || 'Failed to delete product');
+      await showAlert({ title: 'Error', message: error.message || 'Failed to delete product', variant: 'danger' });
     } finally {
       setDeletingProducts(prev => {
         const newSet = new Set(prev);
@@ -305,7 +333,7 @@ function AdminProductList() {
 
   const handleToggleListed = async (productId, currentStatus) => {
     if (!isAuthenticated) {
-      alert('You must be logged in to update products');
+      await showAlert({ title: 'Unauthorized', message: 'You must be logged in to update products', variant: 'warning' });
       return;
     }
 
@@ -341,7 +369,7 @@ function AdminProductList() {
       );
     } catch (error) {
       console.error('Error updating product availability:', error);
-      alert(error.message || 'Failed to update product availability');
+      await showAlert({ title: 'Error', message: error.message || 'Failed to update product availability', variant: 'danger' });
     } finally {
       setUpdatingProducts(prev => {
         const newSet = new Set(prev);
@@ -394,6 +422,13 @@ function AdminProductList() {
                 </div>
                 
                 <div className="product-card-actions">
+                  <button 
+                    className="action-btn action-view"
+                    onClick={() => handleView(product.id)}
+                    title="View Details"
+                  >
+                    <FaEye /> View
+                  </button>
                   <button 
                     className={`action-btn action-listed ${product.is_available ? 'listed-active' : 'listed-inactive'}`}
                     onClick={() => handleToggleListed(product.id, product.is_available)}
@@ -634,6 +669,156 @@ function AdminProductList() {
           </Button>
           <Button variant="success" onClick={handleAddProduct} disabled={isAdding}>
             {isAdding ? "Adding..." : "Add Product"}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* VIEW PRODUCT MODAL */}
+      <Modal show={showViewModal} onHide={handleCloseViewModal} size="lg">
+        <Modal.Header closeButton className="order-modal-header">
+          <Modal.Title className="order-modal-title">Product Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="order-modal-body">
+          {viewingProduct && (
+            <div className="product-view-container">
+              <div className="product-view-image-section" style={{ 
+                textAlign: 'center', 
+                marginBottom: '25px',
+                padding: '15px',
+                backgroundColor: '#f8f9fa',
+                borderRadius: '8px'
+              }}>
+                {(() => {
+                  const imageUrl = viewingProduct.image_url 
+                    ? viewingProduct.image_url
+                    : viewingProduct.image_filename 
+                      ? `http://localhost:8082/storage/products/${viewingProduct.image_filename}`
+                      : null;
+                  return imageUrl ? (
+                    <img 
+                      src={imageUrl} 
+                      alt={viewingProduct.name} 
+                      className="product-view-image"
+                      style={{ 
+                        maxWidth: '100%', 
+                        maxHeight: '400px', 
+                        objectFit: 'contain', 
+                        borderRadius: '8px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                      }}
+                    />
+                  ) : (
+                    <div className="product-view-placeholder" style={{ 
+                      width: '100%', 
+                      height: '300px', 
+                      backgroundColor: '#e9ecef', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      borderRadius: '8px',
+                      color: '#6c757d',
+                      fontSize: '16px',
+                      fontWeight: '500'
+                    }}>
+                      No Image Available
+                    </div>
+                  );
+                })()}
+              </div>
+              
+              <div className="product-view-details">
+                <div className="product-view-detail-row">
+                  <div className="product-view-label">Product Name</div>
+                  <div className="product-view-value product-view-name">
+                    {viewingProduct.name || 'N/A'}
+                  </div>
+                </div>
+
+                <div className="product-view-detail-row">
+                  <div className="product-view-label">Price</div>
+                  <div className="product-view-value product-view-price">
+                    ₱{viewingProduct.price?.toFixed(2) || '0.00'}
+                  </div>
+                </div>
+
+                <div className="product-view-detail-row">
+                  <div className="product-view-label">Stock Quantity</div>
+                  <div className="product-view-value">
+                    {viewingProduct.stock_quantity || 0} units
+                  </div>
+                </div>
+
+                <div className="product-view-detail-row">
+                  <div className="product-view-label">Category</div>
+                  <div className="product-view-value">
+                    {(() => {
+                      // Try multiple ways to get category name
+                      // 1. Check if category is a string directly (e.g., "Furniture")
+                      if (typeof viewingProduct.category === 'string' && viewingProduct.category) {
+                        return viewingProduct.category;
+                      }
+                      // 2. Check if category is nested object with category_name
+                      if (viewingProduct.category?.category_name) {
+                        return viewingProduct.category.category_name;
+                      }
+                      // 3. Check if category_name is a direct property
+                      if (viewingProduct.category_name) {
+                        return viewingProduct.category_name;
+                      }
+                      // 4. Look up category by ID (handle both string and number IDs)
+                      if (viewingProduct.category_id) {
+                        const category = categories.find(c => 
+                          String(c.id) === String(viewingProduct.category_id) || 
+                          c.id === viewingProduct.category_id ||
+                          String(c.id) === String(viewingProduct.category?.id)
+                        );
+                        if (category) {
+                          return category.category_name;
+                        }
+                      }
+                      // 5. If no category found, show message
+                      return 'No category assigned';
+                    })()}
+                  </div>
+                </div>
+
+                <div className="product-view-detail-row">
+                  <div className="product-view-label">Status</div>
+                  <div className="product-view-value">
+                    <span className={`product-status-badge ${viewingProduct.is_available ? 'status-available' : 'status-unavailable'}`}>
+                      {viewingProduct.is_available ? 'Available (Listed)' : 'Unavailable (Unlisted)'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="product-view-detail-row product-view-description-row">
+                  <div className="product-view-label">Description</div>
+                  <div className="product-view-value product-view-description">
+                    {viewingProduct.description || 'No description available'}
+                  </div>
+                </div>
+
+                <div className="product-view-detail-row">
+                  <div className="product-view-label">Product ID</div>
+                  <div className="product-view-value product-view-id">
+                    #{viewingProduct.id}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer className="order-modal-footer">
+          <Button variant="secondary" onClick={handleCloseViewModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={() => {
+            handleCloseViewModal();
+            if (viewingProduct) {
+              handleEdit(viewingProduct.id);
+            }
+          }}>
+            <FaEdit style={{ marginRight: '5px' }} /> Edit Product
           </Button>
         </Modal.Footer>
       </Modal>

@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaStar, FaRegStar } from "react-icons/fa";
 import ProductContext from "../contexts/ProductContext";
 import CartContext from "../contexts/CartContext";
 import PopupContext from "../contexts/PopupContext";
 import AuthContext from "../contexts/AuthContext";
+import StarRating from "../components/StarRating";
 import "./ProductDetails.css";
 import productbg from '../assets/images/products-bg.jpg'
 
@@ -37,13 +37,6 @@ export default function ProductDetails() {
     );
   }
 
-  const renderStars = (rating) => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      stars.push(i <= rating ? <FaStar key={i} color="#f4b400" /> : <FaRegStar key={i} color="#ccc" />);
-    }
-    return stars;
-  };
 
   const handleAddToCartClick = () => {
         // 3. Call showPopup and pass it the product and a function to run
@@ -88,8 +81,8 @@ export default function ProductDetails() {
           <h1 className="product-title">{product.name}</h1>
 
           <div className="rating-section">
-            {renderStars(Math.round(product.rating))}
-            <span className="rating-score">[{product.rating}]</span>
+            <StarRating rating={Math.round(product.rating || 0)} readonly size={20} />
+            <span className="rating-score">[{product.rating || 0}]</span>
             <span className="review-count">{product.ratings_count || 0} Ratings</span>
           </div>
 

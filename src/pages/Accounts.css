@@ -433,6 +433,19 @@ h3, .orders-card h4 {
   line-height: 1.5;
 }
 
+.order-item-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 /* Modal Footer */
 .order-modal-footer {
   border-top: 1px solid #e0e0e0;
@@ -445,4 +458,17 @@ h3, .orders-card h4 {
   padding: 8px 24px;
   font-weight: 500;
   border-radius: 6px;
+}
+
+.order-cancel-btn {
+  padding: 8px 24px;
+  font-weight: 500;
+  border-radius: 6px;
+  margin-right: auto;
+}
+
+.order-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }

@@ -6,19 +6,28 @@ import { useNavigate } from "react-router-dom";
 import "./Accounts.css";  
 import AuthContext from "../contexts/AuthContext";
 import UserContext from "../contexts/UserContext";
+import AlertContext from "../contexts/AlertContext";
+import RatingModal from "../components/RatingModal";
+import StarRating from "../components/StarRating";
 
 import defaultProfile from '../assets/images/default-profile.png';
 
 function Accounts() {
 
   const { user, updateUser, isUpdatingUser } = useContext(UserContext);
+  const { alert: showAlert, confirm: showConfirm } = useContext(AlertContext);
   
   const navigate = useNavigate();
   const { logout, isLoggingOut } = useContext(AuthContext);
   const [imagePath, setImagePath] = useState('');
   const [orders, setOrders] = useState([]);
+  const [fullOrders, setFullOrders] = useState([]); // Store full order data with order_items
   const [loadingOrders, setLoadingOrders] = useState(false);
   const [ordersError, setOrdersError] = useState(null);
+  const [cancellingOrderId, setCancellingOrderId] = useState(null);
+  const [showRatingModal, setShowRatingModal] = useState(false);
+  const [selectedProductForRating, setSelectedProductForRating] = useState(null);
+  const [productRatings, setProductRatings] = useState({}); // { orderId_productId: rating }
   const hasFetchedOrders = useRef(false);
 
   useEffect(() => {
@@ -58,6 +67,9 @@ function Accounts() {
 
         if (response.ok) {
           const data = await response.json();
+          // Store full order data for rating functionality
+          setFullOrders(data);
+          
           // Transform backend orders to match component expectations
           const transformedOrders = data.map(order => {
             // Map order items to a readable format
@@ -186,6 +198,132 @@ function Accounts() {
   const handleOrderClick = (order) => {
     setSelectedOrder(order);
     setShowOrderModal(true);
+    
+    // Fetch ratings for products in this order if delivered
+    if (order.status === 'delivered') {
+      fetchOrderRatings(order.id);
+    }
+  };
+
+  const fetchOrderRatings = async (orderId) => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(`http://localhost:8082/api/orders/${orderId}/ratings`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        const ratings = await response.json();
+        // Create a map: { orderId_productId: rating }
+        const ratingsMap = {};
+        ratings.forEach(rating => {
+          const key = `${orderId}_${rating.product_id}`;
+          ratingsMap[key] = rating.rating;
+        });
+        setProductRatings(prev => ({ ...prev, ...ratingsMap }));
+      }
+    } catch (error) {
+      console.error('Error fetching ratings:', error);
+      // If endpoint doesn't exist yet, that's okay - backend will implement it
+    }
+  };
+
+  const handleRateProduct = (product, orderId) => {
+    setSelectedProductForRating({ ...product, orderId });
+    setShowRatingModal(true);
+  };
+
+  const handleRatingSubmit = (result) => {
+    // Update productRatings state
+    const key = `${result.order_id}_${result.product_id}`;
+    setProductRatings(prev => ({
+      ...prev,
+      [key]: result.rating
+    }));
+    
+    // Close rating modal and reset selection
+    setShowRatingModal(false);
+    setSelectedProductForRating(null);
+
+    // Optionally close the order modal to prevent stacking issues
+    setShowOrderModal(false);
+
+    // Refresh the order ratings to update UI if order still open
+    if (selectedOrder) {
+      fetchOrderRatings(selectedOrder.id);
+    }
+  };
+
+  const handleCancelOrder = async (orderId) => {
+    const confirmed = await showConfirm({
+      title: 'Cancel Order',
+      message: 'Are you sure you want to cancel this order? This action cannot be undone.',
+      variant: 'danger',
+      confirmLabel: 'Cancel Order',
+      cancelLabel: 'Keep Order'
+    });
+    if (!confirmed) return;
+
+    setCancellingOrderId(orderId);
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await fetch(`http://localhost:8082/api/orders/${orderId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          status: 'cancelled'
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Failed to cancel order');
+      }
+
+      // Update the order in local state
+      setOrders(prevOrders =>
+        prevOrders.map(order =>
+          order.id === orderId
+            ? { ...order, status: 'cancelled' }
+            : order
+        )
+      );
+
+      // Update selected order if it's the one being cancelled
+      if (selectedOrder && selectedOrder.id === orderId) {
+        setSelectedOrder({ ...selectedOrder, status: 'cancelled' });
+      }
+
+      await showAlert({
+        title: 'Order Cancelled',
+        message: 'Order cancelled successfully!',
+        variant: 'success'
+      });
+      setShowOrderModal(false);
+    } catch (error) {
+      console.error('Error cancelling order:', error);
+      await showAlert({
+        title: 'Error',
+        message: error.message || 'Failed to cancel order',
+        variant: 'danger'
+      });
+    } finally {
+      setCancellingOrderId(null);
+    }
+  };
+
+  // Check if order can be cancelled (not shipped or delivered)
+  const canCancelOrder = (order) => {
+    const status = order.status?.toLowerCase();
+    return status === 'pending' || status === 'processing';
   };
 
 
@@ -357,23 +495,87 @@ function Accounts() {
               <div className="order-items-section">
                 <h5 className="order-items-title">Items Ordered</h5>
                 <div className="order-items-list">
-                  {selectedOrder.itemsOrdered.map((item, i) => (
-                    <div key={i} className="order-item">
-                      <span className="order-item-bullet">•</span>
-                      <span className="order-item-text">{item}</span>
-                    </div>
-                  ))}
+                  {(() => {
+                    // Get full order data with order_items
+                    const fullOrder = fullOrders.find(o => o.id === selectedOrder.id);
+                    const orderItems = fullOrder?.order_items || [];
+                    
+                    return orderItems.length > 0 ? (
+                      orderItems.map((item, i) => {
+                        const product = item.product || {};
+                        const productId = product.id || item.product_id;
+                        const ratingKey = `${selectedOrder.id}_${productId}`;
+                        const isRated = productRatings[ratingKey] !== undefined;
+                        const rating = productRatings[ratingKey];
+                        
+                        return (
+                          <div key={i} className="order-item">
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1 }}>
+                              <span className="order-item-bullet">•</span>
+                              <span className="order-item-text">
+                                {item.quantity}x {product.name || 'Unknown Product'}
+                              </span>
+                            </div>
+                            {selectedOrder.status === 'delivered' && (
+                              <div className="order-item-rating">
+                                {isRated ? (
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <span style={{ fontSize: '14px', color: '#666' }}>Rated:</span>
+                                    <StarRating rating={rating} readonly size={16} />
+                                  </div>
+                                ) : (
+                                  <Button 
+                                    variant="outline-primary" 
+                                    size="sm"
+                                    onClick={() => handleRateProduct(product, selectedOrder.id)}
+                                  >
+                                    Rate Product
+                                  </Button>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })
+                    ) : (
+                      selectedOrder.itemsOrdered.map((item, i) => (
+                        <div key={i} className="order-item">
+                          <span className="order-item-bullet">•</span>
+                          <span className="order-item-text">{item}</span>
+                        </div>
+                      ))
+                    );
+                  })()}
                 </div>
               </div>
             </div>
           )}
         </Modal.Body>
         <Modal.Footer className="order-modal-footer">
+          {selectedOrder && canCancelOrder(selectedOrder) && (
+            <Button 
+              variant="danger" 
+              onClick={() => handleCancelOrder(selectedOrder.id)}
+              disabled={cancellingOrderId === selectedOrder.id}
+              className="order-cancel-btn"
+            >
+              {cancellingOrderId === selectedOrder.id ? 'Cancelling...' : 'Cancel Order'}
+            </Button>
+          )}
           <Button variant="secondary" onClick={() => setShowOrderModal(false)} className="order-close-btn">
             Close
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/* RATING MODAL */}
+      <RatingModal
+        show={showRatingModal}
+        onHide={() => setShowRatingModal(false)}
+        product={selectedProductForRating}
+        orderId={selectedProductForRating?.orderId}
+        onRatingSubmit={handleRatingSubmit}
+      />
 
       {/* EDIT PROFILE MODAL */}
       <Modal show={showEditModal} onHide={handleCloseModal}>

@@ -125,6 +125,17 @@
     gap: 6px;
 }
 
+.product-card-actions .action-view {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.product-card-actions .action-view:hover {
+    background-color: #138496;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(23, 162, 184, 0.3);
+}
+
 .product-card-actions .action-edit {
     background-color: #ffc107;
     color: #444;
@@ -256,6 +267,107 @@
 
 .modal input[type="file"].form-control:hover {
   border-color: #5f8d4e;
-  background-color: #f0f0f0;
 }
 
+/* Product View Modal Styles */
+.product-view-container {
+  padding: 10px 0;
+}
+
+.product-view-image-section {
+  margin-bottom: 25px;
+}
+
+.product-view-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product-view-detail-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.product-view-detail-row:last-child {
+  border-bottom: none;
+}
+
+.product-view-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.product-view-value {
+  font-size: 16px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.product-view-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #212529;
+  margin-top: 4px;
+}
+
+.product-view-price {
+  font-size: 28px;
+  font-weight: 700;
+  color: #5f8d4e;
+  margin-top: 4px;
+}
+
+.product-view-description {
+  color: #555;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.product-view-id {
+  font-size: 14px;
+  color: #6c757d;
+  font-family: 'Courier New', monospace;
+}
+
+.product-status-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.product-status-badge.status-available {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.product-status-badge.status-unavailable {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.product-view-description-row {
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 20px;
+}
+
+.product-view-description-row .product-view-value {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 3px solid #5f8d4e;
+}

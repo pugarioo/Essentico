@@ -9,6 +9,8 @@ import AdminProductList from './AdminProductList';
 import AdminCategories from './AdminCategories';
 import AdminOrders from './AdminOrders';
 import AdminUsers from './AdminUsers';
+import AdminPromos from './AdminPromos';
+import AdminRatings from './AdminRatings';
 import UserContext from '../contexts/UserContext';
 import AuthContext from '../contexts/AuthContext';
 
@@ -38,8 +40,10 @@ const AdminDashboard = () => {
                 return <AdminOrders />;
             case 'users':
                 return <AdminUsers />;
-            case 'settings':
-                return <div className="admin-content"><h2>Settings</h2><p>Settings page coming soon...</p></div>;
+            case 'promos':
+                return <AdminPromos />;
+            case 'ratings':
+                return <AdminRatings />;
             default:
                 return <AdminProductList />;
         }
