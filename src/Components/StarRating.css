@@ -1,0 +1,18 @@
+.star-rating {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.star {
+  transition: transform 0.2s ease;
+}
+
+.star-clickable:hover {
+  transform: scale(1.2);
+}
+
+.star-clickable:active {
+  transform: scale(0.95);
+}
+

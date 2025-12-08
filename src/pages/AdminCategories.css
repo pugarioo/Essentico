@@ -1,0 +1,177 @@
+/* --- AdminCategories.css --- */
+
+/* Admin Content Container */
+.admin-content {
+    width: 100%;
+    padding: 0;
+    overflow-x: auto;
+}
+
+/* Admin Header */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.admin-header h2 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #333333;
+    margin: 0;
+}
+
+/* Add button style */
+.btn-primary,
+.btn-add-new {
+  background-color: #5f8d4e;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-add-new:hover {
+  background-color: #4f7a41;
+}
+
+.category-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.category-form input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 250px; 
+  font-size: 14px;
+}
+
+/* Admin Table Styles */
+.admin-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 15px;
+  min-width: 700px;
+}
+
+.admin-table thead tr {
+  background: linear-gradient(135deg, #5f8d4e 0%, #4f7a41 100%) !important;
+  color: white !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  height: auto;
+}
+
+.admin-table thead th {
+  padding: 10px 10px !important;
+  text-align: left;
+  vertical-align: middle !important;
+  border: none !important;
+  position: relative;
+  background: transparent !important;
+  color: white !important;
+  font-size: 12px;
+  line-height: 1.5 !important;
+  height: auto;
+  display: table-cell !important;
+}
+
+.admin-table thead th:first-child {
+  border-top-left-radius: 8px;
+}
+
+.admin-table thead th:last-child {
+  border-top-right-radius: 8px;
+}
+
+.admin-table tbody td {
+  padding: 16px 18px;
+  text-align: left;
+  border-bottom: 1px solid #e8e8e8;
+  background-color: white !important;
+  transition: all 0.2s ease;
+}
+
+/* Override Bootstrap striped table styles */
+.admin-table.table-striped > tbody > tr:nth-of-type(odd) > td {
+  background-color: white !important;
+}
+
+.admin-table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.admin-table tbody tr:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.admin-table tbody tr:hover td {
+  background-color: #f8f9fa;
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 8px;
+}
+
+.admin-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 8px;
+}
+
+/* Actions column specific styling */
+.admin-table th:last-child,
+.admin-table td:last-child {
+  width: 150px;
+  min-width: 150px;
+  max-width: 150px;
+  text-align: center;
+  padding: 8px;
+}
+
+/* Action Buttons */
+.action-buttons {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  min-width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.icon-btn:hover {
+  background-color: #f0f0f0;
+}
+

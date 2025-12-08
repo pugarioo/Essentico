@@ -1,0 +1,537 @@
+/* AdminOrders.css */
+
+/* Admin Content Container */
+.admin-content {
+    width: 100%;
+    padding: 0;
+    overflow-x: auto;
+}
+
+/* Admin Header */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.admin-header h2 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #333333;
+    margin: 0;
+}
+
+/* Order Filter Toggle */
+.order-toggle {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.order-toggle .btn {
+    border-color: #767945;
+    color: #767945;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    padding: 6px 12px;
+}
+
+.order-toggle .btn-check:checked + .btn,
+.order-toggle .btn.active {
+    background-color: #767945;
+    border-color: #767945;
+    color: white;
+    box-shadow: 0 2px 8px rgba(118, 121, 69, 0.3);
+}
+
+.order-toggle .btn:hover {
+    border-color: #767945;
+    color: #767945;
+    background-color: rgba(118, 121, 69, 0.1);
+}
+
+.order-toggle .btn-check:checked + .btn:hover,
+.order-toggle .btn.active:hover {
+    background-color: #515829;
+    border-color: #515829;
+}
+
+/* Add button style */
+.btn-primary,
+.btn-add-new {
+  background-color: #5f8d4e;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-add-new:hover {
+  background-color: #4f7a41;
+}
+
+/* Admin Table Styles */
+.admin-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 15px;
+  min-width: 700px;
+}
+
+.admin-table thead tr {
+  background: linear-gradient(135deg, #5f8d4e 0%, #4f7a41 100%) !important;
+  color: white !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  height: auto;
+}
+
+.admin-table thead th {
+  padding: 10px 10px !important;
+  text-align: left;
+  vertical-align: middle !important;
+  border: none !important;
+  position: relative;
+  background: transparent !important;
+  color: white !important;
+  font-size: 12px;
+  line-height: 1.5 !important;
+  height: auto;
+  display: table-cell !important;
+}
+
+.admin-table thead th:first-child {
+  border-top-left-radius: 8px;
+}
+
+.admin-table thead th:last-child {
+  border-top-right-radius: 8px;
+}
+
+.admin-table tbody td {
+  padding: 12px 10px;
+  text-align: left;
+  border-bottom: 1px solid #e8e8e8;
+  background-color: white !important;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+/* Override Bootstrap striped table styles */
+.admin-table.table-striped > tbody > tr:nth-of-type(odd) > td {
+  background-color: white !important;
+}
+
+.admin-table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.admin-table tbody tr:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.admin-table tbody tr:hover td {
+  background-color: #f8f9fa;
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 8px;
+}
+
+.admin-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 8px;
+}
+
+/* Make ID column narrower */
+.admin-table tbody td:first-child,
+.admin-table thead th:first-child {
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Status column */
+.admin-table tbody td:nth-last-child(1),
+.admin-table thead th:nth-last-child(1) {
+  min-width: 150px;
+  max-width: 150px;
+  width: 150px;
+  overflow: visible;
+  position: relative;
+}
+
+/* Status Badge */
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-block;
+    letter-spacing: 0.3px;
+}
+
+.status-pending {
+    background-color: #fff3e0;
+    color: #e65100;
+    box-shadow: 0 2px 4px rgba(230, 81, 0, 0.15);
+}
+
+.status-processing {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    box-shadow: 0 2px 4px rgba(25, 118, 210, 0.15);
+}
+
+.status-shipped {
+    background-color: #e8f5e9;
+    color: #4CAF50;
+    box-shadow: 0 2px 4px rgba(76, 175, 80, 0.15);
+}
+
+.status-delivered {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    box-shadow: 0 2px 4px rgba(46, 125, 50, 0.15);
+}
+
+.status-cancelled {
+    background-color: #ffebee;
+    color: #c62828;
+    box-shadow: 0 2px 4px rgba(198, 40, 40, 0.15);
+}
+
+/* Status Select Dropdown */
+.status-select {
+    width: 100%;
+    max-width: 150px;
+    font-size: 13px;
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: white;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    box-sizing: border-box;
+}
+
+.status-select:hover:not(:disabled) {
+    border-color: #5f8d4e;
+    box-shadow: 0 2px 4px rgba(95, 141, 78, 0.1);
+}
+
+.status-select:focus {
+    outline: none;
+    border-color: #5f8d4e;
+    box-shadow: 0 0 0 3px rgba(95, 141, 78, 0.1);
+}
+
+.status-select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #f5f5f5;
+}
+
+/* Ensure status column has proper width and dropdown doesn't overflow */
+.admin-table tbody td:nth-last-child(1) {
+    overflow: visible !important;
+    white-space: nowrap;
+    position: relative;
+    z-index: 1;
+}
+
+/* When dropdown is open, ensure it doesn't get cut off */
+.admin-table tbody td:nth-last-child(1) select:focus {
+    position: relative;
+    z-index: 10;
+}
+
+/* Ensure the select dropdown options are visible */
+.admin-table tbody td:nth-last-child(1) select {
+    position: relative;
+    z-index: 1;
+}
+
+/* Action Buttons */
+.action-buttons {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  min-width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.icon-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.action-delete:hover {
+  background-color: #ffebee;
+}
+
+/* List items in table cells */
+.admin-table ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style: none;
+}
+
+.admin-table ul li {
+  padding: 4px 0;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.admin-table ul li:before {
+  content: "•";
+  color: #5f8d4e;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+/* Order Details Modal Styles */
+.order-details-modal .modal-content {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.order-modal-header {
+  background: linear-gradient(135deg, #5f8d4e 0%, #4f7a41 100%);
+  color: white;
+  border-bottom: none;
+  padding: 20px 25px;
+  border-radius: 12px 12px 0 0;
+}
+
+.order-modal-title {
+  color: white;
+  font-weight: 600;
+  font-size: 22px;
+  margin: 0;
+}
+
+.order-modal-header .btn-close {
+  filter: invert(1);
+  opacity: 0.9;
+}
+
+.order-modal-header .btn-close:hover {
+  opacity: 1;
+}
+
+.order-modal-body {
+  padding: 25px;
+  background-color: #fafafa;
+}
+
+.order-details-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Status Badge */
+.order-status-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.order-status-badge {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.order-status-badge.status-pending {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.order-status-badge.status-processing {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.order-status-badge.status-shipped {
+  background-color: #e8f5e9;
+  color: #388e3c;
+}
+
+.order-status-badge.status-delivered {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.order-status-badge.status-cancelled {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+/* Order Info Grid */
+.order-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.order-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.order-info-item.order-total {
+  grid-column: 1 / -1;
+  padding-top: 15px;
+  border-top: 2px solid #e0e0e0;
+  margin-top: 5px;
+}
+
+.order-info-label {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.order-info-value {
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+.order-info-item.order-total .order-info-value {
+  font-size: 24px;
+  color: #5f8d4e;
+}
+
+/* Delivery Address Section */
+.order-address-section {
+  background-color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Items Ordered Section */
+.order-items-section {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.order-items-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.order-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.order-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.order-item:hover {
+  background-color: #f0f0f0;
+}
+
+.order-item-bullet {
+  color: #5f8d4e;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.order-item-text {
+  flex: 1;
+  color: #333;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* Modal Footer */
+.order-modal-footer {
+  border-top: 1px solid #e0e0e0;
+  padding: 15px 25px;
+  background-color: #fafafa;
+  border-radius: 0 0 12px 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.order-close-btn {
+  padding: 8px 24px;
+  font-weight: 500;
+  border-radius: 6px;
+}
+

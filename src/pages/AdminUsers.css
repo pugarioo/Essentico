@@ -1,0 +1,395 @@
+/* AdminUsers.css */
+
+/* Admin Content Container */
+.admin-content {
+    width: 100%;
+    padding: 0;
+    overflow-x: auto;
+}
+
+/* Admin Header */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.admin-header h2 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #333333;
+    margin: 0;
+}
+
+/* Add button style */
+.btn-primary,
+.btn-add-new {
+  background-color: #5f8d4e;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-add-new:hover {
+  background-color: #4f7a41;
+}
+
+/* Admin Table Styles */
+.admin-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 15px;
+  min-width: 700px;
+}
+
+.admin-table thead tr {
+  background: linear-gradient(135deg, #5f8d4e 0%, #4f7a41 100%) !important;
+  color: white !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  height: auto;
+}
+
+.admin-table thead th {
+  padding: 10px 10px !important;
+  text-align: left;
+  vertical-align: middle !important;
+  border: none !important;
+  position: relative;
+  background: transparent !important;
+  color: white !important;
+  font-size: 12px;
+  line-height: 1.5 !important;
+  height: auto;
+  display: table-cell !important;
+}
+
+.admin-table thead th:first-child {
+  border-top-left-radius: 8px;
+}
+
+.admin-table thead th:last-child {
+  border-top-right-radius: 8px;
+}
+
+.admin-table tbody td {
+  padding: 12px 10px;
+  text-align: left;
+  border-bottom: 1px solid #e8e8e8;
+  background-color: white !important;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+/* Override Bootstrap striped table styles */
+.admin-table.table-striped > tbody > tr:nth-of-type(odd) > td {
+  background-color: white !important;
+}
+
+.admin-table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.admin-table tbody tr:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.admin-table tbody tr:hover td {
+  background-color: #f8f9fa;
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 8px;
+}
+
+.admin-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 8px;
+}
+
+/* Actions column specific styling */
+.admin-table th:last-child,
+.admin-table td:last-child {
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
+  text-align: center;
+  padding: 8px;
+}
+
+/* Adjust table cell padding for better fit */
+.admin-table tbody td {
+  padding: 12px 10px;
+  font-size: 14px;
+}
+
+.admin-table thead th {
+  padding: 12px 10px;
+}
+
+/* Make ID column narrower */
+.admin-table tbody td:first-child,
+.admin-table thead th:first-child {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Role Badge */
+.role-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    display: inline-block;
+    letter-spacing: 0.3px;
+}
+
+.role-customer {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    box-shadow: 0 2px 4px rgba(25, 118, 210, 0.15);
+}
+
+.role-admin {
+    background-color: #fff3e0;
+    color: #f57c00;
+    box-shadow: 0 2px 4px rgba(245, 124, 0, 0.15);
+}
+
+/* Action Buttons */
+.action-buttons {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  min-width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.icon-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.action-edit:hover {
+  background-color: #fff3e0;
+}
+
+.action-delete:hover {
+  background-color: #ffebee;
+}
+
+/* Order Details Modal Styles (reused for user details) */
+.order-details-modal .modal-content {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.order-modal-header {
+  background: linear-gradient(135deg, #5f8d4e 0%, #4f7a41 100%);
+  color: white;
+  border-bottom: none;
+  padding: 20px 25px;
+  border-radius: 12px 12px 0 0;
+}
+
+.order-modal-title {
+  color: white;
+  font-weight: 600;
+  font-size: 22px;
+  margin: 0;
+}
+
+.order-modal-header .btn-close {
+  filter: invert(1);
+  opacity: 0.9;
+}
+
+.order-modal-header .btn-close:hover {
+  opacity: 1;
+}
+
+.order-modal-body {
+  padding: 25px;
+  background-color: #fafafa;
+}
+
+.order-details-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Status Badge */
+.order-status-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.order-status-badge {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Order Info Grid */
+.order-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.order-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.order-info-item.order-total {
+  grid-column: 1 / -1;
+  padding-top: 15px;
+  border-top: 2px solid #e0e0e0;
+  margin-top: 5px;
+}
+
+.order-info-label {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.order-info-value {
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+.order-info-item.order-total .order-info-value {
+  font-size: 24px;
+  color: #5f8d4e;
+}
+
+/* Delivery Address Section */
+.order-address-section {
+  background-color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Items Ordered Section */
+.order-items-section {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.order-items-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.order-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.order-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.order-item:hover {
+  background-color: #f0f0f0;
+}
+
+.order-item-bullet {
+  color: #5f8d4e;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.order-item-text {
+  flex: 1;
+  color: #333;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* Modal Footer */
+.order-modal-footer {
+  border-top: 1px solid #e0e0e0;
+  padding: 15px 25px;
+  background-color: #fafafa;
+  border-radius: 0 0 12px 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.order-close-btn {
+  padding: 8px 24px;
+  font-weight: 500;
+  border-radius: 6px;
+}
+
