@@ -8,6 +8,19 @@
   overflow: visible; 
 }
 
+/* Responsive padding */
+@media (max-width: 768px) {
+  .account-page {
+    padding: 20px 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .account-page {
+    padding: 15px 10px;
+  }
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -40,6 +53,18 @@ body {
   margin-top: 100px; 
 }
 
+/* Responsive profile card */
+@media (max-width: 768px) {
+  .profile-card {
+    margin-top: 20px;
+    padding: 20px !important;
+  }
+  
+  .orders-card {
+    padding: 20px !important;
+  }
+}
+
 .order-table-wrapper {
   max-height: 400px;
   overflow-y: auto;
@@ -47,6 +72,77 @@ body {
   width: 100%;
   margin-top: 15px;
   scrollbar-width: thin;
+  overflow-x: auto;
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+  .order-table-wrapper {
+    max-height: none;
+  }
+  
+  .orders-card table {
+    font-size: 0.9rem;
+    min-width: 0;
+  }
+  
+  .orders-card table thead th {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+  
+  .orders-card table tbody td {
+    padding: 8px;
+    font-size: 0.85rem;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 576px) {
+  .order-table-wrapper {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .orders-card table {
+    min-width: 0;
+    font-size: 0.85rem;
+  }
+  
+  .orders-card table thead th,
+  .orders-card table tbody td {
+    padding: 6px;
+    white-space: normal;
+  }
+
+  .orders-card table thead {
+    display: none;
+  }
+
+  .orders-card table,
+  .orders-card table tbody,
+  .orders-card table tr,
+  .orders-card table td {
+    display: block;
+    width: 100%;
+  }
+
+  .orders-card table tr {
+    margin-bottom: 12px;
+    border: 1px solid rgba(118, 121, 69, 0.15);
+    border-radius: 8px;
+    padding: 10px;
+    background: #fff;
+  }
+
+  .orders-card table td {
+    text-align: left;
+    padding: 6px 0;
+  }
+
+  .orders-card table td:last-child {
+    text-align: left;
+  }
 }
 
 .order-table-wrapper::-webkit-scrollbar {
@@ -83,6 +179,18 @@ body {
   background-color: rgba(118, 121, 69, 0.05);
 }
 
+/* Responsive profile image */
+@media (max-width: 768px) {
+  .profile-img {
+    width: 120px;
+    height: 120px;
+    min-width: 120px;
+    min-height: 120px;
+    max-width: 120px;
+    max-height: 120px;
+  }
+}
+
 h3, .orders-card h4 {
   font-weight: 600;
   color: #333;
@@ -101,6 +209,25 @@ h3, .orders-card h4 {
   gap: 10px;
   margin-top: 20px;
   margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+/* Responsive toggle buttons */
+@media (max-width: 768px) {
+  .order-toggle {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .order-toggle {
+    gap: 5px;
+  }
+  
+  .order-toggle .btn {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+  }
 }
 
 /* Toggle button styling */
@@ -134,6 +261,8 @@ h3, .orders-card h4 {
 /* Table styling improvements */
 .orders-card table {
   margin-top: 10px;
+  table-layout: fixed;
+  width: 100%;
 }
 
 .orders-card table thead th {
@@ -150,6 +279,19 @@ h3, .orders-card h4 {
 
 .orders-card table tbody tr:hover {
   background-color: rgba(118, 121, 69, 0.05);
+}
+
+.orders-card table tbody td {
+  vertical-align: middle;
+}
+
+.orders-card table tbody td:first-child {
+  width: 70%;
+}
+
+.orders-card table tbody td:last-child {
+  width: 30%;
+  text-align: right;
 }
 
 .tracking-timeline p {
@@ -174,6 +316,23 @@ h3, .orders-card h4 {
   margin-bottom: 5px;
 }
 
+/* Responsive profile details */
+@media (max-width: 768px) {
+  .profile-details {
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .profile-details h3 {
+    font-size: 1.5rem;
+  }
+  
+  .profile-details p {
+    font-size: 0.9rem;
+  }
+}
+
 .profile-details p {
   color: #555;
   margin: 0;
@@ -189,6 +348,31 @@ h3, .orders-card h4 {
   gap: 12px;          
   margin-top: 15px;  
   flex-wrap: wrap;   
+}
+
+/* Responsive profile buttons */
+@media (max-width: 768px) {
+  .profile-buttons {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .profile-buttons button {
+    flex: 1;
+    min-width: auto;
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .profile-buttons {
+    flex-direction: column;
+  }
+  
+  .profile-buttons button {
+    width: 100%;
+    max-width: none;
+  }
 }
 
 .profile-buttons button {
@@ -339,6 +523,19 @@ h3, .orders-card h4 {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
+/* Responsive order info grid */
+@media (max-width: 576px) {
+  .order-info-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 15px;
+  }
+  
+  .order-info-item.order-total {
+    grid-column: 1;
+  }
+}
+
 .order-info-item {
   display: flex;
   flex-direction: column;
@@ -471,4 +668,77 @@ h3, .orders-card h4 {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+}
+
+/* Responsive modals */
+@media (max-width: 576px) {
+  .order-details-modal .modal-dialog {
+    margin: 10px;
+  }
+  
+  .order-modal-header {
+    padding: 15px 20px;
+  }
+  
+  .order-modal-title {
+    font-size: 18px;
+  }
+  
+  .order-modal-body {
+    padding: 15px;
+  }
+  
+  .order-modal-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .order-modal-footer .btn {
+    width: 100%;
+    margin: 0;
+  }
+  
+  .order-cancel-btn {
+    margin-right: 0;
+    order: -1;
+  }
+  
+  .order-items-section {
+    padding: 15px;
+  }
+  
+  .order-address-section {
+    padding: 12px 15px;
+  }
+  
+  .order-info-grid {
+    padding: 15px;
+  }
+  
+  .order-info-value {
+    font-size: 14px;
+  }
+  
+  .order-info-item.order-total .order-info-value {
+    font-size: 20px;
+  }
+  
+  .order-items-title {
+    font-size: 16px;
+  }
+  
+  .order-item-text {
+    font-size: 14px;
+  }
+  
+  .order-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .order-item-rating {
+    width: 100%;
+    justify-content: flex-start;
+  }
 }

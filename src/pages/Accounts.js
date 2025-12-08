@@ -359,8 +359,8 @@ function Accounts() {
       {/* PROFILE CARD */}
       <Card className="profile-card shadow-sm">
         <Card.Body>
-          <Row>
-            <Col md={3} className="text-center">
+          <Row className="align-items-center">
+            <Col xs={12} md={3} className="text-center mb-3 mb-md-0">
               <img 
                 src={imagePath} 
                 alt="Profile" 
@@ -369,7 +369,7 @@ function Accounts() {
               />
             </Col>
 
-            <Col md={9}>
+            <Col xs={12} md={9}>
               <div className="profile-details">
                 <h3>{user?.name || "Loading..."}</h3>
                 <p><strong>Email:</strong> {user?.email || "Loading..."}</p>
@@ -451,7 +451,7 @@ function Accounts() {
       </Card>
 
       {/* ORDER DETAILS MODAL */}
-      <Modal show={showOrderModal} onHide={() => setShowOrderModal(false)} centered size="lg" className="order-details-modal">
+      <Modal show={showOrderModal} onHide={() => setShowOrderModal(false)} centered size="lg" className="order-details-modal" scrollable>
         <Modal.Header closeButton className="order-modal-header">
           <Modal.Title className="order-modal-title">Order Details #{selectedOrder?.id}</Modal.Title>
         </Modal.Header>

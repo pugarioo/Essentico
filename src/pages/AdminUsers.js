@@ -35,6 +35,12 @@ function AdminUsers() {
   const { updateUser } = useContext(UserContext);
   const { alert: showAlert, confirm: showConfirm } = useContext(AlertContext);
 
+  const getOrderCount = (user) => {
+    if (!user) return 0;
+    if (typeof user.total_orders === 'number') return user.total_orders;
+    return 0;
+  };
+
   useEffect(() => {
     fetch("http://localhost:8082/api/users")
       .then((res) => {
@@ -410,7 +416,7 @@ function AdminUsers() {
                   <td>{customer.name || "-"}</td>
                   <td>{customer.email || "-"}</td>
                   <td>{customer.phone || "-"}</td>
-                  <td>{customer.orders ? customer.orders.length : 0}</td>
+                  <td>{getOrderCount(customer)}</td>
                   <td>
                     <span className={`role-badge ${customer.role === 'admin' ? 'role-admin' : 'role-customer'}`}>
                       {customer.role || "Customer"}
@@ -686,7 +692,7 @@ function AdminUsers() {
                 </div>
                 <div className="order-info-item">
                   <span className="order-info-label">Total Orders</span>
-                  <span className="order-info-value">{selectedUser.orders ? selectedUser.orders.length : 0}</span>
+                  <span className="order-info-value">{getOrderCount(selectedUser)}</span>
                 </div>
                 {selectedUser.created_at && (
                   <div className="order-info-item">
