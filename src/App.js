@@ -13,7 +13,7 @@ import Popup from './components/Popup';
 import Home from './pages/Home';
 import ProductList from './pages/ProductList';
 import ProductDetails from './pages/ProductDetails';
-import Cart from './components/cart.js'
+import Cart from './components/Cart.js'
 import Checkout from './components/Checkout'; 
 import Accounts from './pages/Accounts';
 import AdminLogin from './pages/AdminLogin'; 
