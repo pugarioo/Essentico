@@ -67,11 +67,14 @@ function Accounts() {
 
         if (response.ok) {
           const data = await response.json();
+          // Filter orders by the current user's ID
+          const userOrders = data.filter(order => order.user_id === user.id);
+
           // Store full order data for rating functionality
-          setFullOrders(data);
+          setFullOrders(userOrders);
           
           // Transform backend orders to match component expectations
-          const transformedOrders = data.map(order => {
+          const transformedOrders = userOrders.map(order => {
             // Map order items to a readable format
             const itemsList = order.order_items?.map(item => 
               `${item.quantity}x ${item.product?.name || 'Unknown Product'}`
